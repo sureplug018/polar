@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deposit funds — Tescomint</title>
+<meta name="description" content="Fund your Tescomint account with Bitcoin, Ethereum, USDT or Solana." />
+<meta property="og:title" content="Deposit funds — Tescomint" />
+<meta property="og:description" content="Fund your Tescomint account with Bitcoin, Ethereum, USDT or Solana." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="../assets/app.css" />
+<script src="../assets/app.js" defer></script>
+</head>
+<body><div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="./index.html"><span class="brand-mark">T</span><span class="brand-name">Tescomint</span></a>
+    
+    <nav style="display:flex;flex-direction:column;gap:4px;margin-top:24px;flex:1">
+          <a class="nav-link" href="./index.html">Dashboard</a>
+          <a class="nav-link active" href="./deposit.html">Deposit</a>
+          <a class="nav-link" href="./withdraw.html">Withdraw</a>
+          <a class="nav-link" href="./invest.html">Invest</a>
+          <a class="nav-link" href="./transactions.html">Transactions</a>
+          <a class="nav-link" href="./investments.html">Investments</a>
+          <a class="nav-link" href="./referrals.html">Referrals</a>
+          <a class="nav-link" href="./profile.html">Profile</a>
+          <a class="nav-link" href="./support.html">Support</a>
+    </nav>
+    <a class="nav-switch" href="../admin/index.html">Switch to admin</a>
+  </aside>
+  <div class="content">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-mark hide-desktop">T</span>
+          <div style="min-width:0">
+            <p class="eyebrow">Welcome back</p>
+            <p style="margin:0;font-size:14px;font-weight:700">Adaeze Okonkwo</p>
+          </div>
+        </div>
+        <div class="row"><button class="icon-btn" aria-label="Notifications">🔔</button><button class="icon-btn" type="button" aria-label="Toggle dark mode" onclick="toggleTheme()">◐</button></div>
+      </div>
+      <div class="chip-nav hide-desktop">
+          <a class="chip" href="./index.html">Dashboard</a>
+          <a class="chip active" href="./deposit.html">Deposit</a>
+          <a class="chip" href="./withdraw.html">Withdraw</a>
+          <a class="chip" href="./invest.html">Invest</a>
+          <a class="chip" href="./transactions.html">Transactions</a>
+          <a class="chip" href="./investments.html">Investments</a>
+          <a class="chip" href="./referrals.html">Referrals</a>
+          <a class="chip" href="./profile.html">Profile</a>
+          <a class="chip" href="./support.html">Support</a>
+      </div>
+    </header>
+    <main class="page">
+      <div style="margin-bottom:18px">
+        <h1 style="font-size:24px">Deposit funds</h1>
+        <p class="muted" style="margin:6px 0 0">Send crypto to a Tescomint wallet and confirm your payment.</p>
+      </div>
+      <div class="alert warning"><h4>Send only the selected asset</h4><p style="margin:0">Sending a different coin or network will result in permanent loss of funds. <a href="../user/support.html">Contact us</a></p></div>
+<div class="grid g2-md mt">
+  <div class="card">
+    <h2 class="section-title">Payment details</h2>
+    <form data-demo class="mt-sm">
+      <label class="field"><span>Select wallet</span><select><option>Bitcoin (BTC)</option><option>Tether (TRC20)</option><option>Ethereum (ERC20)</option></select></label>
+      <label class="field"><span>Amount (USD)</span><input type="number" placeholder="500" /></label>
+      <button class="btn block" type="submit">I have made this payment</button>
+      <div class="alert success mt" data-demo-note style="display:none"><h4>Payment submitted</h4><p style="margin:0">Your deposit is pending confirmation. It usually clears within 30 minutes.</p></div>
+    </form>
+  </div>
+  <div class="card" style="text-align:center">
+    <p class="eyebrow">Scan to pay</p>
+    <img class="qr mt-sm" alt="Deposit wallet QR code" src="https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=8&data=TQ9xLm4Vd7Kp2Rn8Ws3Yb6Zc1Fh5Jg0Ae" />
+    <div class="copy-box mt"><span id="addr">TQ9xLm4Vd7Kp2Rn8Ws3Yb6Zc1Fh5Jg0Ae</span><button class="btn sm ghost" onclick="copyText(document.getElementById('addr').textContent, this)">Copy</button></div>
+    <p class="muted small mt-sm">Tether · TRC20 network</p>
+  </div>
+</div>
+<h2 class="section-title mt">All deposit wallets</h2>
+<div class="grid g2-md mt-sm"><div class="card"><div class="row between"><strong>Bitcoin · BTC</strong><span class="pill success">success</span></div>
+  <div class="copy-box mt-sm"><span>bc1qx8k4y2vn6r7t3m9plq0wz5s8d4hg7fjc2ne1ka</span></div></div><div class="card"><div class="row between"><strong>Tether · TRC20</strong><span class="pill success">success</span></div>
+  <div class="copy-box mt-sm"><span>TQ9xLm4Vd7Kp2Rn8Ws3Yb6Zc1Fh5Jg0Ae</span></div></div><div class="card"><div class="row between"><strong>Ethereum · ERC20</strong><span class="pill success">success</span></div>
+  <div class="copy-box mt-sm"><span>0x7Fa3B21c9De04Ec8815bA6f4703cD19eF52aB6d1</span></div></div><div class="card"><div class="row between"><strong>Solana · SOL</strong><span class="pill error">error</span></div>
+  <div class="copy-box mt-sm"><span>5Hb9KpQr3Tz8Vm2Wn7Yc4Xd6Fe1Gh0Jk3Lm5Np8Qr2S</span></div></div></div>
+    </main>
+  </div>
+  <nav class="bottom-nav">
+      <a class="" href="./index.html"><span class="ico">●</span>Home</a>
+      <a class="active" href="./deposit.html"><span class="ico">●</span>Deposit</a>
+      <a class="" href="./invest.html"><span class="ico">●</span>Invest</a>
+      <a class="" href="./transactions.html"><span class="ico">●</span>History</a>
+      <a class="" href="./support.html"><span class="ico">●</span>Support</a>
+    </nav>
+</div></body>
+</html>

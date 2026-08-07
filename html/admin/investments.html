@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin investments — Tescomint</title>
+<meta name="description" content="Adjust profits and manage the status of member investment plans." />
+<meta property="og:title" content="Admin investments — Tescomint" />
+<meta property="og:description" content="Adjust profits and manage the status of member investment plans." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="../assets/app.css" />
+<script src="../assets/app.js" defer></script>
+</head>
+<body><div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="./index.html"><span class="brand-mark">T</span><span class="brand-name">Tescomint</span></a>
+    <p class="eyebrow accent" style="margin-top:8px">Admin console</p>
+    <nav style="display:flex;flex-direction:column;gap:4px;margin-top:24px;flex:1">
+          <a class="nav-link" href="./index.html">Overview</a>
+          <a class="nav-link" href="./transactions.html">Transactions</a>
+          <a class="nav-link active" href="./investments.html">Investments</a>
+          <a class="nav-link" href="./users.html">Users</a>
+          <a class="nav-link" href="./support.html">Support</a>
+          <a class="nav-link" href="./wallets.html">Wallets</a>
+          <a class="nav-link" href="./plans.html">Plans</a>
+    </nav>
+    <a class="nav-switch" href="../user/index.html">Switch to user app</a>
+  </aside>
+  <div class="content">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-mark hide-desktop">T</span>
+          <div style="min-width:0">
+            <p class="eyebrow">Admin console</p>
+            <p style="margin:0;font-size:14px;font-weight:700">Operations desk</p>
+          </div>
+        </div>
+        <div class="row"><button class="icon-btn" type="button" aria-label="Toggle dark mode" onclick="toggleTheme()">◐</button></div>
+      </div>
+      <div class="chip-nav hide-desktop">
+          <a class="chip" href="./index.html">Overview</a>
+          <a class="chip" href="./transactions.html">Transactions</a>
+          <a class="chip active" href="./investments.html">Investments</a>
+          <a class="chip" href="./users.html">Users</a>
+          <a class="chip" href="./support.html">Support</a>
+          <a class="chip" href="./wallets.html">Wallets</a>
+          <a class="chip" href="./plans.html">Plans</a>
+      </div>
+    </header>
+    <main class="page">
+      <div style="margin-bottom:18px">
+        <h1 style="font-size:24px">Investments</h1>
+        <p class="muted" style="margin:6px 0 0">Adjust profit and manage the lifecycle of member plans.</p>
+      </div>
+      <div class="mt"><div class="card" style="padding:6px">
+  <div class="table-wrap"><table class="data"><thead><tr><th>ID</th><th>Member</th><th>Plan</th><th>Amount</th><th>Profit</th><th>Status</th><th>Action</th></tr></thead>
+  <tbody><tr><td>IV-3391</td><td>Adaeze Okonkwo</td><td>Growth</td><td>$7,500.00</td><td>$1,875.00</td><td><span class="pill success">success</span></td><td><button class="btn sm ghost" onclick="openModal('inv-modal')">Adjust</button></td></tr><tr><td>IV-3350</td><td>Priya Raman</td><td>Starter</td><td>$1,200.00</td><td>$168.00</td><td><span class="pill success">success</span></td><td><button class="btn sm ghost" onclick="openModal('inv-modal')">Adjust</button></td></tr><tr><td>IV-3288</td><td>Liam O'Brien</td><td>Premium</td><td>$15,000.00</td><td>$5,400.00</td><td><span class="pill pending">pending</span></td><td><button class="btn sm ghost" onclick="openModal('inv-modal')">Adjust</button></td></tr><tr><td>IV-3204</td><td>Marcus Feld</td><td>Growth</td><td>$4,000.00</td><td>$0.00</td><td><span class="pill error">error</span></td><td><button class="btn sm ghost" onclick="openModal('inv-modal')">Adjust</button></td></tr></tbody></table></div>
+  <div class="cards-list" style="padding:10px"><div class="mini-card"><div class="row between"><strong>Adaeze Okonkwo</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Growth · IV-3391</span><span>$7,500.00</span></div>
+    <div class="mini-row"><span>Profit</span><span>$1,875.00</span></div>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('inv-modal')">Adjust</button></div><div class="mini-card"><div class="row between"><strong>Priya Raman</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Starter · IV-3350</span><span>$1,200.00</span></div>
+    <div class="mini-row"><span>Profit</span><span>$168.00</span></div>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('inv-modal')">Adjust</button></div><div class="mini-card"><div class="row between"><strong>Liam O'Brien</strong><span class="pill pending">pending</span></div>
+    <div class="mini-row"><span>Premium · IV-3288</span><span>$15,000.00</span></div>
+    <div class="mini-row"><span>Profit</span><span>$5,400.00</span></div>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('inv-modal')">Adjust</button></div><div class="mini-card"><div class="row between"><strong>Marcus Feld</strong><span class="pill error">error</span></div>
+    <div class="mini-row"><span>Growth · IV-3204</span><span>$4,000.00</span></div>
+    <div class="mini-row"><span>Profit</span><span>$0.00</span></div>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('inv-modal')">Adjust</button></div></div>
+</div></div>
+<div class="modal-backdrop" id="inv-modal">
+  <div class="modal">
+    <div class="row between"><h3 style="font-size:18px">Adjust investment</h3><button class="icon-btn" onclick="closeModal('inv-modal')">✕</button></div>
+    <div class="mt"><form data-demo><label class="field"><span>Profit (USD)</span><input type="number" placeholder="1875" /></label><label class="field"><span>Status</span><select><option>Active</option><option>Completed</option><option>Cancelled</option></select></label><label class="field"><span>Note to member</span><textarea rows="4" placeholder="Profit credited for the current cycle."></textarea></label><button class="btn block" type="submit">Save changes</button><div class="alert success mt" data-demo-note style="display:none"><h4>Investment updated</h4><p style="margin:0">Changes are live on the member dashboard.</p></div></form></div>
+  </div>
+</div>
+    </main>
+  </div>
+  
+</div></body>
+</html>

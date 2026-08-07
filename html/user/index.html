@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dashboard — Tescomint Investor Portal</title>
+<meta name="description" content="Track balance, active investments, profits and recent transactions." />
+<meta property="og:title" content="Dashboard — Tescomint Investor Portal" />
+<meta property="og:description" content="Track balance, active investments, profits and recent transactions." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="../assets/app.css" />
+<script src="../assets/app.js" defer></script>
+</head>
+<body><div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="./index.html"><span class="brand-mark">T</span><span class="brand-name">Tescomint</span></a>
+    
+    <nav style="display:flex;flex-direction:column;gap:4px;margin-top:24px;flex:1">
+          <a class="nav-link active" href="./index.html">Dashboard</a>
+          <a class="nav-link" href="./deposit.html">Deposit</a>
+          <a class="nav-link" href="./withdraw.html">Withdraw</a>
+          <a class="nav-link" href="./invest.html">Invest</a>
+          <a class="nav-link" href="./transactions.html">Transactions</a>
+          <a class="nav-link" href="./investments.html">Investments</a>
+          <a class="nav-link" href="./referrals.html">Referrals</a>
+          <a class="nav-link" href="./profile.html">Profile</a>
+          <a class="nav-link" href="./support.html">Support</a>
+    </nav>
+    <a class="nav-switch" href="../admin/index.html">Switch to admin</a>
+  </aside>
+  <div class="content">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-mark hide-desktop">T</span>
+          <div style="min-width:0">
+            <p class="eyebrow">Welcome back</p>
+            <p style="margin:0;font-size:14px;font-weight:700">Adaeze Okonkwo</p>
+          </div>
+        </div>
+        <div class="row"><button class="icon-btn" aria-label="Notifications">🔔</button><button class="icon-btn" type="button" aria-label="Toggle dark mode" onclick="toggleTheme()">◐</button></div>
+      </div>
+      <div class="chip-nav hide-desktop">
+          <a class="chip active" href="./index.html">Dashboard</a>
+          <a class="chip" href="./deposit.html">Deposit</a>
+          <a class="chip" href="./withdraw.html">Withdraw</a>
+          <a class="chip" href="./invest.html">Invest</a>
+          <a class="chip" href="./transactions.html">Transactions</a>
+          <a class="chip" href="./investments.html">Investments</a>
+          <a class="chip" href="./referrals.html">Referrals</a>
+          <a class="chip" href="./profile.html">Profile</a>
+          <a class="chip" href="./support.html">Support</a>
+      </div>
+    </header>
+    <main class="page">
+      <div style="margin-bottom:18px">
+        <h1 style="font-size:24px">Dashboard</h1>
+        <p class="muted" style="margin:6px 0 0">Your portfolio at a glance.</p>
+      </div>
+      <div class="grid g4">
+  <div class="card"><p class="eyebrow">Account balance</p><p class="stat-value">$24,850.42</p><p class="muted small" style="margin:6px 0 0">Available to withdraw</p></div>
+  <div class="card"><p class="eyebrow">Active investments</p><p class="stat-value">$15,200.00</p><p class="muted small" style="margin:6px 0 0">2 running plans</p></div>
+  <div class="card"><p class="eyebrow">Total profits</p><p class="stat-value">$6,250.42</p><p class="muted small" style="margin:6px 0 0">+12.4% this month</p></div>
+  <div class="card"><p class="eyebrow">Referral earnings</p><p class="stat-value">$1,180.00</p><p class="muted small" style="margin:6px 0 0">9 referrals</p></div>
+</div>
+<h2 class="section-title mt">Quick actions</h2>
+<div class="grid g4 mt-sm"><a class="card" style="text-align:center;font-weight:700" href="deposit.html">Deposit</a><a class="card" style="text-align:center;font-weight:700" href="withdraw.html">Withdraw</a><a class="card" style="text-align:center;font-weight:700" href="invest.html">Invest</a><a class="card" style="text-align:center;font-weight:700" href="transactions.html">Transactions</a><a class="card" style="text-align:center;font-weight:700" href="investments.html">Investments</a><a class="card" style="text-align:center;font-weight:700" href="referrals.html">Referrals</a><a class="card" style="text-align:center;font-weight:700" href="profile.html">Profile</a><a class="card" style="text-align:center;font-weight:700" href="support.html">Support</a></div>
+<div class="card mt"><div class="row between"><h2 class="section-title">Profit performance</h2><span class="muted small">Last 6 months</span></div>
+<svg class="chart" data-values='[420,860,1240,980,1710,2140]' data-labels='["Mar","Apr","May","Jun","Jul","Aug"]'></svg></div>
+<div class="row between mt"><h2 class="section-title">Recent transactions</h2><a href="transactions.html" style="color:var(--primary);font-weight:700" class="small">View all</a></div>
+<div class="mt-sm"><div class="card" style="padding:6px">
+  <div class="table-wrap"><table class="data"><thead><tr><th>ID</th><th>Type</th><th>Amount</th><th>Asset</th><th>Status</th><th>Date</th></tr></thead>
+  <tbody><tr><td>TX-90412</td><td>Deposit</td><td>$5,000.00</td><td>USDT (TRC20)</td><td><span class="pill success">success</span></td><td>04 Aug 2026, 14:22</td></tr><tr><td>TX-90388</td><td>Withdrawal</td><td>$1,200.00</td><td>BTC</td><td><span class="pill pending">pending</span></td><td>03 Aug 2026, 09:10</td></tr><tr><td>TX-90355</td><td>Profit</td><td>$480.50</td><td>USDT (TRC20)</td><td><span class="pill success">success</span></td><td>02 Aug 2026, 00:05</td></tr><tr><td>TX-90310</td><td>Deposit</td><td>$2,500.00</td><td>ETH</td><td><span class="pill warning">warning</span></td><td>01 Aug 2026, 18:44</td></tr><tr><td>TX-90266</td><td>Withdrawal</td><td>$3,000.00</td><td>USDT (TRC20)</td><td><span class="pill error">error</span></td><td>29 Jul 2026, 11:31</td></tr></tbody></table></div>
+  <div class="cards-list" style="padding:10px"><div class="mini-card"><div class="row between"><strong>Deposit</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Amount</span><span>$5,000.00</span></div>
+    <div class="mini-row"><span>Asset</span><span>USDT (TRC20)</span></div>
+    <div class="mini-row"><span>Date</span><span>04 Aug 2026, 14:22</span></div>
+    <p class="muted small" style="margin:8px 0 0">Deposit confirmed after 12 network confirmations.</p></div><div class="mini-card"><div class="row between"><strong>Withdrawal</strong><span class="pill pending">pending</span></div>
+    <div class="mini-row"><span>Amount</span><span>$1,200.00</span></div>
+    <div class="mini-row"><span>Asset</span><span>BTC</span></div>
+    <div class="mini-row"><span>Date</span><span>03 Aug 2026, 09:10</span></div>
+    <p class="muted small" style="margin:8px 0 0">Awaiting compliance review — usually under 2 hours.</p></div><div class="mini-card"><div class="row between"><strong>Profit</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Amount</span><span>$480.50</span></div>
+    <div class="mini-row"><span>Asset</span><span>USDT (TRC20)</span></div>
+    <div class="mini-row"><span>Date</span><span>02 Aug 2026, 00:05</span></div>
+    </div><div class="mini-card"><div class="row between"><strong>Deposit</strong><span class="pill warning">warning</span></div>
+    <div class="mini-row"><span>Amount</span><span>$2,500.00</span></div>
+    <div class="mini-row"><span>Asset</span><span>ETH</span></div>
+    <div class="mini-row"><span>Date</span><span>01 Aug 2026, 18:44</span></div>
+    <p class="muted small" style="margin:8px 0 0">Amount received is lower than declared. Contact support to reconcile.</p></div><div class="mini-card"><div class="row between"><strong>Withdrawal</strong><span class="pill error">error</span></div>
+    <div class="mini-row"><span>Amount</span><span>$3,000.00</span></div>
+    <div class="mini-row"><span>Asset</span><span>USDT (TRC20)</span></div>
+    <div class="mini-row"><span>Date</span><span>29 Jul 2026, 11:31</span></div>
+    <p class="muted small" style="margin:8px 0 0">Withdrawal declined: destination wallet failed verification.</p></div><div class="mini-card"><div class="row between"><strong>Referral Bonus</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Amount</span><span>$180.00</span></div>
+    <div class="mini-row"><span>Asset</span><span>USDT (TRC20)</span></div>
+    <div class="mini-row"><span>Date</span><span>27 Jul 2026, 08:02</span></div>
+    </div><div class="mini-card"><div class="row between"><strong>Investment</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Amount</span><span>$7,500.00</span></div>
+    <div class="mini-row"><span>Asset</span><span>USDT (TRC20)</span></div>
+    <div class="mini-row"><span>Date</span><span>24 Jul 2026, 16:50</span></div>
+    </div><div class="mini-card"><div class="row between"><strong>Deposit</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Amount</span><span>$10,000.00</span></div>
+    <div class="mini-row"><span>Asset</span><span>BTC</span></div>
+    <div class="mini-row"><span>Date</span><span>20 Jul 2026, 07:18</span></div>
+    </div></div>
+</div></div>
+    </main>
+  </div>
+  <nav class="bottom-nav">
+      <a class="active" href="./index.html"><span class="ico">●</span>Home</a>
+      <a class="" href="./deposit.html"><span class="ico">●</span>Deposit</a>
+      <a class="" href="./invest.html"><span class="ico">●</span>Invest</a>
+      <a class="" href="./transactions.html"><span class="ico">●</span>History</a>
+      <a class="" href="./support.html"><span class="ico">●</span>Support</a>
+    </nav>
+</div></body>
+</html>

@@ -1,0 +1,1187 @@
+const Plan = require('../models/planModel');
+const Transaction = require('../models/transactionsModel');
+const Investment = require('../models/investmentModel');
+const User = require('../models/userModel');
+const Kyc = require('../models/kycModel');
+const Wallet = require('../models/walletsModel');
+const Support = require('../models/supportModel');
+
+function formatCurrency(amount) {
+  if (amount == null || isNaN(amount)) return 'N/A';
+  const num = Number(amount);
+  if (Number.isInteger(num)) {
+    return num.toLocaleString('en-US'); // e.g., 5000 → "5,000"
+  }
+  return num.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }); // e.g., 5000.567 → "5,000.57"
+}
+
+exports.homePage = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    const plans = await Plan.find().sort({ min: 1 });
+    return res.status(200).render('index', {
+      user,
+      title: 'Home',
+      plans,
+      formatCurrency,
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.about = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    const plans = await Plan.find();
+    return res.status(200).render('about', {
+      user,
+      title: 'About Us',
+      plans,
+      formatCurrency,
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.realEstate = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('real-estate', {
+      user,
+      title: 'Real Estate Properties',
+      image: 'real-estate.jpg',
+      description:
+        'Invest in properties with expert guidance to maximize value and secure stable returns through strategic real estate planning.',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.nfp = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('nfp', {
+      user,
+      title: 'NFP',
+      image: 'nfp.jpg',
+      description:
+        'Profit from non-farm payroll data releases with tailored trading strategies to navigate economic market movements.',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.cryptoInvestment = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('crypto-investment', {
+      user,
+      title: 'Crypto Investment',
+      image: 'crypto.jpg',
+      description:
+        'Capitalize on digital assets with strategic insights and risk management in the volatile crypto market.',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.gold = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('gold', {
+      user,
+      title: 'Gold',
+      image: 'gold.jpeg',
+      description:
+        'Preserve wealth with gold investments, a stable asset offering security in uncertain economic conditions.',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.loan = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('loan', {
+      user,
+      title: 'Loan',
+      image: 'loan.jpg',
+      description:
+        'Earn steady income through secured loan investments with predictable returns and managed risk for stability.',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.charity = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('charity', {
+      user,
+      title: 'Charity',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.hedgeFund = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('hedge-fund', {
+      user,
+      title: 'Hedge Fund',
+      image: 'hedge-fund.jpg',
+      description:
+        'Achieve consistent returns with sophisticated hedge fund strategies, active management, and risk mitigation.',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.stock = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('stock-investment', {
+      user,
+      title: 'Stock Investment',
+      image: 'stock.jpg',
+      description:
+        'Grow wealth with diversified stock portfolios, real-time analytics, and expert insights for long-term returns.',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.services = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('services', {
+      user,
+      title: 'All Services',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.agriculture = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('agriculture', {
+      user,
+      title: 'Agriculture',
+      image: 'agriculture.jpg',
+      description:
+        'Support sustainable farming with strategic investments in agriculture for profitability and food security.',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.medicalCannabis = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('medical-cannabis', {
+      user,
+      title: 'Medical Cannabis',
+      image: 'medical-cannabis.webp',
+      description:
+        'Invest in the growing medical cannabis industry with regulatory expertise and innovative strategies.',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.terms = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('terms-conditions', {
+      user,
+      title: 'Terms & Conditions',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.privacy = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('privacy-policy', {
+      user,
+      title: 'Privacy Policy',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.faq = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('faq', {
+      user,
+      title: 'FAQ',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.contactUs = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('contact', {
+      user,
+      title: 'Contact Us',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.signIn = async (req, res) => {
+  try {
+    return res.status(200).render('sign-in', {
+      title: 'Sign In',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.register = async (req, res) => {
+  try {
+    const { refcode } = req.query;
+    return res.status(200).render('register', {
+      title: 'Register',
+      refcode,
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.forgotPassword = async (req, res) => {
+  try {
+    return res.status(200).render('forgot-password', {
+      title: 'Forgot Password',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  try {
+    return res.status(200).render('reset-password', {
+      title: 'Reset Password',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.confirmEmail = async (req, res) => {
+  try {
+    return res.status(200).render('confirmEmail', {
+      title: 'Confirm Email',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.confirmedEmail = async (req, res) => {
+  try {
+    return res.status(200).render('email-confirmed', {
+      title: 'Confirm Email',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.userDashboard = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user.role === 'user') {
+      const transactions = await Transaction.find({ user: user.id }).sort({
+        createdAt: -1,
+      });
+      const totalTransactions = await Transaction.find({
+        user: user.id,
+        status: 'confirmed',
+      }).sort({
+        createdAt: -1,
+      });
+      const deposits = await Transaction.find({
+        user: user.id,
+        type: 'deposit',
+        status: 'confirmed',
+      });
+      const withdrawals = await Transaction.find({
+        user: user.id,
+        type: 'withdrawal',
+        status: 'confirmed',
+      });
+      const transfers = await Transaction.find({
+        user: user.id,
+        type: 'transfer',
+      });
+
+      const investments = await Investment.find({ user: user.id });
+      return res.status(200).render('dashboard', {
+        title: 'User Dashboard',
+        user,
+        transactions,
+        deposits,
+        withdrawals,
+        investments,
+        transfers,
+        totalTransactions,
+        formatCurrency,
+      });
+    }
+    return res.status(302).redirect('/sign-in');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.investmentPlans = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user.role === 'user') {
+      const plans = await Plan.find().sort({ min: 1 });
+      return res.status(200).render('investment-plans', {
+        title: 'Investment Packages',
+        user,
+        plans,
+        formatCurrency,
+      });
+    }
+    return res.status(302).redirect('/sign-in');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.investmentHistory = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user.role === 'user') {
+      const investments = await Investment.find({ user: user.id }).sort({
+        createdAt: -1,
+      });
+      return res.status(200).render('investment-history', {
+        title: 'Investment Logs',
+        user,
+        investments,
+        formatCurrency,
+      });
+    }
+    return res.status(302).redirect('/sign-in');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.userProfile = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user) {
+      const kyc = await Kyc.findOne({ user: user.id });
+      return res.status(200).render('profile', {
+        title: 'Profile Settings',
+        user,
+        kyc,
+        formatCurrency,
+      });
+    }
+    return res.status(302).redirect('/sign-in');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.myWallets = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user) {
+      const wallets = await Wallet.find({ user: user.id });
+
+      return res.status(200).render('allWallets', {
+        title: 'Wallets',
+        user,
+        wallets,
+      });
+    }
+
+    return res.status(302).redirect('/');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.referral = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user.role === 'user') {
+      const referrals = await User.find({ referral: user.myReferralCode });
+      return res.status(200).render('referral', {
+        title: 'Referral Program',
+        user,
+        referrals,
+      });
+    }
+    return res.status(302).redirect('/sign-in');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.sendMoney = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user.role === 'user') {
+      return res.status(200).render('send-money', {
+        title: 'Send Money',
+        user,
+      });
+    }
+    return res.status(302).redirect('/sign-in');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.transactionHistory = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user.role === 'user') {
+      const transactions = await Transaction.find({ user: user.id }).sort({
+        createdAt: -1,
+      });
+      return res.status(200).render('transaction-history', {
+        title: 'Transaction Logs',
+        user,
+        transactions,
+        formatCurrency,
+      });
+    }
+    return res.status(302).redirect('/sign-in');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.withdrawMoney = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user.role === 'user') {
+      const wallets = await Wallet.find({ user: user.id });
+      return res.status(200).render('withdrawal', {
+        title: 'Withdraw Funds',
+        user,
+        wallets,
+      });
+    }
+    return res.status(302).redirect('/sign-in');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+// exports.deposit = async (req, res) => {
+//   try {
+//     let user;
+//     if (req.query.userId) {
+//       user = await User.findById(req.query.userId);
+//     } else {
+//       user = res.locals.user;
+//     }
+
+//     if (!user) {
+//       return res.status(302).redirect('/sign-in');
+//     }
+
+//     if (user.role === 'user') {
+//       const wallets = await Wallet.find();
+//       return res.status(200).render('deposit', {
+//         title: 'Make Deposit',
+//         user,
+//         wallets,
+//       });
+//     }
+//     return res.status(302).redirect('/sign-in');
+//   } catch (err) {
+//     return res.status(500).render('404', {
+//       title: 'Error',
+//       message: 'Something went wrong',
+//     });
+//   }
+// };
+
+exports.deposit = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user.role === 'user') {
+      const plans = await Plan.find().sort({ min: 1 });
+      const wallets = await Wallet.find({
+        user: { $exists: false },
+      });
+      return res.status(200).render('invest', {
+        title: 'Investment',
+        user,
+        plans,
+        wallets,
+        formatCurrency,
+      });
+    }
+    return res.status(302).redirect('/sign-in');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.walletExchange = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user.role === 'user') {
+      return res.status(200).render('walletExchange', {
+        title: 'Wallet Exchange',
+        user,
+        formatCurrency,
+      });
+    }
+    return res.status(302).redirect('/sign-in');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.invest = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user.role === 'user') {
+      const plans = await Plan.find().sort({ minn: 1 });
+      return res.status(200).render('invest', {
+        title: 'Investment',
+        user,
+        plans,
+        formatCurrency,
+      });
+    }
+    return res.status(302).redirect('/sign-in');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.sendSupport = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user.role === 'user') {
+      return res.status(200).render('send-support', {
+        title: 'Contact Support',
+        user,
+      });
+    }
+    return res.status(302).redirect('/sign-in');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+/////////////////////////
+//ADMIN
+exports.adminDashboard = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    if (!user) {
+      return res.status(302).redirect('/admin/sign-in');
+    }
+
+    if (user.role === 'admin') {
+      const transactions = await Transaction.find().sort({ createdAt: -1 });
+      const deposits = await Transaction.find({
+        type: 'deposit',
+      });
+      const withdrawals = await Transaction.find({
+        type: 'withdrawal',
+      });
+      const transfers = await Transaction.find({
+        type: 'transfer',
+      });
+
+      const investments = await Investment.find();
+
+      const supports = await Support.find();
+
+      return res.status(200).render('adminDashboard', {
+        user,
+        title: 'Admin Dashboard',
+        transactions,
+        deposits,
+        withdrawals,
+        transfers,
+        investments,
+        supports,
+        formatCurrency,
+      });
+    }
+
+    return res.status(302).redirect('/');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.adminSignIn = async (req, res) => {
+  try {
+    const user = res.locals.user;
+    return res.status(200).render('admin-sign-in', {
+      user,
+      title: 'Admin Login',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.allInvestments = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    if (!user) {
+      return res.status(302).redirect('/admin/sign-in');
+    }
+
+    if (user.role === 'admin') {
+      const investments = await Investment.find().sort({ createdAt: -1 });
+      return res.status(200).render('allInvestments', {
+        title: 'Investments',
+        user,
+        investments,
+        formatCurrency,
+      });
+    }
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.allPlans = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    if (!user) {
+      return res.status(302).redirect('/admin/sign-in');
+    }
+
+    if (user.role === 'admin') {
+      const plans = await Plan.find();
+      return res.status(200).render('allPlans', {
+        title: 'Investment Plans',
+        user,
+        plans,
+      });
+    }
+
+    return res.status(302).redirect('/');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.allSupports = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    if (!user) {
+      return res.status(302).redirect('/admin/sign-in');
+    }
+
+    if (user.role === 'admin') {
+      const supports = await Support.find();
+      return res.status(200).render('allSupports', {
+        title: 'Supports',
+        user,
+        supports,
+      });
+    }
+
+    return res.status(302).redirect('/');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.allTransactions = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    if (!user) {
+      return res.redirect('/admin/sign-in');
+    }
+
+    if (user.role !== 'admin') {
+      return res.redirect('/');
+    }
+
+    const { email, type, status } = req.query;
+
+    const filter = {};
+
+    // filter by transaction type
+    if (type) {
+      filter.type = type; // e.g. 'deposit', 'withdrawal'
+    }
+
+    if (status) {
+      filter.status = status;
+    }
+
+    // filter by user email (assuming Transaction has user ref)
+    if (email) {
+      const matchedUsers = await User.find({
+        email: { $regex: email, $options: 'i' },
+      }).select('_id');
+
+      filter.user = { $in: matchedUsers.map((u) => u._id) };
+    }
+
+    const transactions = await Transaction.find(filter)
+      .populate('user') // optional if you need user data
+      .sort({ createdAt: -1 });
+
+    return res.status(200).render('allTransactions', {
+      title: 'Transactions',
+      user,
+      transactions,
+      formatCurrency,
+      query: req.query,
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.allUsers = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    if (!user) {
+      return res.status(302).redirect('/admin/sign-in');
+    }
+
+    if (user.role === 'admin') {
+      const users = await User.find().sort({ createdAt: -1 });
+
+      return res.status(200).render('allUsers', {
+        title: 'Users',
+        user,
+        users,
+        formatCurrency,
+      });
+    }
+
+    return res.status(302).redirect('/');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.allWallets = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    if (!user) {
+      return res.status(302).redirect('/admin/sign-in');
+    }
+
+    if (user.role === 'admin') {
+      const wallets = await Wallet.find();
+
+      return res.status(200).render('allWallets', {
+        title: 'Wallets',
+        user,
+        wallets,
+      });
+    }
+
+    return res.status(302).redirect('/');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.addPlan = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    if (!user) {
+      return res.status(302).redirect('/admin/sign-in');
+    }
+
+    if (user.role === 'admin') {
+      return res.status(200).render('add-plan', {
+        title: 'Add Plan',
+        user,
+      });
+    }
+
+    return res.status(302).redirect('/');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.addWallet = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    if (!user) {
+      return res.status(302).redirect('/admin/sign-in');
+    }
+
+    if (user) {
+      return res.status(200).render('add-wallet', {
+        user,
+        title: 'Add  Wallet',
+      });
+    }
+
+    return res.status(302).redirect('/');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.kycManagement = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    if (!user) {
+      return res.status(302).redirect('/admin/sign-in');
+    }
+
+    if (user.role === 'admin') {
+      const allKyc = await Kyc.find();
+      return res.status(200).render('kyc-management', {
+        user,
+        title: 'KYC management',
+        allKyc,
+      });
+    }
+
+    return res.status(302).redirect('/');
+  } catch (error) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
