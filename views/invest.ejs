@@ -1,0 +1,109 @@
+<%- include('partials/dashboardHeader') %>
+<div class="content">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <button class="icon-btn hide-desktop" type="button" aria-label="Open menu" onclick="openNav()"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 7h16" />
+            <path d="M4 12h16" />
+            <path d="M4 17h16" />
+          </svg></button>
+        <span class="brand-mark hide-desktop">T</span>
+        <div style="min-width:0">
+          <p class="eyebrow">Welcome back</p>
+          <p style="margin:0;font-size:14px;font-weight:700">Adaeze Okonkwo</p>
+        </div>
+      </div>
+      <div class="row"><button class="icon-btn" aria-label="Notifications"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 9a6 6 0 1 0-12 0c0 5-2 6-2 6h16s-2-1-2-6" />
+            <path d="M10.5 20a2 2 0 0 0 3 0" />
+          </svg></button><button class="icon-btn" type="button" aria-label="Toggle dark mode" onclick="toggleTheme()"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="8" />
+            <path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none" />
+          </svg></button></div>
+    </div>
+  </header>
+  <main class="page">
+
+    <div style="margin-bottom:18px">
+      <h1 style="font-size:24px">Investment plans</h1>
+      <p class="muted" style="margin:6px 0 0">Pick a plan and activate it from your balance.</p>
+    </div>
+    <div class="grid g4">
+      <div class="card">
+
+        <p class="display" style="font-size:18px;font-weight:700">Starter</p>
+        <p class="stat-value" style="color:var(--primary)">14% ROI</p>
+        <p class="muted small">14 days term</p>
+        <div class="mini-row"><span>Min</span><span>$100.00</span></div>
+        <div class="mini-row"><span>Max</span><span>$2,000.00</span></div>
+        <div class="mini-row"><span>Referral</span><span>3% referral</span></div>
+        <button class="btn block sm" style="margin-top:12px" onclick="openModal('invest-modal')">Choose Starter</button>
+      </div>
+      <div class="card" style="border-color:var(--primary)">
+        <p class="eyebrow accent">Most popular</p>
+        <p class="display" style="font-size:18px;font-weight:700">Growth</p>
+        <p class="stat-value" style="color:var(--primary)">25% ROI</p>
+        <p class="muted small">30 days term</p>
+        <div class="mini-row"><span>Min</span><span>$2,000.00</span></div>
+        <div class="mini-row"><span>Max</span><span>$10,000.00</span></div>
+        <div class="mini-row"><span>Referral</span><span>5% referral</span></div>
+        <button class="btn block sm" style="margin-top:12px" onclick="openModal('invest-modal')">Choose Growth</button>
+      </div>
+      <div class="card">
+
+        <p class="display" style="font-size:18px;font-weight:700">Premium</p>
+        <p class="stat-value" style="color:var(--primary)">36% ROI</p>
+        <p class="muted small">60 days term</p>
+        <div class="mini-row"><span>Min</span><span>$10,000.00</span></div>
+        <div class="mini-row"><span>Max</span><span>$50,000.00</span></div>
+        <div class="mini-row"><span>Referral</span><span>7% referral</span></div>
+        <button class="btn block sm" style="margin-top:12px" onclick="openModal('invest-modal')">Choose Premium</button>
+      </div>
+      <div class="card">
+
+        <p class="display" style="font-size:18px;font-weight:700">Institutional</p>
+        <p class="stat-value" style="color:var(--primary)">52% ROI</p>
+        <p class="muted small">90 days term</p>
+        <div class="mini-row"><span>Min</span><span>$50,000.00</span></div>
+        <div class="mini-row"><span>Max</span><span>$250,000.00</span></div>
+        <div class="mini-row"><span>Referral</span><span>10% referral</span></div>
+        <button class="btn block sm" style="margin-top:12px" onclick="openModal('invest-modal')">Choose Institutional</button>
+      </div>
+    </div>
+    <div class="card mt">
+      <h2 class="section-title">Activate an investment</h2>
+      <form data-demo class="mt-sm">
+        <div class="grid g2-md"><label class="field"><span>Plan</span><select>
+              <option>Starter — 14% ROI</option>
+              <option>Growth — 25% ROI</option>
+              <option>Premium — 36% ROI</option>
+              <option>Institutional — 52% ROI</option>
+            </select></label><label class="field"><span>Amount (USD)</span><input type="number" placeholder="2500" /></label></div>
+        <label class="field"><span>Funding source</span><select>
+            <option>Account balance</option>
+            <option>New deposit</option>
+          </select></label>
+        <button class="btn block" type="submit">Start investment</button>
+        <div class="alert success mt" data-demo-note style="display:none">
+          <h4>Investment activated</h4>
+          <p style="margin:0">Your plan is now running. Profits accrue daily.</p>
+        </div>
+      </form>
+    </div>
+    <div class="modal-backdrop" id="invest-modal">
+      <div class="modal">
+        <div class="row between">
+          <h3 style="font-size:18px">Confirm plan</h3><button class="icon-btn" onclick="closeModal('invest-modal')"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="m6 6 12 12" />
+              <path d="m18 6-12 12" />
+            </svg></button>
+        </div>
+        <div class="mt">
+          <p class="muted">Confirm to move funds from your available balance into the selected plan.</p><button class="btn block" onclick="closeModal('invest-modal')">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<%- include('partials/dashboardFooter') %>

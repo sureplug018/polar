@@ -1,0 +1,75 @@
+<%- include('partials/dashboardHeader') %>
+<div class="content">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <button class="icon-btn hide-desktop" type="button" aria-label="Open menu" onclick="openNav()"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 7h16" />
+            <path d="M4 12h16" />
+            <path d="M4 17h16" />
+          </svg></button>
+        <span class="brand-mark hide-desktop">T</span>
+        <div style="min-width:0">
+          <p class="eyebrow">Welcome back</p>
+          <p style="margin:0;font-size:14px;font-weight:700">Adaeze Okonkwo</p>
+        </div>
+      </div>
+      <div class="row"><button class="icon-btn" aria-label="Notifications"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 9a6 6 0 1 0-12 0c0 5-2 6-2 6h16s-2-1-2-6" />
+            <path d="M10.5 20a2 2 0 0 0 3 0" />
+          </svg></button><button class="icon-btn" type="button" aria-label="Toggle dark mode" onclick="toggleTheme()"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="8" />
+            <path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none" />
+          </svg></button></div>
+    </div>
+  </header>
+  <main class="page">
+
+    <div style="margin-bottom:18px">
+      <h1 style="font-size:24px">Support</h1>
+      <p class="muted" style="margin:6px 0 0">We usually reply within an hour. Email support@tescomint.com.</p>
+    </div>
+    <div class="grid g2-md">
+      <div class="card">
+        <h2 class="section-title">Open a ticket</h2>
+        <form data-demo class="mt-sm">
+          <label class="field"><span>Subject</span><input type="text" placeholder="Deposit not reflecting" /></label>
+          <label class="field"><span>Category</span><select>
+              <option>Deposits</option>
+              <option>Withdrawals</option>
+              <option>Investments</option>
+              <option>Account</option>
+              <option>Other</option>
+            </select></label>
+          <label class="field"><span>Message</span><textarea rows="4" placeholder="Describe the issue with as much detail as possible."></textarea></label>
+          <button class="btn block" type="submit">Send message</button>
+          <div class="alert success mt" data-demo-note style="display:none">
+            <h4>Ticket submitted</h4>
+            <p style="margin:0">Our team will reply to adaeze@tescomint.com.</p>
+          </div>
+        </form>
+      </div>
+      <div class="card">
+        <h2 class="section-title">Your tickets</h2>
+        <div class="cards-list" style="display:grid;margin-top:10px">
+          <div class="mini-card">
+            <div class="row between"><strong>Deposit not reflecting</strong><span class="pill warning">warning</span></div>
+            <p class="muted small" style="margin:8px 0 0">I sent 500 USDT two hours ago but my balance has not updated. Transaction hash attached in my email.</p>
+            <p class="muted small" style="margin:6px 0 0">05 Aug 2026</p>
+          </div>
+          <div class="mini-card">
+            <div class="row between"><strong>Withdrawal declined</strong><span class="pill warning">warning</span></div>
+            <p class="muted small" style="margin:8px 0 0">My withdrawal was declined and I would like to know why.</p>
+            <p class="muted small" style="margin:6px 0 0">04 Aug 2026</p>
+          </div>
+          <div class="mini-card">
+            <div class="row between"><strong>Change referral code</strong><span class="pill success">success</span></div>
+            <p class="muted small" style="margin:8px 0 0">Can I customise my referral code?</p>
+            <p class="muted small" style="margin:6px 0 0">01 Aug 2026</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<%- include('partials/dashboardFooter') %>

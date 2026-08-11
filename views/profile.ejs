@@ -1,0 +1,73 @@
+<%- include('partials/dashboardHeader') %>
+<div class="content">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <button class="icon-btn hide-desktop" type="button" aria-label="Open menu" onclick="openNav()"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 7h16" />
+            <path d="M4 12h16" />
+            <path d="M4 17h16" />
+          </svg></button>
+        <span class="brand-mark hide-desktop">T</span>
+        <div style="min-width:0">
+          <p class="eyebrow">Welcome back</p>
+          <p style="margin:0;font-size:14px;font-weight:700">Adaeze Okonkwo</p>
+        </div>
+      </div>
+      <div class="row"><button class="icon-btn" aria-label="Notifications"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 9a6 6 0 1 0-12 0c0 5-2 6-2 6h16s-2-1-2-6" />
+            <path d="M10.5 20a2 2 0 0 0 3 0" />
+          </svg></button><button class="icon-btn" type="button" aria-label="Toggle dark mode" onclick="toggleTheme()"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="8" />
+            <path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none" />
+          </svg></button></div>
+    </div>
+  </header>
+  <main class="page">
+
+    <div style="margin-bottom:18px">
+      <h1 style="font-size:24px">Profile & security</h1>
+      <p class="muted" style="margin:6px 0 0">Manage your details, payout wallets and password.</p>
+    </div>
+    <div class="grid g2-md">
+      <div class="card">
+        <h2 class="section-title">Personal details</h2>
+        <form data-demo class="mt-sm">
+          <label class="field"><span>Full name</span><input value="Adaeze Okonkwo" /></label>
+          <label class="field"><span>Username</span><input value="adaeze" /></label>
+          <label class="field"><span>Email</span><input value="adaeze@tescomint.com" /></label>
+          <label class="field"><span>Phone</span><input value="+234 802 118 4420" /></label>
+          <label class="field"><span>Country</span><input value="Nigeria" /></label>
+          <button class="btn block" type="submit">Save changes</button>
+          <div class="alert success mt" data-demo-note style="display:none">
+            <h4>Profile updated</h4>
+            <p style="margin:0">Your details were saved.</p>
+          </div>
+        </form>
+      </div>
+      <div>
+        <div class="card">
+          <h2 class="section-title">Account</h2>
+          <div class="mini-row"><span>Tier</span><span>Gold Investor</span></div>
+          <div class="mini-row"><span>Member since</span><span>12 Mar 2026</span></div>
+          <div class="mini-row"><span>Referral code</span><span>TESCO-AD4420</span></div>
+          <div class="mini-row"><span>Verification</span><span><span class="pill success">success</span></span></div>
+        </div>
+        <div class="card mt">
+          <h2 class="section-title">Change password</h2>
+          <form data-demo class="mt-sm">
+            <label class="field"><span>Current password</span><input type="password" placeholder="••••••••" /></label>
+            <label class="field"><span>New password</span><input type="password" placeholder="••••••••" /></label>
+            <label class="field"><span>Confirm new password</span><input type="password" placeholder="••••••••" /></label>
+            <button class="btn block" type="submit">Update password</button>
+            <div class="alert success mt" data-demo-note style="display:none">
+              <h4>Password changed</h4>
+              <p style="margin:0">Use your new password next time you sign in.</p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<%- include('partials/dashboardFooter') %>
