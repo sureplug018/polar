@@ -325,7 +325,7 @@ exports.contactUs = async (req, res) => {
 
 exports.signIn = async (req, res) => {
   try {
-    return res.status(200).render('sign-in', {
+    return res.status(200).render('login', {
       title: 'Sign In',
     });
   } catch (err) {

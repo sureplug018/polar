@@ -35,7 +35,23 @@ app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
 
 // DATA SANITIZATION
-app.use(mongoSanitize());
+app.use((req, res, next) => {
+  const sanitize = (obj) => {
+    if (!obj || typeof obj !== 'object') return;
+    for (const key in obj) {
+      if (/^\$/.test(key) || /\./.test(key)) {
+        const safeKey = key.replace(/^\$|\./g, '_');
+        obj[safeKey] = obj[key];
+        delete obj[key];
+      }
+    }
+  };
+
+  sanitize(req.body);
+  sanitize(req.query);
+  sanitize(req.params);
+  next();
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 

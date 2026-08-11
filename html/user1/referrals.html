@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Referrals — Tescomint</title>
+<meta name="description" content="Share your Tescomint referral link and track commission earnings." />
+<meta property="og:title" content="Referrals — Tescomint" />
+<meta property="og:description" content="Share your Tescomint referral link and track commission earnings." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="../assets/app.css" />
+<script src="../assets/app.js" defer></script>
+</head>
+<body><div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="./index.html"><span class="brand-mark">T</span><span class="brand-name">Tescomint</span></a>
+    
+    <nav style="display:flex;flex-direction:column;gap:4px;margin-top:24px;flex:1">
+          <a class="nav-link" href="./index.html">Dashboard</a>
+          <a class="nav-link" href="./deposit.html">Deposit</a>
+          <a class="nav-link" href="./withdraw.html">Withdraw</a>
+          <a class="nav-link" href="./invest.html">Invest</a>
+          <a class="nav-link" href="./transactions.html">Transactions</a>
+          <a class="nav-link" href="./investments.html">Investments</a>
+          <a class="nav-link active" href="./referrals.html">Referrals</a>
+          <a class="nav-link" href="./profile.html">Profile</a>
+          <a class="nav-link" href="./support.html">Support</a>
+    </nav>
+    <a class="nav-switch" href="../admin/index.html">Switch to admin</a>
+  </aside>
+  <div class="content">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-mark hide-desktop">T</span>
+          <div style="min-width:0">
+            <p class="eyebrow">Welcome back</p>
+            <p style="margin:0;font-size:14px;font-weight:700">Adaeze Okonkwo</p>
+          </div>
+        </div>
+        <div class="row"><button class="icon-btn" aria-label="Notifications">🔔</button><button class="icon-btn" type="button" aria-label="Toggle dark mode" onclick="toggleTheme()">◐</button></div>
+      </div>
+      <div class="chip-nav hide-desktop">
+          <a class="chip" href="./index.html">Dashboard</a>
+          <a class="chip" href="./deposit.html">Deposit</a>
+          <a class="chip" href="./withdraw.html">Withdraw</a>
+          <a class="chip" href="./invest.html">Invest</a>
+          <a class="chip" href="./transactions.html">Transactions</a>
+          <a class="chip" href="./investments.html">Investments</a>
+          <a class="chip active" href="./referrals.html">Referrals</a>
+          <a class="chip" href="./profile.html">Profile</a>
+          <a class="chip" href="./support.html">Support</a>
+      </div>
+    </header>
+    <main class="page">
+      <div style="margin-bottom:18px">
+        <h1 style="font-size:24px">Referrals</h1>
+        <p class="muted" style="margin:6px 0 0">Invite investors and earn commission on their capital.</p>
+      </div>
+      <div class="grid g4"><div class="card"><p class="eyebrow">Referral earnings</p><p class="stat-value">$1,180.00</p></div><div class="card"><p class="eyebrow">Total referrals</p><p class="stat-value">9</p></div><div class="card"><p class="eyebrow">Active referrals</p><p class="stat-value">2</p></div></div>
+<div class="card mt"><p class="eyebrow">Your referral link</p>
+  <div class="copy-box mt-sm"><span id="ref">https://tescomint.com/auth/register?ref=TESCO-AD4420</span>
+  <button class="btn sm ghost" onclick="copyText(document.getElementById('ref').textContent, this)">Copy</button></div>
+  <p class="muted small mt-sm">Code: <strong>TESCO-AD4420</strong></p>
+</div>
+<div class="mt"><div class="card" style="padding:6px">
+  <div class="table-wrap"><table class="data"><thead><tr><th>Name</th><th>Email</th><th>Joined</th><th>Invested</th><th>Commission</th><th>Status</th></tr></thead>
+  <tbody><tr><td>Marcus Feld</td><td>marcus.feld@mail.com</td><td>28 Feb 2026</td><td>$6,000.00</td><td>$300.00</td><td><span class="pill success">success</span></td></tr><tr><td>Priya Raman</td><td>priya.raman@mail.com</td><td>19 Feb 2026</td><td>$1,000.00</td><td>$30.00</td><td><span class="pill pending">pending</span></td></tr><tr><td>Liam O'Brien</td><td>liam.obrien@mail.com</td><td>04 Jan 2026</td><td>$40,000.00</td><td>$800.00</td><td><span class="pill success">success</span></td></tr><tr><td>Sofia Castillo</td><td>sofia.castillo@mail.com</td><td>22 Dec 2025</td><td>$0.00</td><td>$50.00</td><td><span class="pill pending">pending</span></td></tr></tbody></table></div>
+  <div class="cards-list" style="padding:10px"><div class="mini-card"><div class="row between"><strong>Marcus Feld</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Invested</span><span>$6,000.00</span></div>
+    <div class="mini-row"><span>Commission</span><span>$300.00</span></div>
+    <div class="mini-row"><span>Joined</span><span>28 Feb 2026</span></div></div><div class="mini-card"><div class="row between"><strong>Priya Raman</strong><span class="pill pending">pending</span></div>
+    <div class="mini-row"><span>Invested</span><span>$1,000.00</span></div>
+    <div class="mini-row"><span>Commission</span><span>$30.00</span></div>
+    <div class="mini-row"><span>Joined</span><span>19 Feb 2026</span></div></div><div class="mini-card"><div class="row between"><strong>Liam O'Brien</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Invested</span><span>$40,000.00</span></div>
+    <div class="mini-row"><span>Commission</span><span>$800.00</span></div>
+    <div class="mini-row"><span>Joined</span><span>04 Jan 2026</span></div></div><div class="mini-card"><div class="row between"><strong>Sofia Castillo</strong><span class="pill pending">pending</span></div>
+    <div class="mini-row"><span>Invested</span><span>$0.00</span></div>
+    <div class="mini-row"><span>Commission</span><span>$50.00</span></div>
+    <div class="mini-row"><span>Joined</span><span>22 Dec 2025</span></div></div></div>
+</div></div>
+    </main>
+  </div>
+  <nav class="bottom-nav">
+      <a class="" href="./index.html"><span class="ico">●</span>Home</a>
+      <a class="" href="./deposit.html"><span class="ico">●</span>Deposit</a>
+      <a class="" href="./invest.html"><span class="ico">●</span>Invest</a>
+      <a class="" href="./transactions.html"><span class="ico">●</span>History</a>
+      <a class="" href="./support.html"><span class="ico">●</span>Support</a>
+    </nav>
+</div></body>
+</html>

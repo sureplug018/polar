@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin transactions — Tescomint</title>
+<meta name="description" content="Review, confirm or decline member deposits and withdrawals." />
+<meta property="og:title" content="Admin transactions — Tescomint" />
+<meta property="og:description" content="Review, confirm or decline member deposits and withdrawals." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="../assets/app.css" />
+<script src="../assets/app.js" defer></script>
+</head>
+<body><div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="./index.html"><span class="brand-mark">T</span><span class="brand-name">Tescomint</span></a>
+    <p class="eyebrow accent" style="margin-top:8px">Admin console</p>
+    <nav style="display:flex;flex-direction:column;gap:4px;margin-top:24px;flex:1">
+          <a class="nav-link" href="./index.html">Overview</a>
+          <a class="nav-link active" href="./transactions.html">Transactions</a>
+          <a class="nav-link" href="./investments.html">Investments</a>
+          <a class="nav-link" href="./users.html">Users</a>
+          <a class="nav-link" href="./support.html">Support</a>
+          <a class="nav-link" href="./wallets.html">Wallets</a>
+          <a class="nav-link" href="./plans.html">Plans</a>
+    </nav>
+    <a class="nav-switch" href="../user/index.html">Switch to user app</a>
+  </aside>
+  <div class="content">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-mark hide-desktop">T</span>
+          <div style="min-width:0">
+            <p class="eyebrow">Admin console</p>
+            <p style="margin:0;font-size:14px;font-weight:700">Operations desk</p>
+          </div>
+        </div>
+        <div class="row"><button class="icon-btn" type="button" aria-label="Toggle dark mode" onclick="toggleTheme()">◐</button></div>
+      </div>
+      <div class="chip-nav hide-desktop">
+          <a class="chip" href="./index.html">Overview</a>
+          <a class="chip active" href="./transactions.html">Transactions</a>
+          <a class="chip" href="./investments.html">Investments</a>
+          <a class="chip" href="./users.html">Users</a>
+          <a class="chip" href="./support.html">Support</a>
+          <a class="chip" href="./wallets.html">Wallets</a>
+          <a class="chip" href="./plans.html">Plans</a>
+      </div>
+    </header>
+    <main class="page">
+      <div style="margin-bottom:18px">
+        <h1 style="font-size:24px">Transactions</h1>
+        <p class="muted" style="margin:6px 0 0">Confirm or decline member transactions and attach a message.</p>
+      </div>
+      <div class="card"><div class="grid g3"><label class="field"><span>Search</span><input type="text" placeholder="Member, ID or asset" /></label><label class="field"><span>Type</span><select><option>All types</option><option>Deposit</option><option>Withdrawal</option><option>Profit</option></select></label><label class="field"><span>Status</span><select><option>All statuses</option><option>Success</option><option>Pending</option><option>Warning</option><option>Error</option></select></label></div></div>
+<div class="mt"><div class="card" style="padding:6px">
+  <div class="table-wrap"><table class="data"><thead><tr><th>ID</th><th>Member</th><th>Type</th><th>Amount</th><th>Status</th><th>Date</th><th>Action</th></tr></thead>
+  <tbody><tr><td>TX-90412</td><td>Adaeze Okonkwo</td><td>Deposit</td><td>$5,000.00</td><td><span class="pill success">success</span></td><td>04 Aug 2026, 14:22</td><td><button class="btn sm ghost" onclick="openModal('tx-modal')">Manage</button></td></tr><tr><td>TX-90388</td><td>Adaeze Okonkwo</td><td>Withdrawal</td><td>$1,200.00</td><td><span class="pill pending">pending</span></td><td>03 Aug 2026, 09:10</td><td><button class="btn sm ghost" onclick="openModal('tx-modal')">Manage</button></td></tr><tr><td>TX-90355</td><td>Marcus Feld</td><td>Profit</td><td>$480.50</td><td><span class="pill success">success</span></td><td>02 Aug 2026, 00:05</td><td><button class="btn sm ghost" onclick="openModal('tx-modal')">Manage</button></td></tr><tr><td>TX-90310</td><td>Priya Raman</td><td>Deposit</td><td>$2,500.00</td><td><span class="pill warning">warning</span></td><td>01 Aug 2026, 18:44</td><td><button class="btn sm ghost" onclick="openModal('tx-modal')">Manage</button></td></tr><tr><td>TX-90266</td><td>Sofia Castillo</td><td>Withdrawal</td><td>$3,000.00</td><td><span class="pill error">error</span></td><td>29 Jul 2026, 11:31</td><td><button class="btn sm ghost" onclick="openModal('tx-modal')">Manage</button></td></tr><tr><td>TX-90201</td><td>Liam O'Brien</td><td>Referral Bonus</td><td>$180.00</td><td><span class="pill success">success</span></td><td>27 Jul 2026, 08:02</td><td><button class="btn sm ghost" onclick="openModal('tx-modal')">Manage</button></td></tr><tr><td>TX-90144</td><td>Adaeze Okonkwo</td><td>Investment</td><td>$7,500.00</td><td><span class="pill success">success</span></td><td>24 Jul 2026, 16:50</td><td><button class="btn sm ghost" onclick="openModal('tx-modal')">Manage</button></td></tr><tr><td>TX-90097</td><td>Liam O'Brien</td><td>Deposit</td><td>$10,000.00</td><td><span class="pill success">success</span></td><td>20 Jul 2026, 07:18</td><td><button class="btn sm ghost" onclick="openModal('tx-modal')">Manage</button></td></tr></tbody></table></div>
+  <div class="cards-list" style="padding:10px"><div class="mini-card"><div class="row between"><strong>Adaeze Okonkwo</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Deposit · TX-90412</span><span>$5,000.00</span></div>
+    <div class="mini-row"><span>Date</span><span>04 Aug 2026, 14:22</span></div>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('tx-modal')">Manage</button></div><div class="mini-card"><div class="row between"><strong>Adaeze Okonkwo</strong><span class="pill pending">pending</span></div>
+    <div class="mini-row"><span>Withdrawal · TX-90388</span><span>$1,200.00</span></div>
+    <div class="mini-row"><span>Date</span><span>03 Aug 2026, 09:10</span></div>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('tx-modal')">Manage</button></div><div class="mini-card"><div class="row between"><strong>Marcus Feld</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Profit · TX-90355</span><span>$480.50</span></div>
+    <div class="mini-row"><span>Date</span><span>02 Aug 2026, 00:05</span></div>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('tx-modal')">Manage</button></div><div class="mini-card"><div class="row between"><strong>Priya Raman</strong><span class="pill warning">warning</span></div>
+    <div class="mini-row"><span>Deposit · TX-90310</span><span>$2,500.00</span></div>
+    <div class="mini-row"><span>Date</span><span>01 Aug 2026, 18:44</span></div>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('tx-modal')">Manage</button></div><div class="mini-card"><div class="row between"><strong>Sofia Castillo</strong><span class="pill error">error</span></div>
+    <div class="mini-row"><span>Withdrawal · TX-90266</span><span>$3,000.00</span></div>
+    <div class="mini-row"><span>Date</span><span>29 Jul 2026, 11:31</span></div>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('tx-modal')">Manage</button></div><div class="mini-card"><div class="row between"><strong>Liam O'Brien</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Referral Bonus · TX-90201</span><span>$180.00</span></div>
+    <div class="mini-row"><span>Date</span><span>27 Jul 2026, 08:02</span></div>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('tx-modal')">Manage</button></div><div class="mini-card"><div class="row between"><strong>Adaeze Okonkwo</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Investment · TX-90144</span><span>$7,500.00</span></div>
+    <div class="mini-row"><span>Date</span><span>24 Jul 2026, 16:50</span></div>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('tx-modal')">Manage</button></div><div class="mini-card"><div class="row between"><strong>Liam O'Brien</strong><span class="pill success">success</span></div>
+    <div class="mini-row"><span>Deposit · TX-90097</span><span>$10,000.00</span></div>
+    <div class="mini-row"><span>Date</span><span>20 Jul 2026, 07:18</span></div>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('tx-modal')">Manage</button></div></div>
+</div></div>
+<div class="modal-backdrop" id="tx-modal">
+  <div class="modal">
+    <div class="row between"><h3 style="font-size:18px">Manage transaction</h3><button class="icon-btn" onclick="closeModal('tx-modal')">✕</button></div>
+    <div class="mt"><form data-demo>
+    <label class="field"><span>New status</span><select><option>Success</option><option>Pending</option><option>Warning</option><option>Declined</option></select></label>
+    <label class="field"><span>Message to member</span><textarea rows="4" placeholder="Deposit confirmed after 12 network confirmations."></textarea></label>
+    <div class="row"><button class="btn" type="submit">Save & notify</button><button class="btn danger" type="button" onclick="closeModal('tx-modal')">Decline</button></div>
+    <div class="alert success mt" data-demo-note style="display:none"><h4>Transaction updated</h4><p style="margin:0">The member has been notified by email.</p></div>
+  </form></div>
+  </div>
+</div>
+    </main>
+  </div>
+  
+</div></body>
+</html>

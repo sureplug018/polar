@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>
+    <%= subject %>
+  </title>
+  <%- include('styles/_style') %>
+</head>
+
+<body>
+  <table class="body" role="presentation" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td></td>
+        <td class="container">
+          <div class="content">
+            <p style="text-align: center;">
+              <img style="padding-top: 20px;" src="https://evergreenwealthsolutions.ltd/assets/images/banner.jpeg" alt="" width="100%" style="height: auto;" />
+            </p>
+            <p>Hello <%= name %>,</p>
+            <!-- <p>Your KYC (Know Your Customer) verification request has been reviewed.</p> -->
+            <% if (transaction.status === 'Verified') { %>
+            <p>Congratulations! 🎉! Your KYC has been successfully verified.</p>
+            <% } else { %>
+            <p>We regret to inform you that your KYC verification was not successful. Please review the submitted details and ensure all required documents are accurate and complete. You can resubmit your KYC documents through your account dashboard.</p>
+            <% } %>
+            <p>Submission Date: <%= transaction.createdAt.toLocaleDateString() %></p>
+            <p>------</p>
+            </p>
+            <p>Should you have any questions or require further assistance,
+              please don't hesitate to reach out to our support
+              team at <a href="mailto:support@evergreenwealthsolutions.ltd">support@evergreenwealthsolutions.ltd</a> or start a live chat with our <a href="https://widget-page.smartsupp.com/widget/bb1de3be79a120eb6fe4f63c720ee544020869d3">support here.</a></p>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

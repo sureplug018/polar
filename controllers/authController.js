@@ -239,7 +239,7 @@ exports.login = async (req, res) => {
 
     // fetching data from database
     const user = await User.findOne({ email: sanitizedEmail }).select(
-      '+password'
+      '+password',
     );
 
     // comparing the input data and the saved data
@@ -345,7 +345,7 @@ exports.loginAdmin = async (req, res) => {
 
     // fetching data from database
     const user = await User.findOne({ email: sanitizedEmail }).select(
-      '+password'
+      '+password',
     );
 
     if (user.role !== 'admin') {
@@ -445,18 +445,18 @@ exports.protect = async (req, res, next) => {
     // step 2: verification of token
     const decodedAccessToken = await promisify(jwt.verify)(
       accessToken,
-      process.env.ACCESS_TOKEN_SECRET
+      process.env.ACCESS_TOKEN_SECRET,
     );
 
     const decodedRefreshToken = await promisify(jwt.verify)(
       refreshToken,
-      process.env.REFRESH_TOKEN_SECRET
+      process.env.REFRESH_TOKEN_SECRET,
     );
 
     // compare the cookie refresh token and the one from database
     const DBrefreshToken = await User.find(
       { _id: decodedRefreshToken.id },
-      { refreshToken: 1 }
+      { refreshToken: 1 },
     );
     let token = DBrefreshToken[0].refreshToken;
     token = token.toString();
@@ -498,7 +498,7 @@ exports.protect = async (req, res, next) => {
         // Verify the refresh token
         const decodedRefreshToken = jwt.verify(
           refreshToken,
-          process.env.REFRESH_TOKEN_SECRET
+          process.env.REFRESH_TOKEN_SECRET,
         );
         // Check if refresh token is still valid
         // If refresh token is valid, generate a new access token
@@ -519,7 +519,7 @@ exports.protect = async (req, res, next) => {
           process.env.ACCESS_TOKEN_SECRET,
           {
             expiresIn: '15m',
-          }
+          },
         );
 
         const cookieOptions = {
@@ -566,6 +566,13 @@ exports.forgotPassword = async (req, res, next) => {
   try {
     const email = req.body.email;
 
+    if (!email) {
+      return res.status(400).json({
+        status: 'fail',
+        message: 'Please provide an email address',
+      });
+    }
+
     const sanitizedEmail = email ? validator.escape(email) : undefined;
     const user = await User.findOne({ email: sanitizedEmail });
 
@@ -585,7 +592,7 @@ exports.forgotPassword = async (req, res, next) => {
     // step 5: sending the email
     try {
       const resetUrl = `${req.protocol}://${req.get(
-        'host'
+        'host',
       )}/reset-password/${resetToken}`;
 
       await new Email(user, resetUrl).sendPasswordReset();
@@ -595,15 +602,15 @@ exports.forgotPassword = async (req, res, next) => {
         message: 'Token sent to email!',
       });
     } catch (err) {
-      (user.passwordResetToken = undefined),
+      ((user.passwordResetToken = undefined),
         (user.passwordResetExpires = undefined),
-        await user.save({ validateBeforeSave: false });
+        await user.save({ validateBeforeSave: false }));
 
       return next(
         res.status(500).json({
           status: 'fail',
           message: 'there was an error sending the email, try again',
-        })
+        }),
       );
     }
   } catch (err) {
@@ -812,7 +819,7 @@ exports.updateUserData = async (req, res) => {
     // Step 1: Authentication - Verify JWT token
     const decoded = await promisify(jwt.verify)(
       req.cookies['access-token'], // Assuming the JWT is stored in a cookie
-      process.env.ACCESS_TOKEN_SECRET
+      process.env.ACCESS_TOKEN_SECRET,
     );
 
     // Step 2: Fetch the user from the database
@@ -906,12 +913,12 @@ exports.isLoggedIn = async (req, res, next) => {
       // step 2: verification of token
       const decoded = await promisify(jwt.verify)(
         req.cookies['access-token'],
-        process.env.ACCESS_TOKEN_SECRET
+        process.env.ACCESS_TOKEN_SECRET,
       );
 
       const decodedRefreshToken = await promisify(jwt.verify)(
         req.cookies['refresh-token'],
-        process.env.REFRESH_TOKEN_SECRET
+        process.env.REFRESH_TOKEN_SECRET,
       );
 
       // step 3: check if user still exists
@@ -935,7 +942,7 @@ exports.isLoggedIn = async (req, res, next) => {
       if (req.cookies['refresh-token']) {
         const decodedRefreshToken = await promisify(jwt.verify)(
           req.cookies['refresh-token'],
-          process.env.REFRESH_TOKEN_SECRET
+          process.env.REFRESH_TOKEN_SECRET,
         );
 
         const currentUser = await User.findById(decodedRefreshToken.id);
@@ -950,7 +957,7 @@ exports.isLoggedIn = async (req, res, next) => {
           process.env.ACCESS_TOKEN_SECRET,
           {
             expiresIn: '15m',
-          }
+          },
         );
 
         const cookieOptions = {

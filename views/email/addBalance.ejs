@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>
+    <%= subject %>
+  </title>
+
+  <%- include('styles/_style') %>
+</head>
+
+<body>
+  <table class="body" role="presentation" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td></td>
+        <td class="container">
+          <div class="content">
+            <p style="text-align: center;">
+              <img style="padding-top: 20px;" src="https://evergreenwealthsolutions.ltd/assets/images/banner.jpeg" alt="" width="100%" style="height: auto;" />
+            </p>
+            <!-- Rest of your HTML content -->
+            <p>Hello <%= name %>,</p>
+            <% const time = transaction.createdAt.toLocaleTimeString() %>
+            <% const date = transaction.createdAt.toLocaleDateString() %>
+            <p>
+              We are pleased to inform you that <%= transaction.amount %> USD has been successfully credited to your account with Evergreen Wealth Solutions.
+            </p>
+            <p>
+              Your updated account balance is now available for review. You can log in to your account <a href="htttps://evergreenwealthsolutions.ltd/dashboard">here</a> to view your balance and transaction history.
+            </p>
+
+            <p>Deposit Details:
+            <ul>
+              <li>Amount: <%= transaction.amount %> USD</li>
+              <li>Transaction Id: <%= transaction.transactionId %></li>
+              <li>Transaction Type: <%= transaction.type %>.</li>
+              <li>Date: <%= time %> <%= date %>.</li>
+            </ul>
+            </p>
+            <p>
+              <%= transaction.status === 'confirmed' ? 'The funds have been processed and are now available in your account. You can view your updated account balance or transaction history by logging into your account on our platform.' : '' %>
+            </p>
+
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

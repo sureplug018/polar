@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>
+    <%= subject %>
+  </title>
+
+  <%- include('styles/_style') %>
+</head>
+
+<body>
+  <table class="body" role="presentation" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td></td>
+        <td class="container">
+          <div class="content">
+            <p style="text-align: center;">
+              <img style="padding-top: 20px;" src="https://evergreenwealthsolutions.ltd/assets/images/banner.jpeg" alt="" width="100%" style="height: auto;" />
+            </p>
+            <!-- Rest of your HTML content -->
+            <p>Hello <%= name %>,</p>
+            <% const time = transaction.createdAt.toLocaleTimeString() %>
+            <% const date = transaction.createdAt.toLocaleDateString() %>
+            <p>Your <%= transaction.type === 'deposit' ? 'deposit' : 'withdrawal' %> request of <%= transaction.amount %> USD via <%= transaction.wallet %> has been declined.</p>
+            <p>Detail of your <%= transaction.type === 'deposit' ? 'deposit' : 'withdrawal' %>:</p>
+            <p>
+              Amount: <%= transaction.amount %> USD <br>
+              Charge: <span style="color: red;">0 USD</span>
+            </p>
+            <p>
+              Conversion Rate: 1 USD = 1 $ <br>
+              You will get: <%= transaction.amount %> $ <br>
+              Via: <%= transaction.wallet %>
+            </p>
+            <p>Transaction Number: <%= transaction.transactionId %></p>
+            <p>------</p>
+            <p>Details of Processed Payment: <%= transaction.status === 'confirmed' ? 'Approved' : 'Declined' %></p>
+
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

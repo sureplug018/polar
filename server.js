@@ -4,7 +4,6 @@ dotenv.config({ path: 'config.env' });
 const app = require('./app');
 const cronJob = require('./cronJob');
 const returnInvestment = require('./returnInvestment');
-const spin = require('./spinUp');
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
@@ -31,7 +30,6 @@ mongoose
 // Run the cron job
 cronJob();
 returnInvestment();
-// spin();
 
 const port = process.env.PORT;
 app.listen(port, () => {

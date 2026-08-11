@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin wallets — Tescomint</title>
+<meta name="description" content="Manage the crypto deposit wallets shown to Tescomint members." />
+<meta property="og:title" content="Admin wallets — Tescomint" />
+<meta property="og:description" content="Manage the crypto deposit wallets shown to Tescomint members." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="../assets/app.css" />
+<script src="../assets/app.js" defer></script>
+</head>
+<body><div class="shell">
+  <aside class="sidebar">
+    <a class="brand" href="./index.html"><span class="brand-mark">T</span><span class="brand-name">Tescomint</span></a>
+    <p class="eyebrow accent" style="margin-top:8px">Admin console</p>
+    <nav style="display:flex;flex-direction:column;gap:4px;margin-top:24px;flex:1">
+          <a class="nav-link" href="./index.html">Overview</a>
+          <a class="nav-link" href="./transactions.html">Transactions</a>
+          <a class="nav-link" href="./investments.html">Investments</a>
+          <a class="nav-link" href="./users.html">Users</a>
+          <a class="nav-link" href="./support.html">Support</a>
+          <a class="nav-link active" href="./wallets.html">Wallets</a>
+          <a class="nav-link" href="./plans.html">Plans</a>
+    </nav>
+    <a class="nav-switch" href="../user/index.html">Switch to user app</a>
+  </aside>
+  <div class="content">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <span class="brand-mark hide-desktop">T</span>
+          <div style="min-width:0">
+            <p class="eyebrow">Admin console</p>
+            <p style="margin:0;font-size:14px;font-weight:700">Operations desk</p>
+          </div>
+        </div>
+        <div class="row"><button class="icon-btn" type="button" aria-label="Toggle dark mode" onclick="toggleTheme()">◐</button></div>
+      </div>
+      <div class="chip-nav hide-desktop">
+          <a class="chip" href="./index.html">Overview</a>
+          <a class="chip" href="./transactions.html">Transactions</a>
+          <a class="chip" href="./investments.html">Investments</a>
+          <a class="chip" href="./users.html">Users</a>
+          <a class="chip" href="./support.html">Support</a>
+          <a class="chip active" href="./wallets.html">Wallets</a>
+          <a class="chip" href="./plans.html">Plans</a>
+      </div>
+    </header>
+    <main class="page">
+      <div style="margin-bottom:18px">
+        <h1 style="font-size:24px">Deposit wallets</h1>
+        <p class="muted" style="margin:6px 0 0">Add, edit or disable the wallets shown to members.</p>
+      </div>
+      <div class="row between"><h2 class="section-title">Wallets</h2><button class="btn sm" onclick="openModal('wallet-modal')">Add wallet</button></div>
+<div class="mt-sm"><div class="card" style="padding:6px">
+  <div class="table-wrap"><table class="data"><thead><tr><th>Asset</th><th>Network</th><th>Address</th><th>Status</th><th>Action</th></tr></thead>
+  <tbody><tr><td>Bitcoin</td><td>BTC</td><td>bc1qx8k4y2vn6r7t3m9plq0wz5s8d4hg7fjc2ne1ka</td><td><span class="pill success">success</span></td><td><button class="btn sm ghost" onclick="openModal('wallet-modal')">Edit</button></td></tr><tr><td>Tether</td><td>TRC20</td><td>TQ9xLm4Vd7Kp2Rn8Ws3Yb6Zc1Fh5Jg0Ae</td><td><span class="pill success">success</span></td><td><button class="btn sm ghost" onclick="openModal('wallet-modal')">Edit</button></td></tr><tr><td>Ethereum</td><td>ERC20</td><td>0x7Fa3B21c9De04Ec8815bA6f4703cD19eF52aB6d1</td><td><span class="pill success">success</span></td><td><button class="btn sm ghost" onclick="openModal('wallet-modal')">Edit</button></td></tr><tr><td>Solana</td><td>SOL</td><td>5Hb9KpQr3Tz8Vm2Wn7Yc4Xd6Fe1Gh0Jk3Lm5Np8Qr2S</td><td><span class="pill error">error</span></td><td><button class="btn sm ghost" onclick="openModal('wallet-modal')">Edit</button></td></tr></tbody></table></div>
+  <div class="cards-list" style="padding:10px"><div class="mini-card"><div class="row between"><strong>Bitcoin · BTC</strong><span class="pill success">success</span></div>
+    <p class="muted small" style="word-break:break-all;margin:8px 0 0">bc1qx8k4y2vn6r7t3m9plq0wz5s8d4hg7fjc2ne1ka</p>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('wallet-modal')">Edit</button></div><div class="mini-card"><div class="row between"><strong>Tether · TRC20</strong><span class="pill success">success</span></div>
+    <p class="muted small" style="word-break:break-all;margin:8px 0 0">TQ9xLm4Vd7Kp2Rn8Ws3Yb6Zc1Fh5Jg0Ae</p>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('wallet-modal')">Edit</button></div><div class="mini-card"><div class="row between"><strong>Ethereum · ERC20</strong><span class="pill success">success</span></div>
+    <p class="muted small" style="word-break:break-all;margin:8px 0 0">0x7Fa3B21c9De04Ec8815bA6f4703cD19eF52aB6d1</p>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('wallet-modal')">Edit</button></div><div class="mini-card"><div class="row between"><strong>Solana · SOL</strong><span class="pill error">error</span></div>
+    <p class="muted small" style="word-break:break-all;margin:8px 0 0">5Hb9KpQr3Tz8Vm2Wn7Yc4Xd6Fe1Gh0Jk3Lm5Np8Qr2S</p>
+    <button class="btn sm block" style="margin-top:10px" onclick="openModal('wallet-modal')">Edit</button></div></div>
+</div></div>
+<div class="modal-backdrop" id="wallet-modal">
+  <div class="modal">
+    <div class="row between"><h3 style="font-size:18px">Wallet details</h3><button class="icon-btn" onclick="closeModal('wallet-modal')">✕</button></div>
+    <div class="mt"><form data-demo><label class="field"><span>Asset</span><input type="text" placeholder="Tether" /></label><label class="field"><span>Network</span><input type="text" placeholder="TRC20" /></label><label class="field"><span>Wallet address</span><input type="text" placeholder="Paste the receiving address" /></label><label class="field"><span>Status</span><select><option>Active</option><option>Disabled</option></select></label><div class="row"><button class="btn" type="submit">Save wallet</button><button class="btn danger" type="button" onclick="closeModal('wallet-modal')">Delete</button></div><div class="alert success mt" data-demo-note style="display:none"><h4>Wallet saved</h4><p style="margin:0">Members will see this wallet on the deposit page.</p></div></form></div>
+  </div>
+</div>
+    </main>
+  </div>
+  
+</div></body>
+</html>
