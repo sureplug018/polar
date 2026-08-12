@@ -63,15 +63,15 @@ router.get('/dashboard', viewsController.userDashboard);
 
 router.get('/investment-packages', viewsController.investmentPlans);
 
-router.get('/investment-logs', viewsController.investmentHistory);
+router.get('/investments', viewsController.investmentHistory);
 
-router.get('/profile-settings', viewsController.userProfile);
+router.get('/profile', viewsController.userProfile);
 
-router.get('/referral-program', viewsController.referral);
+router.get('/referrals', viewsController.referral);
 
 router.get('/send-funds', viewsController.sendMoney);
 
-router.get('/transaction-logs', viewsController.transactionHistory);
+router.get('/transactions', viewsController.transactionHistory);
 
 router.get('/withdraw', viewsController.withdrawMoney);
 
@@ -83,7 +83,7 @@ router.get('/wallets', viewsController.myWallets);
 
 router.get('/invest', viewsController.invest);
 
-router.get('/contact-support', viewsController.sendSupport);
+router.get('/support', viewsController.sendSupport);
 
 /////////////////////////
 // ADMIN

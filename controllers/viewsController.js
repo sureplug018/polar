@@ -511,7 +511,7 @@ exports.investmentHistory = async (req, res) => {
       const investments = await Investment.find({ user: user.id }).sort({
         createdAt: -1,
       });
-      return res.status(200).render('investment-history', {
+      return res.status(200).render('investments', {
         title: 'Investment Logs',
         user,
         investments,
@@ -605,7 +605,7 @@ exports.referral = async (req, res) => {
 
     if (user.role === 'user') {
       const referrals = await User.find({ referral: user.myReferralCode });
-      return res.status(200).render('referral', {
+      return res.status(200).render('referrals', {
         title: 'Referral Program',
         user,
         referrals,
@@ -665,7 +665,7 @@ exports.transactionHistory = async (req, res) => {
       const transactions = await Transaction.find({ user: user.id }).sort({
         createdAt: -1,
       });
-      return res.status(200).render('transaction-history', {
+      return res.status(200).render('transactions', {
         title: 'Transaction Logs',
         user,
         transactions,
@@ -694,12 +694,42 @@ exports.withdrawMoney = async (req, res) => {
       return res.status(302).redirect('/sign-in');
     }
 
+    const pendingWithdrawals = await Transaction.find({
+      user: user.id,
+      type: 'withdrawal',
+      status: 'pending',
+    });
+
+    const totalPendingWithdrawals = pendingWithdrawals.reduce(
+      (total, withdrawal) => total + withdrawal.amount,
+      0,
+    );
+
+    const totalWithdrawn = await Transaction.aggregate([
+      {
+        $match: {
+          user: user.id,
+          type: 'withdrawal',
+          status: 'confirmed',
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          total: { $sum: '$amount' },
+        },
+      },
+    ]);
+
     if (user.role === 'user') {
       const wallets = await Wallet.find({ user: user.id });
-      return res.status(200).render('withdrawal', {
+      return res.status(200).render('withdraw', {
         title: 'Withdraw Funds',
         user,
         wallets,
+        totalPendingWithdrawals,
+        totalWithdrawn,
+        formatCurrency,
       });
     }
     return res.status(302).redirect('/sign-in');
@@ -850,7 +880,7 @@ exports.sendSupport = async (req, res) => {
     }
 
     if (user.role === 'user') {
-      return res.status(200).render('send-support', {
+      return res.status(200).render('support', {
         title: 'Contact Support',
         user,
       });

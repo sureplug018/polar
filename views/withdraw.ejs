@@ -1,28 +1,6 @@
 <%- include('partials/dashboardHeader') %>
 <div class="content">
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <button class="icon-btn hide-desktop" type="button" aria-label="Open menu" onclick="openNav()"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 7h16" />
-            <path d="M4 12h16" />
-            <path d="M4 17h16" />
-          </svg></button>
-        <span class="brand-mark hide-desktop">T</span>
-        <div style="min-width:0">
-          <p class="eyebrow">Welcome back</p>
-          <p style="margin:0;font-size:14px;font-weight:700"><%= user.firstName %> <%= user.lastName %></p>
-        </div>
-      </div>
-      <div class="row"><button class="icon-btn" aria-label="Notifications"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M18 9a6 6 0 1 0-12 0c0 5-2 6-2 6h16s-2-1-2-6" />
-            <path d="M10.5 20a2 2 0 0 0 3 0" />
-          </svg></button><button class="icon-btn" type="button" aria-label="Toggle dark mode" onclick="toggleTheme()"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="8" />
-            <path d="M12 4a8 8 0 0 1 0 16Z" fill="currentColor" stroke="none" />
-          </svg></button></div>
-    </div>
-  </header>
+  <%- include('partials/dashboardHead') %>
   <main class="page">
 
     <div style="margin-bottom:18px">
@@ -38,7 +16,7 @@
               <path d="M16 12.5h3" />
             </svg></span>
         </div>
-        <p class="stat-value">$24,850.42</p>
+        <p class="stat-value">$<%= formatCurrency(user.balance) %></p>
       </div>
       <div class="card stat">
         <div class="row between" style="align-items:flex-start;flex-wrap:nowrap">
@@ -49,7 +27,7 @@
               <path d="M12 8v4l3 2" />
             </svg></span>
         </div>
-        <p class="stat-value">$1,500.00</p>
+        <p class="stat-value">$<%= formatCurrency(totalPendingWithdrawals) %></p>
       </div>
       <div class="card stat">
         <div class="row between" style="align-items:flex-start;flex-wrap:nowrap">
@@ -60,21 +38,25 @@
               <path d="M4 3h16" />
             </svg></span>
         </div>
-        <p class="stat-value">$18,400.00</p>
+        <p class="stat-value">$<%= formatCurrency(totalWithdrawn[0] ? totalWithdrawn[0].total : 0) %></p>
       </div>
     </div>
     <div class="grid g2-md mt">
       <div class="card">
         <h2 class="section-title">Payout request</h2>
         <form data-demo class="mt-sm">
-          <label class="field"><span>Asset & network</span><select>
-              <option>Bitcoin (BTC)</option>
-              <option>Tether (TRC20)</option>
-              <option>Ethereum (ERC20)</option>
-              <option>Solana (SOL)</option>
+          <label class="field"><span>Payment Method</span><select>
+            <option>Select an Wallet</option>
+              <% wallets.forEach(wallet => { %>
+              <option data-wallet-id="<%= wallet.id %>" data-wallet-address="<%= wallet.address %>"><%= wallet.name %></option>
+              <% }) %>
             </select></label>
-          <label class="field"><span>Amount (USD)</span><input type="number" placeholder="1000" /></label>
-          <label class="field"><span>Destination wallet address</span><input type="text" placeholder="Paste your wallet address" /></label>
+          <label class="field"><span>Amount (USD)</span>
+            <input type="number" placeholder="1000" />
+          </label>
+          <label class="field"><span>Destination wallet address</span>
+            <input type="text" placeholder="Paste your wallet address" readonly />
+          </label>
           <button class="btn block" type="submit">Request withdrawal</button>
           <div class="alert success mt" data-demo-note style="display:none">
             <h4>Withdrawal requested</h4>
