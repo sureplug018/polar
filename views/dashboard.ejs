@@ -143,6 +143,7 @@
                 <th>Type</th>
                 <th>Amount</th>
                 <th>Gateway</th>
+                <th>Address</th>
                 <th>Status</th>
                 <th>Date</th>
               </tr>
@@ -154,6 +155,7 @@
                 <td><%= transaction.type %></td>
                 <td>$<%= formatCurrency(transaction.amount) %></td>
                 <td><%= transaction.wallet %></td>
+                <td><%= transaction.address || 'N/A' %></td>
                 <td><span class="pill <%= transaction.status === 'declined' ? 'error' : transaction.status === 'pending' ? 'warning' : 'success' %>"><%= transaction.status %></span></td>
                 <% const date = transaction.createdAt.toLocaleDateString() %>
                 <% const time = transaction.createdAt.toLocaleTimeString() %>

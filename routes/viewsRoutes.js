@@ -95,6 +95,8 @@ router.get('/admin/transactions', viewsController.allTransactions);
 
 router.get('/admin/users', viewsController.allUsers);
 
+router.get('/admin/users/:id', viewsController.adminUserDetail);
+
 router.get('/admin/investments', viewsController.allInvestments);
 
 router.get('/admin/wallets', viewsController.allWallets);

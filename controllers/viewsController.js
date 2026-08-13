@@ -638,7 +638,9 @@ exports.referral = async (req, res) => {
         }
       }
 
-      const activeReferrals = referrals.filter((referral) => referral.status === 'active');
+      const activeReferrals = referrals.filter(
+        (referral) => referral.status === 'active',
+      );
 
       return res.status(200).render('referrals', {
         title: 'Referral Program',
@@ -920,13 +922,13 @@ exports.sendSupport = async (req, res) => {
 
     if (user.role === 'user') {
       const supports = await Support.find({ userId: user.id }).sort({
-        createdAt: -1
+        createdAt: -1,
       });
       console.log('Supports:', supports); // Log the supports to check if they are being retrieved correctly
       return res.status(200).render('support', {
         title: 'Contact Support',
         user,
-        supports
+        supports,
       });
     }
     return res.status(302).redirect('/sign-in');
@@ -959,8 +961,9 @@ exports.adminDashboard = async (req, res) => {
       const transfers = await Transaction.find({
         type: 'transfer',
       });
-
+      const users = await User.find().sort({ createdAt: -1 });
       const investments = await Investment.find();
+      const pendingVerifications = await User.find({ confirmed: false });
 
       const supports = await Support.find();
 
@@ -974,6 +977,8 @@ exports.adminDashboard = async (req, res) => {
         investments,
         supports,
         formatCurrency,
+        users,
+        pendingVerifications,
       });
     }
 
@@ -1011,7 +1016,7 @@ exports.allInvestments = async (req, res) => {
 
     if (user.role === 'admin') {
       const investments = await Investment.find().sort({ createdAt: -1 });
-      return res.status(200).render('allInvestments', {
+      return res.status(200).render('admin-investments', {
         title: 'Investments',
         user,
         investments,
@@ -1036,7 +1041,7 @@ exports.allPlans = async (req, res) => {
 
     if (user.role === 'admin') {
       const plans = await Plan.find();
-      return res.status(200).render('allPlans', {
+      return res.status(200).render('admin-plans', {
         title: 'Investment Plans',
         user,
         plans,
@@ -1116,7 +1121,7 @@ exports.allTransactions = async (req, res) => {
       .populate('user') // optional if you need user data
       .sort({ createdAt: -1 });
 
-    return res.status(200).render('allTransactions', {
+    return res.status(200).render('admin-transactions', {
       title: 'Transactions',
       user,
       transactions,
@@ -1142,7 +1147,7 @@ exports.allUsers = async (req, res) => {
     if (user.role === 'admin') {
       const users = await User.find().sort({ createdAt: -1 });
 
-      return res.status(200).render('allUsers', {
+      return res.status(200).render('admin-users', {
         title: 'Users',
         user,
         users,
@@ -1159,6 +1164,77 @@ exports.allUsers = async (req, res) => {
   }
 };
 
+exports.adminUserDetail = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    if (!user) return res.redirect('/signin');
+    if (user.role === 'admin') {
+      const userId = req.params.id;
+
+      const userDetail = await User.findById(userId);
+
+      if (!userDetail) {
+        return res.redirect('/admin/users');
+      }
+
+      const userTransactions = await Transaction.find({
+        user: userDetail.id,
+      }).sort({ createdAt: -1 });
+
+      const userInvestments = await Investment.find({
+        user: userDetail.id,
+      }).sort({ createdAt: -1 });
+
+      const userReferrals = await User.find({
+        referralCode: userDetail.myReferralCode,
+      }).sort({ createdAt: -1 });
+
+      const userDeposits = await Transaction.find({
+        type: 'deposit',
+        status: 'confirmed',
+        user: userDetail.id,
+      });
+
+      const totalUserDepositAmount = userDeposits.reduce(
+        (sum, tx) => sum + Number(tx.amount),
+        0,
+      );
+
+      const userWithdrawal = await Transaction.find({
+        type: 'withdrawal',
+        status: 'confirmed',
+        user: userDetail.id,
+      });
+
+      const totalUserWithdrawalAmount = userWithdrawal.reduce(
+        (sum, tx) => sum + Number(tx.amount),
+        0,
+      );
+
+      const userWallets = await Wallet.find({ user: userDetail.id });
+
+      return res.render('admin-userDetails', {
+        title: 'Admin User Detail',
+        user,
+        userDetail,
+        transactions: userTransactions,
+        investments: userInvestments,
+        referrals: userReferrals,
+        deposits: userDeposits,
+        totalUserWithdrawalAmount,
+        wallets: userWallets,
+        formatCurrency,
+      });
+    }
+
+    return res.redirect('/signin');
+  } catch (err) {
+    console.log(err);
+    return res.redirect('/signin');
+  }
+};
+
 exports.allWallets = async (req, res) => {
   try {
     const user = res.locals.user;
@@ -1168,9 +1244,8 @@ exports.allWallets = async (req, res) => {
     }
 
     if (user.role === 'admin') {
-      const wallets = await Wallet.find();
-
-      return res.status(200).render('allWallets', {
+      const wallets = await Wallet.find({ user: { $exists: false } });
+      return res.status(200).render('admin-wallets', {
         title: 'Wallets',
         user,
         wallets,

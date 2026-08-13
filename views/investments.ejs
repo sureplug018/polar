@@ -71,30 +71,16 @@
           </table>
         </div>
         <div class="cards-list" style="padding:10px">
+          <% investments.forEach(investment => { %>
           <div class="mini-card">
-            <div class="row between"><strong>Growth</strong><span class="pill success">success</span></div>
-            <div class="mini-row"><span>Amount</span><span>$7,500.00</span></div>
-            <div class="mini-row"><span>Profit</span><span>$1,875.00</span></div>
-            <div class="mini-row"><span>Window</span><span>24 Jul 2026 → 24 Aug 2026</span></div>
+            <div class="row between"><strong><%= investment.plan.name %></strong><span class="pill <%= investment.status === 'active' ? 'warning' : 'success' %>"><%= investment.status === 'active' ? 'Active' : 'Completed' %></span></div>
+            <div class="mini-row"><span>Amount</span><span>$<%= formatCurrency(investment.amount) %></span></div>
+            <div class="mini-row"><span>Profit</span><span><%= formatCurrency(investment.plan.roi) %>%</span></div>
+            <% const date = investment.createdAt.toLocaleDateString() %>
+            <% const time = investment.createdAt.toLocaleTimeString() %>
+            <div class="mini-row"><span>Window</span><span><%= date %> → <%= date %></span></div>
           </div>
-          <div class="mini-card">
-            <div class="row between"><strong>Starter</strong><span class="pill success">success</span></div>
-            <div class="mini-row"><span>Amount</span><span>$1,200.00</span></div>
-            <div class="mini-row"><span>Profit</span><span>$168.00</span></div>
-            <div class="mini-row"><span>Window</span><span>01 Aug 2026 → 15 Aug 2026</span></div>
-          </div>
-          <div class="mini-card">
-            <div class="row between"><strong>Premium</strong><span class="pill pending">pending</span></div>
-            <div class="mini-row"><span>Amount</span><span>$15,000.00</span></div>
-            <div class="mini-row"><span>Profit</span><span>$5,400.00</span></div>
-            <div class="mini-row"><span>Window</span><span>12 May 2026 → 12 Jul 2026</span></div>
-          </div>
-          <div class="mini-card">
-            <div class="row between"><strong>Growth</strong><span class="pill error">error</span></div>
-            <div class="mini-row"><span>Amount</span><span>$4,000.00</span></div>
-            <div class="mini-row"><span>Profit</span><span>$0.00</span></div>
-            <div class="mini-row"><span>Window</span><span>02 Apr 2026 → 02 May 2026</span></div>
-          </div>
+          <% }) %>
         </div>
         <div class="pager" data-pager hidden>
           <button class="btn sm ghost" type="button" data-page-prev>Previous</button>
