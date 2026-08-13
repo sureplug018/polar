@@ -130,10 +130,14 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    level: {
+      type: String,
+      default: 'Level 1',
+    },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 //creating a timestamp for each time password is changed
@@ -157,7 +161,7 @@ userSchema.pre('save', async function (next) {
 // comparing provided password with the one saved in database before logging user in
 userSchema.methods.correctPassword = async function (
   candidatePassword,
-  userPassword
+  userPassword,
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
@@ -167,7 +171,7 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   if (this.passswordChangedAt) {
     const changedTimestamp = parseInt(
       this.passswordChangedAt.getTime() / 1000,
-      10
+      10,
     );
     return JWTTimestamp < changedTimestamp;
   }

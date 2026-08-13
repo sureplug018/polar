@@ -11,11 +11,11 @@
       <div class="card">
         <h2 class="section-title">Personal details</h2>
         <form data-demo class="mt-sm">
-          <label class="field"><span>Full name</span><input value="Adaeze Okonkwo" /></label>
-          <label class="field"><span>Username</span><input value="adaeze" /></label>
-          <label class="field"><span>Email</span><input value="adaeze@tescomint.com" /></label>
-          <label class="field"><span>Phone</span><input value="+234 802 118 4420" /></label>
-          <label class="field"><span>Country</span><input value="Nigeria" /></label>
+          <label class="field"><span>Full name</span><input value="<%= user.firstName %> <%= user.lastName %>" /></label>
+          <label class="field"><span>Username</span><input value="<%= user.username %>" /></label>
+          <label class="field"><span>Email</span><input value="<%= user.email %>" /></label>
+          <label class="field"><span>Phone</span><input value="<%= user.phone %>" /></label>
+          <label class="field"><span>Country</span><input value="<%= user.country %>" /></label>
           <button class="btn block" type="submit">Save changes</button>
           <div class="alert success mt" data-demo-note style="display:none">
             <h4>Profile updated</h4>
@@ -26,10 +26,10 @@
       <div>
         <div class="card">
           <h2 class="section-title">Account</h2>
-          <div class="mini-row"><span>Tier</span><span>Gold Investor</span></div>
-          <div class="mini-row"><span>Member since</span><span>12 Mar 2026</span></div>
-          <div class="mini-row"><span>Referral code</span><span>TESCO-AD4420</span></div>
-          <div class="mini-row"><span>Verification</span><span><span class="pill success">success</span></span></div>
+          <div class="mini-row"><span>Level</span><span><%= user.level %></span></div>
+          <div class="mini-row"><span>Member since</span><span><%= user.createdAt.toLocaleDateString() %></span></div>
+          <div class="mini-row"><span>Referral code</span><span><%= user.myReferralCode %></span></div>
+          <div class="mini-row"><span>Verification</span><span><span class="pill <%= user.confirmed === true ? 'success' : 'error' %>"><%= user.confirmed === true ? 'Verified' : 'Not Verified' %></span></span></div>
         </div>
         <div class="card mt">
           <h2 class="section-title">Change password</h2>

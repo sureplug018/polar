@@ -13,10 +13,10 @@
         <p class="display" style="font-size:18px;font-weight:700"><%= plan.name %></p>
         <p class="stat-value" style="color:var(--primary)"><%= plan.roi %>% ROI Daily</p>
         <p class="muted small"><%= plan.duration %> days term</p>
-        <div class="mini-row"><span>Min</span><span>$<%= plan.min.toFixed(2) %></span></div>
-        <div class="mini-row"><span>Max</span><span>$<%= plan.max.toFixed(2) %></span></div>
+        <div class="mini-row"><span>Min</span><span>$<%= plan.min.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></span></div>
+        <div class="mini-row"><span>Max</span><span>$<%= plan.max.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></span></div>
         <div class="mini-row"><span>Referral</span><span>10% referral bonus</span></div>
-        <button class="btn block sm" style="margin-top:12px" onclick="openModal('invest-modal')">Choose <%= plan.name %></button>
+        <!-- <button class="btn block sm" style="margin-top:12px" onclick="openModal('invest-modal')">Choose </button> -->
         <!-- <button class="btn block sm" style="margin-top:12px" onclick="openModal('invest-modal')">Choose </button> -->
       </div>
       <% })  %>
@@ -24,25 +24,32 @@
     <div class="card mt">
       <h2 class="section-title">Activate an investment</h2>
       <form data-demo class="mt-sm">
-        <div class="grid g2-md"><label class="field"><span>Plan</span><select>
+        <div id="alert" style="margin-bottom:14px"></div>
+        <div class="grid g2-md"><label class="field"><span>Plan</span>
+            <select data-plan-select>
+              <option value="">Select a plan</option>
               <% plans.forEach(plan => { %>
               <option data-plan-id="<%= plan.id %>"><%= plan.name %> — <%= plan.roi %>% ROI Daily</option>
               <% }) %>
             </select></label><label class="field"><span>Amount (USD)</span><input type="number" placeholder="2500" /></label></div>
         <label class="field"><span>Funding source</span>
-          <select>
-            <option>Account balance</option>
-            <option>New deposit</option>
+          <select class="source-select" data-source-select>
+            <option value="balance">Account balance</option>
+            <option value="wallet">New deposit</option>
           </select>
         </label>
-        <label class="field"><span>Wallet Address</span>
-          <select>
-            <% wallets.forEach(wallet => { %>
-            <option data-wallet-id="<%= wallet.id %>" data-wallet-address="<%= wallet.address %>"><%= wallet.name %></option>
-            <% }) %>
-          </select>
-        </label>
-        <div style="padding-bottom:12px; display:none">
+        <div style=" display:none">
+          <label class="field"><span>Payment Method</span>
+            <select class="wallet-address-select" data-wallet-address-select>
+              <option value="">Select a wallet</option>
+              <% wallets.forEach(wallet => { %>
+              <option data-wallet-id="<%= wallet.id %>" data-wallet-name="<%= wallet.name %>" data-wallet-address="<%= wallet.address %>"><%= wallet.name %></option>
+              <% }) %>
+            </select>
+          </label>
+        </div>
+
+        <div style="padding-bottom:12px; display:none" data-wallet-info>
           <div class="alert warning">
             <h4>Make your deposit here</h4>
             <p style="margin:0">
@@ -51,7 +58,7 @@
             </p>
           </div>
         </div>
-        <button class="btn block" type="submit">Start investment</button>
+        <button class="btn block submit-btn" type="submit">Start investment</button>
       </form>
     </div>
     <div class="modal-backdrop" id="invest-modal">
@@ -69,7 +76,46 @@
     </div>
   </main>
 </div>
+<script src="/assets/js/alert.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
+  const planSelect = document.querySelector('select[data-plan-select]');
+  const fundingSourceSelect = document.querySelector('select[data-source-select]');
+  const walletSelect = document.querySelector('select[data-wallet-address-select]');
+  const walletAddressSpan = document.querySelector('.wallet-address');
+  const walletNameSpan = document.querySelector('.wallet-name');
+  const walletInfoDiv = document.querySelector('[data-wallet-info]');
+
+  if (fundingSourceSelect) {
+    fundingSourceSelect.addEventListener('change', function() {
+      if (this.value === 'wallet') {
+        walletSelect.parentElement.parentElement.style.display = 'block';
+        // walletNameSpan.textContent = walletSelect.options[walletSelect.selectedIndex].text;
+        // walletAddressSpan.textContent = walletSelect.options[walletSelect.selectedIndex].dataset.walletAddress;
+      } else {
+        walletSelect.parentElement.parentElement.style.display = 'none';
+        walletInfoDiv.style.display = 'none';
+      }
+    });
+  }
+
+  if (walletSelect) {
+    walletSelect.addEventListener('change', function() {
+      const selectedOption = this.options[this.selectedIndex];
+      const walletAddress = selectedOption.dataset.walletAddress;
+      const walletName = selectedOption.textContent;
+
+      if (walletAddress) {
+        walletNameSpan.textContent = walletName;
+        walletAddressSpan.textContent = walletAddress;
+        walletInfoDiv.style.display = 'block';
+        document.querySelector('.wallet-name').textContent = walletName;
+      } else {
+        walletInfoDiv.style.display = 'none';
+      }
+    });
+  }
+
   function copyAddress(button) {
     // Find the wallet address span inside the same paragraph
     const addressSpan = button.parentElement.querySelector('.wallet-address');
@@ -98,5 +144,55 @@
       alert('Failed to copy address');
     });
   }
+
+  document.querySelector('form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const selectedPlanOption = planSelect.options[planSelect.selectedIndex];
+    const selectedPlanId = selectedPlanOption.dataset.planId;
+    const amount = this.querySelector('input[type="number"]').value;
+    const fundingSource = fundingSourceSelect.value;
+    const selectedWalletOption = walletSelect.options[walletSelect.selectedIndex];
+    const selectedWalletId = selectedWalletOption ? selectedWalletOption.dataset.walletId : null;
+    const submitButton = document.querySelector('.submit-btn');
+
+    // Disable button
+    submitButton.disabled = true;
+    submitButton.textContent = 'Processing...';
+    submitButton.style.cursor = 'not-allowed';
+
+    try {
+      const response = await axios.post('/api/v1/transactions/deposit', {
+        plan: selectedPlanId,
+        amount: amount,
+        wallet: selectedWalletId, // better to use the ID
+        address: selectedWalletOption ? selectedWalletOption.dataset.walletAddress : '',
+        paymentMethod: fundingSource,
+      });
+
+      if (response.data.status === 'success' && response.data.data.wallet === 'balance') {
+        showAlert('success', 'Investment Activated', 'Your investment has been successfully activated.');
+        this.reset();
+        walletInfoDiv.style.display = 'none';
+      } else {
+        showAlert('success', 'Investment Pending', 'Your investment is pending. Please complete the deposit to activate it.');
+        this.reset();
+        walletInfoDiv.style.display = 'none';
+      }
+
+    } catch (error) {
+      console.error('Error activating investment:', error.response ? error.response.data : error.message);
+      showAlert(
+        'error',
+        'Investment Failed',
+        error.response?.data?.message || 'An unexpected error occurred. Please try again.'
+      );
+    } finally {
+      // Re-enable button
+      submitButton.disabled = false;
+      submitButton.textContent = 'Start investment';
+      submitButton.style.cursor = 'pointer';
+    }
+  });
 </script>
 <%- include('partials/dashboardFooter') %>

@@ -4,26 +4,26 @@ const supportController = require('../controllers/supportController');
 
 const router = express.Router();
 
-router.post('/send-support', supportController.createSupport);
-
 router.use(authController.protect);
+
+router.post('/send-support', supportController.createSupport);
 
 router.post(
   '/reply-support/:supportId',
   authController.restrictTo('admin'),
-  supportController.replySupport
+  supportController.replySupport,
 );
 
 router.post(
   '/send-mail/:id',
   authController.restrictTo('admin'),
-  supportController.sendMail
+  supportController.sendMail,
 );
 
 router.delete(
   '/delete-support/:supportId',
   authController.restrictTo('admin'),
-  supportController.deleteSupport
+  supportController.deleteSupport,
 );
 
 module.exports = router;

@@ -8,7 +8,7 @@ router
   .route('/deposit')
   .post(
     authController.protect,
-    transactionController.uploadPaymentProof,
+    // transactionController.uploadPaymentProof,
     transactionController.deposit
   );
 

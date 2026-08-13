@@ -511,10 +511,25 @@ exports.investmentHistory = async (req, res) => {
       const investments = await Investment.find({ user: user.id }).sort({
         createdAt: -1,
       });
+
+      const completedInvestments = await Investment.find({
+        user: user.id,
+        status: 'ended',
+      }).sort({
+        createdAt: -1,
+      });
+
+      const totalInvestments = investments.reduce(
+        (total, investment) => total + investment.amount,
+        0,
+      );
+
       return res.status(200).render('investments', {
         title: 'Investment Logs',
         user,
         investments,
+        completedInvestments,
+        totalInvestments,
         formatCurrency,
       });
     }
@@ -604,11 +619,35 @@ exports.referral = async (req, res) => {
     }
 
     if (user.role === 'user') {
+      // 1. Get all users referred by the current user
       const referrals = await User.find({ referral: user.myReferralCode });
+
+      let totalReferralEarnings = 0;
+
+      // 2. For each referral, find their first confirmed deposit
+      for (const referral of referrals) {
+        const firstDeposit = await Transaction.findOne({
+          user: referral._id, // or userId, depending on your schema
+          status: 'confirmed', // adjust status name if different
+          type: 'deposit', // ensure it's a deposit
+        }).sort({ createdAt: 1 }); // oldest first = first deposit
+
+        if (firstDeposit) {
+          // 3. Add 10% of the first deposit amount
+          totalReferralEarnings += firstDeposit.amount * 0.1;
+        }
+      }
+
+      const activeReferrals = referrals.filter((referral) => referral.status === 'active');
+
       return res.status(200).render('referrals', {
         title: 'Referral Program',
         user,
         referrals,
+        activeReferrals,
+        totalReferralEarnings, // pass it to the view
+        totalReferralEarningsFormatted: formatCurrency(totalReferralEarnings), // formatted version
+        formatCurrency,
       });
     }
     return res.status(302).redirect('/sign-in');
@@ -880,9 +919,13 @@ exports.sendSupport = async (req, res) => {
     }
 
     if (user.role === 'user') {
+      const supports = await Support.find({ userId: user.id }).sort({
+        createdAt: -1
+      });
       return res.status(200).render('support', {
         title: 'Contact Support',
         user,
+        supports
       });
     }
     return res.status(302).redirect('/sign-in');

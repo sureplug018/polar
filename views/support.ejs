@@ -11,43 +11,73 @@
       <div class="card">
         <h2 class="section-title">Open a ticket</h2>
         <form data-demo class="mt-sm">
-          <label class="field"><span>Subject</span><input type="text" placeholder="Deposit not reflecting" /></label>
-          <label class="field"><span>Category</span><select>
+          <div id="alert" style="margin-bottom:14px"></div>
+          <label class="field"><span>Subject</span><input id="subject" type="text" placeholder="Deposit not reflecting" /></label>
+          <label class="field"><span>Category</span><select id="category">
               <option>Deposits</option>
               <option>Withdrawals</option>
               <option>Investments</option>
               <option>Account</option>
               <option>Other</option>
             </select></label>
-          <label class="field"><span>Message</span><textarea rows="4" placeholder="Describe the issue with as much detail as possible."></textarea></label>
+          <label class="field"><span>Message</span><textarea id="message" rows="4" placeholder="Describe the issue with as much detail as possible."></textarea></label>
           <button class="btn block" type="submit">Send message</button>
-          <div class="alert success mt" data-demo-note style="display:none">
-            <h4>Ticket submitted</h4>
-            <p style="margin:0">Our team will reply to adaeze@tescomint.com.</p>
-          </div>
         </form>
       </div>
       <div class="card">
         <h2 class="section-title">Your tickets</h2>
         <div class="cards-list" style="display:grid;margin-top:10px">
+          <% supports.forEach(support => { %>
           <div class="mini-card">
-            <div class="row between"><strong>Deposit not reflecting</strong><span class="pill warning">warning</span></div>
-            <p class="muted small" style="margin:8px 0 0">I sent 500 USDT two hours ago but my balance has not updated. Transaction hash attached in my email.</p>
-            <p class="muted small" style="margin:6px 0 0">05 Aug 2026</p>
+            <div class="row between"><strong><%= support.subject %></strong><span class="pill <%= support.status === 'replied' ? 'success' : 'warning' %>"><%= support.status === 'replied' ? 'Closed' : 'Open' %></span></div>
+            <p class="muted small" style="margin:8px 0 0"><%= support.message %></p>
+            <p class="muted small" style="margin:6px 0 0"><%= support.createdAt.toLocaleDateString() %></p>
           </div>
-          <div class="mini-card">
-            <div class="row between"><strong>Withdrawal declined</strong><span class="pill warning">warning</span></div>
-            <p class="muted small" style="margin:8px 0 0">My withdrawal was declined and I would like to know why.</p>
-            <p class="muted small" style="margin:6px 0 0">04 Aug 2026</p>
-          </div>
-          <div class="mini-card">
-            <div class="row between"><strong>Change referral code</strong><span class="pill success">success</span></div>
-            <p class="muted small" style="margin:8px 0 0">Can I customise my referral code?</p>
-            <p class="muted small" style="margin:6px 0 0">01 Aug 2026</p>
-          </div>
+          <% }) %>
         </div>
       </div>
     </div>
   </main>
 </div>
+<script src="/assets/js/alert.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+  document.querySelector('form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const subject = document.getElementById('subject').value;
+    const category = document.getElementById('category').value;
+    const message = document.getElementById('message').value;
+
+    const button = document.querySelector('button[type="submit"]');
+    button.disabled = true;
+    button.textContent = 'Sending...';
+    button.style.cursor = 'not-allowed';
+
+    try {
+      const response = await axios.post('/api/v1/supports/send-support', {
+        subject,
+        category,
+        message
+      });
+
+      if (response.data.status === 'success') {
+        showAlert('success', 'Ticket Submitted', 'Your support ticket has been submitted successfully.');
+        // Optionally, you can clear the form fields after successful submission
+        document.getElementById('subject').value = '';
+        document.getElementById('category').selectedIndex = 0;
+        document.getElementById('message').value = '';
+      }
+    } catch (error) {
+      console.error('Error submitting support ticket:', error.response ? error.response.data : error.message);
+      showAlert('error', 'Submission Error', error.response && error.response.data && error.response.data.message ? error.response.data.message : 'An unexpected error occurred. Please try again.');
+    } finally {
+      button.disabled = false;
+      button.textContent = 'Send message';
+      button.style.cursor = 'pointer';
+    }
+  });
+</script>
+
 <%- include('partials/dashboardFooter') %>

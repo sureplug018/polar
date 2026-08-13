@@ -36,10 +36,11 @@ const supportSchema = new mongoose.Schema(
       enum: ['pending', 'replied'],
       default: 'pending',
     },
+    category: String,
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 supportSchema.pre(/^find/, function (next) {

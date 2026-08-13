@@ -94,7 +94,7 @@ exports.deposit = async (req, res) => {
   const { amount, wallet, address, plan, paymentMethod } = req.body;
   try {
     const user = await User.findById(req.user.id);
-    const planDetails = await Plan.findOne({ name: plan });
+    const planDetails = await Plan.findById(plan);
     if (!plan)
       return res
         .status(400)
@@ -123,7 +123,6 @@ exports.deposit = async (req, res) => {
         });
       }
     }
-
     if (amount < planDetails.min) {
       return res.status(400).json({
         status: 'fail',
@@ -139,10 +138,10 @@ exports.deposit = async (req, res) => {
     }
 
     // Handle optional payment proof
-    const paymentProof =
-      req.files && req.files.paymentProof
-        ? req.files.paymentProof[0].path
-        : null; // Cloudinary URL or null
+    // const paymentProof =
+    //   req.files && req.files.paymentProof
+    //     ? req.files.paymentProof[0].path
+    //     : null; // Cloudinary URL or null
 
     if (user.depositStatus === false) {
       return res.status(400).json({
@@ -177,7 +176,7 @@ exports.deposit = async (req, res) => {
       user,
       amount,
       wallet: paymentMethod === 'balance' ? 'balance' : wallet,
-      paymentProof,
+      // paymentProof,
       type,
       status: paymentMethod === 'wallet' ? 'pending' : 'confirmed',
       address,

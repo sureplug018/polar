@@ -18,7 +18,7 @@
               <path d="M20 6.5v4" />
             </svg></span>
         </div>
-        <p class="stat-value">$1,180.00</p>
+        <p class="stat-value">$<%= totalReferralEarningsFormatted %></p>
       </div>
       <div class="card stat">
         <div class="row between" style="align-items:flex-start;flex-wrap:nowrap">
@@ -30,7 +30,7 @@
               <path d="M21 20v-1.5a4 4 0 0 0-3-3.8" />
             </svg></span>
         </div>
-        <p class="stat-value">9</p>
+        <p class="stat-value"><%= referrals.length %></p>
       </div>
       <div class="card stat">
         <div class="row between" style="align-items:flex-start;flex-wrap:nowrap">
@@ -40,15 +40,15 @@
               <path d="M20 7v5h-5" />
             </svg></span>
         </div>
-        <p class="stat-value">2</p>
+        <p class="stat-value"><%= activeReferrals.length %></p>
       </div>
     </div>
     <div class="card mt">
       <p class="eyebrow">Your referral link</p>
-      <div class="copy-box mt-sm"><span id="ref">https://tescomint.com/auth/register?ref=TESCO-AD4420</span>
+      <div class="copy-box mt-sm"><span id="ref">https://polarfincorp.com/register?ref=<%= user.myReferralCode %></span>
         <button class="btn sm ghost" onclick="copyText(document.getElementById('ref').textContent, this)">Copy</button>
       </div>
-      <p class="muted small mt-sm">Code: <strong>TESCO-AD4420</strong></p>
+      <p class="muted small mt-sm">Code: <strong><%= user.myReferralCode %></strong></p>
     </div>
     <div class="mt">
       <div class="card table-card" data-paginate="10" id="tbl4" style="padding:6px">
@@ -59,78 +59,39 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Joined</th>
-                <th>Invested</th>
-                <th>Commission</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
+              <% referrals.forEach(referral => { %>
               <tr>
-                <td>Marcus Feld</td>
-                <td>marcus.feld@mail.com</td>
-                <td>28 Feb 2026</td>
-                <td>$6,000.00</td>
-                <td>$300.00</td>
-                <td><span class="pill success">success</span></td>
+                <td><%= referral.firstName %> <%= referral.lastName %></td>
+                <td><%= referral.email %></td>
+                <% const date = referral.createdAt.toLocaleDateString() %>
+                <% const time = referral.createdAt.toLocaleTimeString() %>
+                <td><%= date %>, <%= time %></td>
+                <td><span class="pill <%= referral.confirmed === true ? 'success' : 'pending' %>"><%= referral.confirmed === true ? 'Active' : 'Pending' %></span></td>
               </tr>
-              <tr>
-                <td>Priya Raman</td>
-                <td>priya.raman@mail.com</td>
-                <td>19 Feb 2026</td>
-                <td>$1,000.00</td>
-                <td>$30.00</td>
-                <td><span class="pill pending">pending</span></td>
-              </tr>
-              <tr>
-                <td>Liam O'Brien</td>
-                <td>liam.obrien@mail.com</td>
-                <td>04 Jan 2026</td>
-                <td>$40,000.00</td>
-                <td>$800.00</td>
-                <td><span class="pill success">success</span></td>
-              </tr>
-              <tr>
-                <td>Sofia Castillo</td>
-                <td>sofia.castillo@mail.com</td>
-                <td>22 Dec 2025</td>
-                <td>$0.00</td>
-                <td>$50.00</td>
-                <td><span class="pill pending">pending</span></td>
-              </tr>
+              <% }) %>
             </tbody>
           </table>
         </div>
         <div class="cards-list" style="padding:10px">
+          <% referrals.forEach(referral => { %>
           <div class="mini-card">
-            <div class="row between"><strong>Marcus Feld</strong><span class="pill success">success</span></div>
-            <div class="mini-row"><span>Invested</span><span>$6,000.00</span></div>
-            <div class="mini-row"><span>Commission</span><span>$300.00</span></div>
-            <div class="mini-row"><span>Joined</span><span>28 Feb 2026</span></div>
+            <div class="row between"><strong><%= referral.firstName %> <%= referral.lastName %></strong><span class="pill <%= referral.confirmed === true ? 'success' : 'pending' %>"><%= referral.confirmed === true ? 'Active' : 'Pending' %></span></div>
+            <div class="mini-row"><span>Email</span><span><%= referral.email %></span></div>
+            <% const date = referral.createdAt.toLocaleDateString() %>
+            <% const time = referral.createdAt.toLocaleTimeString() %>
+            <div class="mini-row"><span>Joined</span><span><%= date %>, <%= time %></span></div>
           </div>
-          <div class="mini-card">
-            <div class="row between"><strong>Priya Raman</strong><span class="pill pending">pending</span></div>
-            <div class="mini-row"><span>Invested</span><span>$1,000.00</span></div>
-            <div class="mini-row"><span>Commission</span><span>$30.00</span></div>
-            <div class="mini-row"><span>Joined</span><span>19 Feb 2026</span></div>
-          </div>
-          <div class="mini-card">
-            <div class="row between"><strong>Liam O'Brien</strong><span class="pill success">success</span></div>
-            <div class="mini-row"><span>Invested</span><span>$40,000.00</span></div>
-            <div class="mini-row"><span>Commission</span><span>$800.00</span></div>
-            <div class="mini-row"><span>Joined</span><span>04 Jan 2026</span></div>
-          </div>
-          <div class="mini-card">
-            <div class="row between"><strong>Sofia Castillo</strong><span class="pill pending">pending</span></div>
-            <div class="mini-row"><span>Invested</span><span>$0.00</span></div>
-            <div class="mini-row"><span>Commission</span><span>$50.00</span></div>
-            <div class="mini-row"><span>Joined</span><span>22 Dec 2025</span></div>
-          </div>
+          <% }) %>
         </div>
-        <div class="pager" data-pager hidden>
+        <!-- <div class="pager" data-pager hidden>
           <button class="btn sm ghost" type="button" data-page-prev>Previous</button>
           <span class="muted small" data-page-info></span>
           <button class="btn sm ghost" type="button" data-page-next>Next</button>
-        </div>
+        </div> -->
       </div>
     </div>
   </main>

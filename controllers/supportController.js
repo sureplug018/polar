@@ -15,8 +15,9 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.createSupport = async (req, res) => {
-  const { name, email, subject, message } = req.body;
-  const requiredFields = ['name', 'email', 'subject', 'message'];
+  const user = req.user; // Assuming you have user authentication middleware that sets req.user
+  const { subject, category, message } = req.body;
+  const requiredFields = ['subject', 'category', 'message'];
 
   // Validate request body
   for (const field of requiredFields) {
@@ -28,9 +29,10 @@ exports.createSupport = async (req, res) => {
   }
   try {
     const support = await Support.create({
-      name,
-      email,
+      name: user.firstName + ' ' + user.lastName,
+      email: user.email,
       subject,
+      category,
       message,
     });
 
@@ -78,7 +80,7 @@ exports.replySupport = async (req, res) => {
     await sendReplyEmail(email, subject, message);
 
     // Delete the support message
-    await Support.findByIdAndDelete(support._id);
+    // await Support.findByIdAndDelete(support._id);
 
     return res.status(200).json({
       status: 'success',
