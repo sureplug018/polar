@@ -922,6 +922,7 @@ exports.sendSupport = async (req, res) => {
       const supports = await Support.find({ userId: user.id }).sort({
         createdAt: -1
       });
+      console.log('Supports:', supports); // Log the supports to check if they are being retrieved correctly
       return res.status(200).render('support', {
         title: 'Contact Support',
         user,
@@ -963,7 +964,7 @@ exports.adminDashboard = async (req, res) => {
 
       const supports = await Support.find();
 
-      return res.status(200).render('adminDashboard', {
+      return res.status(200).render('admin-dashboard', {
         user,
         title: 'Admin Dashboard',
         transactions,

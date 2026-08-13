@@ -259,12 +259,12 @@ exports.login = async (req, res) => {
       });
     }
 
-    if (user.role !== 'user') {
-      return res.status(401).json({
-        status: 'fail',
-        message: 'This user is an admin',
-      });
-    }
+    // if (user.role !== 'user') {
+    //   return res.status(401).json({
+    //     status: 'fail',
+    //     message: 'This user is an admin',
+    //   });
+    // }
 
     if (user.confirmed === false) {
       return res.status(403).json({
@@ -316,6 +316,7 @@ exports.login = async (req, res) => {
       status: 'success',
       accessToken,
       refreshToken,
+      role: user.role,
     });
   } catch (err) {
     res.status(401).json({
@@ -814,7 +815,6 @@ exports.logout = async (req, res) => {
 
 // Function to update user data
 exports.updateUserData = async (req, res) => {
-  const paymentProof = req.files.paymentProof[0].path; // Cloudinary URL
   try {
     // Step 1: Authentication - Verify JWT token
     const decoded = await promisify(jwt.verify)(
@@ -878,10 +878,6 @@ exports.updateUserData = async (req, res) => {
 
     if (req.body.phoneNumber) {
       currentUser.phoneNumber = phoneNumber;
-    }
-
-    if (paymentProof) {
-      currentUser.paymentProof = paymentProof;
     }
 
     // Step 4: Save the updated user data

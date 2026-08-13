@@ -74,7 +74,11 @@
           button.disabled = false;
           button.textContent = 'Sign in';
           button.style.cursor = 'pointer';
-          window.location.href = '/dashboard';
+          if (response.data.role === 'admin') {
+            window.location.href = '/admin/dashboard';
+          } else {
+            window.location.href = '/dashboard';
+          }
         }, 1500);
       }
     } catch (error) {

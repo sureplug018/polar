@@ -45,23 +45,26 @@
       <div class="card">
         <h2 class="section-title">Payout request</h2>
         <form data-demo class="mt-sm">
-          <label class="field"><span>Payment Method</span><select>
-            <option>Select an Wallet</option>
+          <div id="alert" style="margin-bottom:14px"></div>
+          <label class="field"><span>Payment Method</span>
+            <select id="wallet-select">
+              <option>Select an Wallet</option>
               <% wallets.forEach(wallet => { %>
-              <option data-wallet-id="<%= wallet.id %>" data-wallet-address="<%= wallet.address %>"><%= wallet.name %></option>
+              <option data-wallet-id="<%= wallet.id %>" data-wallet-name="<%= wallet.name %>" data-wallet-address="<%= wallet.address %>"><%= wallet.name %></option>
               <% }) %>
-            </select></label>
+            </select>
+          </label>
           <label class="field"><span>Amount (USD)</span>
-            <input type="number" placeholder="1000" />
+            <input type="number" placeholder="1000" id="amount" />
           </label>
           <label class="field"><span>Destination wallet address</span>
-            <input type="text" placeholder="Paste your wallet address" readonly />
+            <input type="text" id="address" placeholder="Paste your wallet address" readonly />
           </label>
           <button class="btn block" type="submit">Request withdrawal</button>
-          <div class="alert success mt" data-demo-note style="display:none">
+          <!-- <div class="alert success mt" data-demo-note style="display:none">
             <h4>Withdrawal requested</h4>
             <p style="margin:0">Compliance review typically completes within 2 hours.</p>
-          </div>
+          </div> -->
         </form>
       </div>
       <div class="card">
@@ -80,4 +83,53 @@
     </div>
   </main>
 </div>
+<script src="/assets/js/alert.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const walletSelect = document.querySelector('#wallet-select');
+  const addressInput = document.querySelector('#address');
+
+  walletSelect.addEventListener('change', function() {
+    const selectedOption = this.options[this.selectedIndex];
+    const walletAddress = selectedOption.getAttribute('data-wallet-address');
+    addressInput.value = walletAddress || '';
+  });
+
+  document.querySelector('form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const walletId = walletSelect.options[walletSelect.selectedIndex].getAttribute('data-wallet-id');
+    const walletName = walletSelect.options[walletSelect.selectedIndex].getAttribute('data-wallet-name');
+    const amount = document.getElementById('amount').value;
+    const address = document.getElementById('address').value;
+
+    const button = document.querySelector('button[type="submit"]');
+    button.disabled = true;
+    button.textContent = 'Requesting...';
+    button.style.cursor = 'not-allowed';
+
+    try {
+      const response = await axios.post('/api/v1/transactions/withdraw', {
+        wallet: walletName,
+        amount,
+        address
+      });
+
+      if (response.data.status === 'success') {
+        showAlert('success', 'Withdrawal Requested', 'Your withdrawal request has been submitted successfully.');
+        // Optionally, you can clear the form fields after successful submission
+        walletSelect.selectedIndex = 0;
+        document.getElementById('amount').value = '';
+        document.getElementById('address').value = '';
+      }
+    } catch (error) {
+      console.error('Error requesting withdrawal:', error.response ? error.response.data : error.message);
+      showAlert('error', 'Request Error', error.response && error.response.data && error.response.data.message ? error.response.data.message : 'An unexpected error occurred. Please try again.');
+    } finally {
+      button.disabled = false;
+      button.textContent = 'Request withdrawal';
+      button.style.cursor = 'pointer';
+    }
+  });
+</script>
 <%- include('partials/dashboardFooter') %>

@@ -11,16 +11,14 @@
       <div class="card">
         <h2 class="section-title">Personal details</h2>
         <form data-demo class="mt-sm">
-          <label class="field"><span>Full name</span><input value="<%= user.firstName %> <%= user.lastName %>" /></label>
-          <label class="field"><span>Username</span><input value="<%= user.username %>" /></label>
-          <label class="field"><span>Email</span><input value="<%= user.email %>" /></label>
-          <label class="field"><span>Phone</span><input value="<%= user.phone %>" /></label>
-          <label class="field"><span>Country</span><input value="<%= user.country %>" /></label>
+          <div id="alert" style="margin-bottom:14px"></div>
+          <label class="field"><span>First name</span><input id="first-name" value="<%= user.firstName %>" /></label>
+          <label class="field"><span>Last name</span><input id="last-name" value="<%= user.lastName %>" /></label>
+          <label class="field"><span>Username</span><input id="username" value="<%= user.username %>" /></label>
+          <label class="field"><span>Email</span><input id="email" readonly value="<%= user.email %>" /></label>
+          <label class="field"><span>Phone</span><input id="phone" value="<%= user.phoneNumber %>" /></label>
+          <label class="field"><span>Country</span><input id="country" value="<%= user.country %>" /></label>
           <button class="btn block" type="submit">Save changes</button>
-          <div class="alert success mt" data-demo-note style="display:none">
-            <h4>Profile updated</h4>
-            <p style="margin:0">Your details were saved.</p>
-          </div>
         </form>
       </div>
       <div>
@@ -34,18 +32,138 @@
         <div class="card mt">
           <h2 class="section-title">Change password</h2>
           <form data-demo class="mt-sm">
-            <label class="field"><span>Current password</span><input type="password" placeholder="••••••••" /></label>
-            <label class="field"><span>New password</span><input type="password" placeholder="••••••••" /></label>
-            <label class="field"><span>Confirm new password</span><input type="password" placeholder="••••••••" /></label>
+            <div id="alert" style="margin-bottom:14px"></div>
+            <label class="field"><span>Current password</span><input id="current-password" type="password" placeholder="••••••••" /></label>
+            <label class="field"><span>New password</span><input id="new-password" type="password" placeholder="••••••••" /></label>
+            <label class="field"><span>Confirm new password</span><input id="confirm-password" type="password" placeholder="••••••••" /></label>
             <button class="btn block" type="submit">Update password</button>
-            <div class="alert success mt" data-demo-note style="display:none">
-              <h4>Password changed</h4>
-              <p style="margin:0">Use your new password next time you sign in.</p>
-            </div>
           </form>
         </div>
       </div>
     </div>
   </main>
 </div>
+<script src="/assets/js/alert.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+  // ======================
+  // 1. Personal Details Form
+  // ======================
+  const profileForm = document.querySelectorAll('form')[0];
+
+  profileForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const button = this.querySelector('button[type="submit"]');
+    const originalText = button.textContent;
+    const alertBox = this.querySelector('#alert'); // the div inside this form
+
+    button.disabled = true;
+    button.textContent = 'Saving...';
+    button.style.cursor = 'not-allowed';
+
+    // Clear previous alert
+    alertBox.innerHTML = '';
+
+    try {
+      const firstName = this.querySelector('#first-name').value.trim();
+      const lastName = this.querySelector('#last-name').value.trim();
+      const username = this.querySelector('#username').value.trim();
+      const phoneNumber = this.querySelector('#phone').value.trim();
+      const country = this.querySelector('#country').value.trim();
+
+      await axios.patch('/api/v1/users/update', {
+        firstName,
+        lastName,
+        username,
+        phoneNumber,
+        country
+      });
+
+      // Show success alert inside this form
+      alertBox.innerHTML = `
+<div class="alert success">
+  <h4>Profile Updated</h4>
+  <p style="margin:0">Your details were saved successfully.</p>
+</div>
+`;
+
+    } catch (error) {
+      alertBox.innerHTML = `
+<div class="alert error">
+  <h4>Update Failed</h4>
+  <p style="margin:0">${error.response?.data?.message || 'Something went wrong'}</p>
+</div>
+`;
+    } finally {
+      button.disabled = false;
+      button.textContent = originalText;
+      button.style.cursor = 'pointer';
+    }
+  });
+
+
+  // ======================
+  // 2. Change Password Form
+  // ======================
+  const passwordForm = document.querySelectorAll('form')[1];
+
+  passwordForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const button = this.querySelector('button[type="submit"]');
+    const originalText = button.textContent;
+    const alertBox = this.querySelector('#alert'); // the div inside this form
+
+    button.disabled = true;
+    button.textContent = 'Updating...';
+    button.style.cursor = 'not-allowed';
+
+    alertBox.innerHTML = '';
+
+    try {
+      const currentPassword = this.querySelector('#current-password').value;
+      const newPassword = this.querySelector('#new-password').value;
+      const confirmPassword = this.querySelector('#confirm-password').value;
+
+      if (newPassword !== confirmPassword) {
+        alertBox.innerHTML = `
+<div class="alert error">
+  <h4>Password Mismatch</h4>
+  <p style="margin:0">New password and confirm password do not match</p>
+</div>
+`;
+        return;
+      }
+
+      await axios.patch('/api/v1/users/updateMyPassword', {
+        passwordCurrent: currentPassword,
+        password: newPassword,
+        passwordConfirm: confirmPassword
+      });
+
+      alertBox.innerHTML = `
+<div class="alert success">
+  <h4>Password Changed</h4>
+  <p style="margin:0">Your password has been updated successfully.</p>
+</div>
+`;
+
+      this.reset();
+
+    } catch (error) {
+      alertBox.innerHTML = `
+<div class="alert error">
+  <h4>Update Failed</h4>
+  <p style="margin:0">${error.response?.data?.message || 'Something went wrong'}</p>
+</div>
+`;
+    } finally {
+      button.disabled = false;
+      button.textContent = originalText;
+      button.style.cursor = 'pointer';
+    }
+  });
+</script>
 <%- include('partials/dashboardFooter') %>

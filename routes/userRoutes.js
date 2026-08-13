@@ -32,7 +32,7 @@ router.patch(
 router.patch(
   '/update',
   authController.protect,
-  transactionController.uploadPaymentProof,
+  // transactionController.uploadPaymentProof,
   authController.updateUserData
 );
 

@@ -34,6 +34,7 @@ exports.createSupport = async (req, res) => {
       subject,
       category,
       message,
+      userId: user._id,
     });
 
     const admins = await User.find({ role: 'admin' });
