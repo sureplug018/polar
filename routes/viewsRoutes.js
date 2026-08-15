@@ -103,7 +103,7 @@ router.get('/admin/wallets', viewsController.allWallets);
 
 router.get('/admin/plans', viewsController.allPlans);
 
-router.get('/admin/supports', viewsController.allSupports);
+router.get('/admin/support', viewsController.allSupports);
 
 router.get('/add-wallet', viewsController.addWallet);
 

@@ -46,7 +46,7 @@ const supportSchema = new mongoose.Schema(
 supportSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'userId',
-    select: 'firstName email',
+    select: 'firstName lastName email',
   });
   next();
 });

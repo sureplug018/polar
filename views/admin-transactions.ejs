@@ -6,18 +6,27 @@
     <p class="muted" style="margin:6px 0 0">Confirm or decline member transactions and attach a message.</p>
   </div>
   <div class="card">
-    <div class="grid g3"><label class="field"><span>Search</span><input type="text" placeholder="Member, ID or asset" /></label><label class="field"><span>Type</span><select>
+    <form method="GET">
+      <div class="grid g3"><label class="field"><span>Search</span><input type="text" name="email" placeholder="Search by email..." value="<%= query.email || '' %>" /></label>
+    </form>
+    <!-- <label class="field"><span>Type</span>
+        <select>
           <option>All types</option>
           <option>Deposit</option>
           <option>Withdrawal</option>
           <option>Profit</option>
-        </select></label><label class="field"><span>Status</span><select>
+        </select>
+      </label>
+      <label class="field"><span>Status</span>
+        <select>
           <option>All statuses</option>
           <option>Success</option>
           <option>Pending</option>
           <option>Warning</option>
           <option>Error</option>
-        </select></label></div>
+        </select>
+      </label> -->
+  </div>
   </div>
   <div class="mt">
     <div class="card table-card" data-paginate="10" id="tbl6" style="padding:6px">
@@ -68,11 +77,7 @@
         <% }) %>
 
       </div>
-      <div class="pager" data-pager hidden>
-        <button class="btn sm ghost" type="button" data-page-prev>Previous</button>
-        <span class="muted small" data-page-info></span>
-        <button class="btn sm ghost" type="button" data-page-next>Next</button>
-      </div>
+      <%- include('partials/pagination') %>
     </div>
   </div>
   <div class="modal-backdrop" id="tx-modal">
@@ -85,14 +90,8 @@
       </div>
       <div class="mt">
         <form data-demo>
-          <label class="field"><span>New status</span><select>
-              <option>Success</option>
-              <option>Pending</option>
-              <option>Warning</option>
-              <option>Declined</option>
-            </select></label>
           <label class="field"><span>Message to member</span><textarea rows="4" placeholder="Deposit confirmed after 12 network confirmations."></textarea></label>
-          <div class="row"><button class="btn" type="submit">Save & notify</button><button class="btn danger" type="button" onclick="closeModal('tx-modal')">Decline</button></div>
+          <div class="row"><button class="btn" type="submit">Approve</button><button class="btn danger" type="button" onclick="closeModal('tx-modal')">Decline</button></div>
           <div class="alert success mt" data-demo-note style="display:none">
             <h4>Transaction updated</h4>
             <p style="margin:0">The member has been notified by email.</p>

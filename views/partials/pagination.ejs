@@ -1,0 +1,26 @@
+<% const buildPageUrl = (page) => { %>
+<% const params = new URLSearchParams(query); %>
+<% params.set('page', page); %>
+<%  return '?' + params.toString(); %>
+<% } %>
+
+
+<% if (totalPages > 1) { %>
+<div class="pager" data-pager>
+  <% if (currentPage > 1) { %>
+  <a href="<%= buildPageUrl(currentPage - 1) %>" class="btn sm ghost" data-page-prev>Previous</a>
+  <% } else { %>
+  <button class="btn sm ghost" type="button" disabled>Previous</button>
+  <% } %>
+
+  <span class="muted small" data-page-info>
+    Page <%= currentPage %> of <%= totalPages %>
+  </span>
+
+  <% if (currentPage < totalPages) { %>
+  <a href="<%= buildPageUrl(currentPage + 1) %>" class="btn sm ghost" data-page-next>Next</a>
+  <% } else { %>
+  <button class="btn sm ghost" type="button" disabled>Next</button>
+  <% } %>
+</div>
+<% } %>

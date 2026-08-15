@@ -1015,14 +1015,34 @@ exports.allInvestments = async (req, res) => {
     }
 
     if (user.role === 'admin') {
-      const investments = await Investment.find().sort({ createdAt: -1 });
+      const page = parseInt(req.query.page) || 1;
+      const limit = 10;
+      const skip = (page - 1) * limit;
+
+      // Optional: support email search later if needed
+      const filter = {};
+
+      const totalInvestments = await Investment.countDocuments(filter);
+      const totalPages = Math.ceil(totalInvestments / limit);
+
+      const investments = await Investment.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
+
       return res.status(200).render('admin-investments', {
         title: 'Investments',
         user,
         investments,
         formatCurrency,
+        query: req.query,
+        currentPage: page,
+        totalPages,
+        totalInvestments,
       });
     }
+
+    return res.status(302).redirect('/');
   } catch (err) {
     return res.status(500).render('404', {
       title: 'Error',
@@ -1067,7 +1087,7 @@ exports.allSupports = async (req, res) => {
 
     if (user.role === 'admin') {
       const supports = await Support.find();
-      return res.status(200).render('allSupports', {
+      return res.status(200).render('admin-support', {
         title: 'Supports',
         user,
         supports,
@@ -1097,6 +1117,10 @@ exports.allTransactions = async (req, res) => {
 
     const { email, type, status } = req.query;
 
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
     const filter = {};
 
     // filter by transaction type
@@ -1117,9 +1141,15 @@ exports.allTransactions = async (req, res) => {
       filter.user = { $in: matchedUsers.map((u) => u._id) };
     }
 
+    // Get total count for pagination
+    const totalTransactions = await Transaction.countDocuments();
+    const totalPages = Math.ceil(totalTransactions / limit);
+
     const transactions = await Transaction.find(filter)
       .populate('user') // optional if you need user data
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
     return res.status(200).render('admin-transactions', {
       title: 'Transactions',
@@ -1127,6 +1157,10 @@ exports.allTransactions = async (req, res) => {
       transactions,
       formatCurrency,
       query: req.query,
+      // Pagination data
+      currentPage: page,
+      totalPages,
+      totalTransactions,
     });
   } catch (err) {
     return res.status(500).render('404', {
@@ -1145,13 +1179,38 @@ exports.allUsers = async (req, res) => {
     }
 
     if (user.role === 'admin') {
-      const users = await User.find().sort({ createdAt: -1 });
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const skip = (page - 1) * limit;
+      const emailQuery = req.query.email || '';
+
+      // Build filter
+      const filter = {};
+      if (emailQuery) {
+        filter.email = { $regex: emailQuery, $options: 'i' }; // case-insensitive partial match
+      }
+
+      // Get total count for pagination
+      const totalUsers = await User.countDocuments(filter);
+      const totalPages = Math.ceil(totalUsers / limit);
+
+      // Fetch paginated users
+      const users = await User.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
 
       return res.status(200).render('admin-users', {
         title: 'Users',
         user,
         users,
         formatCurrency,
+        // Pagination data
+        currentPage: page,
+        query: req.query,
+        totalPages,
+        totalUsers,
+        emailQuery, // so the search input can keep the value
       });
     }
 
@@ -1169,66 +1228,109 @@ exports.adminUserDetail = async (req, res) => {
     const user = res.locals.user;
 
     if (!user) return res.redirect('/signin');
-    if (user.role === 'admin') {
-      const userId = req.params.id;
+    if (user.role !== 'admin') return res.redirect('/signin');
 
-      const userDetail = await User.findById(userId);
+    const userId = req.params.id;
+    const userDetail = await User.findById(userId);
 
-      if (!userDetail) {
-        return res.redirect('/admin/users');
-      }
-
-      const userTransactions = await Transaction.find({
-        user: userDetail.id,
-      }).sort({ createdAt: -1 });
-
-      const userInvestments = await Investment.find({
-        user: userDetail.id,
-      }).sort({ createdAt: -1 });
-
-      const userReferrals = await User.find({
-        referralCode: userDetail.myReferralCode,
-      }).sort({ createdAt: -1 });
-
-      const userDeposits = await Transaction.find({
-        type: 'deposit',
-        status: 'confirmed',
-        user: userDetail.id,
-      });
-
-      const totalUserDepositAmount = userDeposits.reduce(
-        (sum, tx) => sum + Number(tx.amount),
-        0,
-      );
-
-      const userWithdrawal = await Transaction.find({
-        type: 'withdrawal',
-        status: 'confirmed',
-        user: userDetail.id,
-      });
-
-      const totalUserWithdrawalAmount = userWithdrawal.reduce(
-        (sum, tx) => sum + Number(tx.amount),
-        0,
-      );
-
-      const userWallets = await Wallet.find({ user: userDetail.id });
-
-      return res.render('admin-userDetails', {
-        title: 'Admin User Detail',
-        user,
-        userDetail,
-        transactions: userTransactions,
-        investments: userInvestments,
-        referrals: userReferrals,
-        deposits: userDeposits,
-        totalUserWithdrawalAmount,
-        wallets: userWallets,
-        formatCurrency,
-      });
+    if (!userDetail) {
+      return res.redirect('/admin/users');
     }
 
-    return res.redirect('/signin');
+    // Pagination settings
+    const limit = 10;
+
+    const txPage = parseInt(req.query.txPage) || 1;
+    const invPage = parseInt(req.query.invPage) || 1;
+    const refPage = parseInt(req.query.refPage) || 1;
+    const walletPage = parseInt(req.query.walletPage) || 1;
+
+    // ===== Transactions =====
+    const txFilter = { user: userDetail._id };
+    const totalTransactions = await Transaction.countDocuments(txFilter);
+    const totalTxPages = Math.ceil(totalTransactions / limit);
+
+    const userTransactions = await Transaction.find(txFilter)
+      .sort({ createdAt: -1 })
+      .skip((txPage - 1) * limit)
+      .limit(limit);
+
+    // ===== Investments =====
+    const invFilter = { user: userDetail._id };
+    const totalInvestments = await Investment.countDocuments(invFilter);
+    const totalInvPages = Math.ceil(totalInvestments / limit);
+
+    const userInvestments = await Investment.find(invFilter)
+      .sort({ createdAt: -1 })
+      .skip((invPage - 1) * limit)
+      .limit(limit);
+
+    // ===== Referrals =====
+    const refFilter = { referralCode: userDetail.myReferralCode };
+    const totalReferrals = await User.countDocuments(refFilter);
+    const totalRefPages = Math.ceil(totalReferrals / limit);
+
+    const userReferrals = await User.find(refFilter)
+      .sort({ createdAt: -1 })
+      .skip((refPage - 1) * limit)
+      .limit(limit);
+
+    // ===== Wallets =====
+    const walletFilter = { user: userDetail._id };
+    const totalWallets = await Wallet.countDocuments(walletFilter);
+    const totalWalletPages = Math.ceil(totalWallets / limit);
+
+    const userWallets = await Wallet.find(walletFilter)
+      .skip((walletPage - 1) * limit)
+      .limit(limit);
+
+    // ===== Totals (for stats) =====
+    const userDeposits = await Transaction.find({
+      type: 'deposit',
+      status: 'confirmed',
+      user: userDetail._id,
+    });
+
+    const totalUserDepositAmount = userDeposits.reduce(
+      (sum, tx) => sum + Number(tx.amount),
+      0,
+    );
+
+    const userWithdrawal = await Transaction.find({
+      type: 'withdrawal',
+      status: 'confirmed',
+      user: userDetail._id,
+    });
+
+    const totalUserWithdrawalAmount = userWithdrawal.reduce(
+      (sum, tx) => sum + Number(tx.amount),
+      0,
+    );
+
+    return res.render('admin-userDetails', {
+      title: 'Admin User Detail',
+      user,
+      userDetail,
+      transactions: userTransactions,
+      investments: userInvestments,
+      referrals: userReferrals,
+      wallets: userWallets,
+      deposits: userDeposits,
+      totalUserDepositAmount,
+      totalUserWithdrawalAmount,
+      formatCurrency,
+
+      // Pagination data
+      txPage,
+      totalTxPages,
+      invPage,
+      totalInvPages,
+      refPage,
+      totalRefPages,
+      walletPage,
+      totalWalletPages,
+      query: req.query,
+    });
   } catch (err) {
     console.log(err);
     return res.redirect('/signin');

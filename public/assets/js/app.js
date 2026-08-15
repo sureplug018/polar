@@ -134,52 +134,52 @@
   });
 
   /* ---------- pagination (max 10 rows / cards per page) ---------- */
-  function setupPager(box) {
-    var size = parseInt(box.dataset.paginate, 10) || 10;
-    var rows = Array.prototype.slice.call(box.querySelectorAll("table.data tbody tr"));
-    var cards = Array.prototype.slice.call(box.querySelectorAll(".cards-list > *"));
-    var total = Math.max(rows.length, cards.length);
-    var pager = box.querySelector("[data-pager]");
-    if (!pager) return;
-    var pages = Math.max(1, Math.ceil(total / size));
-    pager.hidden = false;
-    var info = pager.querySelector("[data-page-info]");
-    var prev = pager.querySelector("[data-page-prev]");
-    var next = pager.querySelector("[data-page-next]");
-    var page = 1;
-    function render() {
-      var start = (page - 1) * size;
-      var end = start + size;
-      rows.forEach(function (r, i) {
-        r.style.display = i >= start && i < end ? "" : "none";
-      });
-      cards.forEach(function (c, i) {
-        c.style.display = i >= start && i < end ? "" : "none";
-      });
-      if (info) info.textContent = "Page " + page + " of " + pages + " · " + total + " records";
-      if (prev) prev.disabled = page === 1;
-      if (next) next.disabled = page === pages;
-    }
-    if (prev)
-      prev.addEventListener("click", function () {
-        if (page > 1) {
-          page--;
-          render();
-        }
-      });
-    if (next)
-      next.addEventListener("click", function () {
-        if (page < pages) {
-          page++;
-          render();
-        }
-      });
-    render();
-  }
-  function setupPagers() {
-    document.querySelectorAll("[data-paginate]").forEach(setupPager);
-  }
-  window.addEventListener("DOMContentLoaded", setupPagers);
+  // function setupPager(box) {
+  //   var size = parseInt(box.dataset.paginate, 10) || 10;
+  //   var rows = Array.prototype.slice.call(box.querySelectorAll("table.data tbody tr"));
+  //   var cards = Array.prototype.slice.call(box.querySelectorAll(".cards-list > *"));
+  //   var total = Math.max(rows.length, cards.length);
+  //   var pager = box.querySelector("[data-pager]");
+  //   if (!pager) return;
+  //   var pages = Math.max(1, Math.ceil(total / size));
+  //   pager.hidden = false;
+  //   var info = pager.querySelector("[data-page-info]");
+  //   var prev = pager.querySelector("[data-page-prev]");
+  //   var next = pager.querySelector("[data-page-next]");
+  //   var page = 1;
+  //   function render() {
+  //     var start = (page - 1) * size;
+  //     var end = start + size;
+  //     rows.forEach(function (r, i) {
+  //       r.style.display = i >= start && i < end ? "" : "none";
+  //     });
+  //     cards.forEach(function (c, i) {
+  //       c.style.display = i >= start && i < end ? "" : "none";
+  //     });
+  //     if (info) info.textContent = "Page " + page + " of " + pages + " · " + total + " records";
+  //     if (prev) prev.disabled = page === 1;
+  //     if (next) next.disabled = page === pages;
+  //   }
+  //   if (prev)
+  //     prev.addEventListener("click", function () {
+  //       if (page > 1) {
+  //         page--;
+  //         render();
+  //       }
+  //     });
+  //   if (next)
+  //     next.addEventListener("click", function () {
+  //       if (page < pages) {
+  //         page++;
+  //         render();
+  //       }
+  //     });
+  //   render();
+  // }
+  // function setupPagers() {
+  //   document.querySelectorAll("[data-paginate]").forEach(setupPager);
+  // }
+  // window.addEventListener("DOMContentLoaded", setupPagers);
 
   document.addEventListener("click", function (e) {
     if (e.target.classList && e.target.classList.contains("modal-backdrop")) {
