@@ -2,7 +2,7 @@ const Wallet = require('./../models/walletsModel');
 
 exports.createWallet = async (req, res) => {
   try {
-    const { name, address } = req.body;
+    const { name, address, user } = req.body;
     const checkName = await Wallet.findOne({ name });
     if (checkName && req.user.role === 'user') {
       return res.status(400).json({
@@ -14,18 +14,7 @@ exports.createWallet = async (req, res) => {
       const newWallet = await Wallet.create({
         name,
         address,
-      });
-      res.status(201).json({
-        status: 'success',
-        data: {
-          wallet: newWallet,
-        },
-      });
-    } else {
-      const newWallet = await Wallet.create({
-        name,
-        address,
-        user: req.user.id,
+        user,
       });
       res.status(201).json({
         status: 'success',
@@ -83,7 +72,7 @@ exports.editWallet = async (req, res) => {
     const walletId = req.params.id;
     const wallets = await Wallet.findById(walletId);
 
-    const { name, address } = req.body;
+    const { name, address, status } = req.body;
 
     if (wallets.name === name && req.user.role === 'user') {
       return res.status(400).json({
@@ -99,6 +88,8 @@ exports.editWallet = async (req, res) => {
     if (address) {
       wallets.address = address;
     }
+
+    if (status) wallets.status = status;
 
     const updatedWallet = await wallets.save();
 

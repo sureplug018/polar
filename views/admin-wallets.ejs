@@ -6,7 +6,7 @@
     <p class="muted" style="margin:6px 0 0">Add, edit or disable the wallets shown to members.</p>
   </div>
   <div class="row between">
-    <h2 class="section-title">Wallets</h2><button class="btn sm" onclick="openModal('wallet-modal')">Add wallet</button>
+    <h2 class="section-title">Wallets</h2><button class="btn sm" onclick="openModal('add-wallet-modal')">Add wallet</button>
   </div>
   <div class="mt-sm">
     <div class="card table-card" data-paginate="10" id="tbl24" style="padding:6px">
@@ -28,7 +28,7 @@
               <td><%= wallet.name %></td>
               <td><%= wallet.address %></td>
               <td><span class="pill <%= wallet.status === 'active' ? 'success' : 'error' %>"><%= wallet.status === 'active' ? 'Active' : 'Inactive' %></span></td>
-              <td><button class="btn sm ghost" onclick="openModal('wallet-modal')">Edit</button></td>
+              <td><button class="btn sm ghost edit-wallet-modal-button" data-wallet-id="<%= wallet._id %>" onclick="openModal('edit-wallet-modal')">Edit</button></td>
             </tr>
             <% }) %>
           </tbody>
@@ -39,38 +39,157 @@
         <div class="mini-card">
           <div class="row between"><strong><%= wallet.name %></strong><span class="pill <%= wallet.status === 'active' ? 'success' : 'error' %>"><%= wallet.status === 'active' ? 'Active' : 'Inactive' %></span></div>
           <p class="muted small" style="word-break:break-all;margin:8px 0 0"><%= wallet.address %></p>
-          <button class="btn sm block" style="margin-top:10px" onclick="openModal('wallet-modal')">Edit</button>
+          <button class="btn sm block edit-wallet-modal-button" data-wallet-id="<%= wallet._id %>" style="margin-top:10px" onclick="openModal('edit-wallet-modal')">Edit</button>
         </div>
         <% }) %>
       </div>
-      <div class="pager" data-pager hidden>
-        <button class="btn sm ghost" type="button" data-page-prev>Previous</button>
-        <span class="muted small" data-page-info></span>
-        <button class="btn sm ghost" type="button" data-page-next>Next</button>
-      </div>
     </div>
   </div>
-  <div class="modal-backdrop" id="wallet-modal">
+  <div class="modal-backdrop" id="add-wallet-modal">
     <div class="modal">
       <div class="row between">
-        <h3 style="font-size:18px">Wallet details</h3><button class="icon-btn" onclick="closeModal('wallet-modal')"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <h3 style="font-size:18px">Wallet details</h3><button class="icon-btn" onclick="closeModal('add-wallet-modal')"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="m6 6 12 12" />
             <path d="m18 6-12 12" />
           </svg></button>
       </div>
       <div class="mt">
-        <form data-demo><label class="field"><span>Asset</span><input type="text" placeholder="Tether" /></label><label class="field"><span>Network</span><input type="text" placeholder="TRC20" /></label><label class="field"><span>Wallet address</span><input type="text" placeholder="Paste the receiving address" /></label><label class="field"><span>Status</span><select>
-              <option>Active</option>
-              <option>Disabled</option>
-            </select></label>
-          <div class="row"><button class="btn" type="submit">Save wallet</button><button class="btn danger" type="button" onclick="closeModal('wallet-modal')">Delete</button></div>
-          <div class="alert success mt" data-demo-note style="display:none">
-            <h4>Wallet saved</h4>
-            <p style="margin:0">Members will see this wallet on the deposit page.</p>
+        <form data-demo class="add-wallet-form">
+          <div id="alert" style="margin-bottom:14px"></div>
+          <label class="field"><span>Name</span><input id="name" type="text" placeholder="USDT" /></label>
+          <label class="field"><span>Wallet address</span><input id="address" type="text" placeholder="Paste the receiving address" /></label>
+          <div class="row">
+            <button class="btn add-wallet-btn" type="submit">Save wallet</button>
+            <button class="btn danger" type="button" onclick="closeModal('add-wallet-modal')">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop" id="edit-wallet-modal">
+    <div class="modal">
+      <div class="row between">
+        <h3 style="font-size:18px">Wallet details</h3><button class="icon-btn" onclick="closeModal('edit-wallet-modal')"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 6 12 12" />
+            <path d="m18 6-12 12" />
+          </svg></button>
+      </div>
+      <div class="mt">
+        <form data-demo class="edit-wallet-form">
+          <div id="alert" style="margin-bottom:14px"></div>
+          <label class="field"><span>Name</span><input id="edit-wallet-name" type="text" placeholder="USDT" /></label>
+          <label class="field"><span>Address</span><input id="edit-wallet-address" type="text" placeholder="address" /></label>
+          <label class="field"><span>Status</span>
+            <select id="edit-wallet-status">
+              <option value="">Select Status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Disabled</option>
+            </select>
+          </label>
+          <div class="row">
+            <button class="btn edit-wallet-btn" type="submit">Save wallet</button>
+            <button class="btn danger" type="button" onclick="closeModal('edit-wallet-modal')">Close</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </main>
+<script src="/assets/js/alert.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+  const editWalletModalButton = document.querySelectorAll('.edit-wallet-modal-button');
+
+  let walletId
+  if (editWalletModalButton) {
+    editWalletModalButton.forEach(button => {
+      button.addEventListener('click', function() {
+        walletId = this.dataset.walletId
+      })
+    })
+  }
+  const editWalletForm = document.querySelector('.edit-wallet-form');
+  if (editWalletForm) {
+    editWalletForm.addEventListener('submit', async (e) => {
+      e.preventDefault()
+
+      const submitBtn = document.querySelector('.edit-wallet-btn')
+      submitBtn.disabled = true
+      submitBtn.style.cursor = 'not-allowed'
+      submitBtn.textContent = 'Saving...'
+
+      const name = document.getElementById('edit-wallet-name').value;
+      const address = document.getElementById('edit-wallet-address').value;
+      const status = document.getElementById('edit-wallet-status').value;
+
+      if (!walletId) return showAlert('error', 'Wallet update error', 'Wallet ID is required')
+
+      try {
+        const response = await axios.patch(`/api/v1/wallets/edit-wallet/${walletId}`, {
+          name,
+          address,
+          status
+        })
+
+        if (response.data.status === 'success') {
+          showAlert('success', 'Wallet updated.', 'You have successfully a wallet');
+          window.setTimeout(() => {
+            editWalletForm.reset()
+            closeModal('edit-wallet-modal');
+          }, 2000)
+
+        }
+      } catch (error) {
+        showAlert('error', 'Error occurred.', error.response?.data?.message || 'An unexpected error occurred.');
+      } finally {
+        submitBtn.disabled = false
+        submitBtn.style.cursor = 'pointer'
+        submitBtn.textContent = 'Save'
+      }
+    })
+  }
+</script>
+
+<script>
+  const addWalletForm = document.querySelector('.add-wallet-form');
+
+  if (addWalletForm) {
+    addWalletForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = document.querySelector('.add-wallet-btn')
+      submitBtn.disabled = true
+      submitBtn.style.cursor = 'not-allowed'
+      submitBtn.textContent = 'Saving...'
+
+
+      const name = document.getElementById('name').value;
+      const address = document.getElementById('address').value;
+
+      try {
+        const response = await axios.post('/api/v1/wallets/create-wallet', {
+          name,
+          address,
+        })
+
+        if (response.data.status === 'success') {
+          showAlert('success', 'Wallet added successfully', 'A new wallet have been added.')
+          window.setTimeout(() => {
+            addWalletForm.reset()
+            closeModal('add-wallet-modal');
+          }, 2000)
+
+        }
+
+      } catch (error) {
+        showAlert('error', 'Error occurred.', error.response?.data?.message || 'An unexpected error occurred.');
+      } finally {
+        submitBtn.disabled = false
+        submitBtn.style.cursor = 'pointer'
+        submitBtn.textContent = 'Save'
+      }
+    })
+  }
+</script>
 <%- include('partials/adminFooter') %>

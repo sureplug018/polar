@@ -54,17 +54,37 @@ exports.getAllPlans = async (req, res) => {
 
 exports.editPlan = async (req, res) => {
   try {
-    await Plan.findByIdAndUpdate(req.params.id, {
-      name: req.body.name,
-      min: req.body.min,
-      max: req.body.max,
-      roi: req.body.roi,
-      duration: req.body.duration,
-    });
+    const planId = req.params.id;
+
+    const { name, roi, min, max, duration } = req.body;
+
+    const plan = await Plan.findById(planId);
+
+    if (!plan) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Plan not found',
+      });
+    }
+
+    if (name) plan.name = name;
+    if (roi) plan.roi = roi;
+    if (min) plan.min = min;
+    if (max) plan.max = max;
+    if (duration) plan.duration = duration;
+
+    await plan.save();
+    if (!plan) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'Plan not found',
+      });
+    }
 
     res.status(200).json({
       status: 'success',
-      message: 'successfully edited plan',
+      message: 'Successfully edited plan',
+      plan,
     });
   } catch (err) {
     res.status(400).json({

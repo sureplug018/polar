@@ -763,7 +763,7 @@ exports.withdrawMoney = async (req, res) => {
     ]);
 
     if (user.role === 'user') {
-      const wallets = await Wallet.find({ user: user.id });
+      const wallets = await Wallet.find({ user: user.id, status: 'active' });
       return res.status(200).render('withdraw', {
         title: 'Withdraw Funds',
         user,
@@ -1019,13 +1019,23 @@ exports.allInvestments = async (req, res) => {
       const limit = 10;
       const skip = (page - 1) * limit;
 
-      // Optional: support email search later if needed
       const filter = {};
+
+      // Search by user email
+      if (req.query.email) {
+        const users = await User.find({
+          email: { $regex: req.query.email, $options: 'i' },
+        }).select('_id');
+
+        const userIds = users.map((u) => u._id);
+        filter.user = { $in: userIds };
+      }
 
       const totalInvestments = await Investment.countDocuments(filter);
       const totalPages = Math.ceil(totalInvestments / limit);
 
       const investments = await Investment.find(filter)
+        .populate('user', 'firstName lastName email')
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit);

@@ -6,40 +6,169 @@
     <p class="muted" style="margin:6px 0 0">Create and tune the plans available to members.</p>
   </div>
   <div class="row between">
-    <h2 class="section-title">Plans</h2><button class="btn sm" onclick="openModal('plan-modal')">Add plan</button>
+    <h2 class="section-title">Plans</h2><button class="btn sm" onclick="openModal('add-plan-modal')">Add plan</button>
   </div>
   <div class="grid g4 mt-sm">
     <% plans.forEach(plan => { %>
     <div class="card">
       <div class="row between"><strong><%= plan.name %></strong></div>
-      <p class="stat-value" style="color:var(--primary)"><%= plan.roi %></p>
+      <p class="stat-value" style="color:var(--primary)"><%= plan.roi %>% Daily</p>
       <div class="mini-row"><span>Duration</span><span><%= plan.duration %> Days</span></div>
-      <div class="mini-row"><span>Range</span><span>$<%= plan.min %> - $<%= plan.max %></span></div>
-      <button class="btn sm block" style="margin-top:12px" onclick="openModal('plan-modal')">Edit plan</button>
+      <div class="mini-row"><span>Range</span><span>$<%= plan.min.toLocaleString() %> - $<%= plan.max.toLocaleString() %></span></div>
+      <button class="btn sm block edit-plan-modal-button" data-plan-id="<%= plan.id %>" style="margin-top:12px" onclick="openModal('edit-plan-modal')">Edit plan</button>
     </div>
     <% }) %>
   </div>
-  <div class="modal-backdrop" id="plan-modal">
+  <div class="modal-backdrop" id="add-plan-modal">
     <div class="modal">
       <div class="row between">
-        <h3 style="font-size:18px">Plan details</h3><button class="icon-btn" onclick="closeModal('plan-modal')"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <h3 style="font-size:18px">Plan details</h3><button class="icon-btn" onclick="closeModal('add-plan-modal')"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="m6 6 12 12" />
             <path d="m18 6-12 12" />
           </svg></button>
       </div>
       <div class="mt">
-        <form data-demo>
-          <div class="grid g2-md"><label class="field"><span>Name</span><input type="text" placeholder="Growth" /></label><label class="field"><span>ROI</span><input type="text" placeholder="25% ROI" /></label></div>
-          <div class="grid g2-md"><label class="field"><span>Minimum (USD)</span><input type="number" placeholder="2000" /></label><label class="field"><span>Maximum (USD)</span><input type="number" placeholder="10000" /></label></div>
-          <div class="grid g2-md"><label class="field"><span>Duration</span><input type="text" placeholder="30 days" /></label><label class="field"><span>Referral</span><input type="text" placeholder="5% referral" /></label></div>
-          <div class="row"><button class="btn" type="submit">Save plan</button><button class="btn danger" type="button" onclick="closeModal('plan-modal')">Delete</button></div>
-          <div class="alert success mt" data-demo-note style="display:none">
-            <h4>Plan saved</h4>
-            <p style="margin:0">The plan is now live for members.</p>
+        <form data-demo class="add-plan-form">
+          <div id="alert" style="margin-bottom:14px"></div>
+          <div class="grid g2-md"><label class="field"><span>Name</span><input id="name" type="text" placeholder="Growth" /></label><label class="field"><span>ROI</span><input id="roi" type="text" placeholder="25" /></label></div>
+          <div class="grid g2-md"><label class="field"><span>Minimum (USD)</span><input id="min" type="number" placeholder="2000" /></label><label class="field"><span>Maximum (USD)</span><input id="max" type="number" placeholder="10000" /></label></div>
+          <div class="grid g2-md"><label class="field"><span>Duration</span><input id="duration" type="text" placeholder="30" /></label></div>
+          <div class="row">
+            <button class="btn add-plan-btn" type="submit">Save plan</button>
+            <button class="btn danger" type="button" onclick="closeModal('add-plan-modal')">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="edit-plan-modal">
+    <div class="modal">
+      <div class="row between">
+        <h3 style="font-size:18px">Plan details</h3><button class="icon-btn" onclick="closeModal('edit-plan-modal')"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 6 12 12" />
+            <path d="m18 6-12 12" />
+          </svg></button>
+      </div>
+      <div class="mt">
+        <form data-demo class="edit-plan-form">
+          <div id="alert" style="margin-bottom:14px"></div>
+          <div class="grid g2-md"><label class="field"><span>Name</span><input id="edit-plan-name" type="text" placeholder="Growth" /></label><label class="field"><span>ROI</span><input id="edit-plan-roi" type="text" placeholder="25" /></label></div>
+          <div class="grid g2-md"><label class="field"><span>Minimum (USD)</span><input id="edit-plan-min" type="number" placeholder="2000" /></label><label class="field"><span>Maximum (USD)</span><input id="edit-plan-max" type="number" placeholder="10000" /></label></div>
+          <div class="grid g2-md"><label class="field"><span>Duration</span><input id="edit-plan-duration" type="text" placeholder="30" /></label></div>
+          <div class="row">
+            <button class="btn edit-plan-btn" type="submit">Save plan</button>
+            <button class="btn danger" type="button" onclick="closeModal('edit-plan-modal')">Close</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </main>
+<script src="/assets/js/alert.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+  const editPlanModalButton = document.querySelectorAll('.edit-plan-modal-button');
+
+  let planId
+  if (editPlanModalButton) {
+    editPlanModalButton.forEach(button => {
+      button.addEventListener('click', function() {
+        planId = this.dataset.planId
+      })
+    })
+  }
+  const editPlanForm = document.querySelector('.edit-plan-form');
+  if (editPlanForm) {
+    editPlanForm.addEventListener('submit', async (e) => {
+      e.preventDefault()
+
+      const submitBtn = document.querySelector('.edit-plan-btn')
+      submitBtn.disabled = true
+      submitBtn.style.cursor = 'not-allowed'
+      submitBtn.textContent = 'Saving...'
+
+      const name = document.getElementById('edit-plan-name').value;
+      const roi = document.getElementById('edit-plan-roi').value;
+      const min = document.getElementById('edit-plan-min').value;
+      const max = document.getElementById('edit-plan-max').value;
+      const duration = document.getElementById('edit-plan-duration').value;
+
+      if (!planId) return showAlert('error', 'Plan update error', 'Plan ID is required')
+
+      try {
+        const response = await axios.patch(`/api/v1/plans/edit-plan/${planId}`, {
+          name,
+          roi,
+          min,
+          max,
+          duration
+        })
+
+        if (response.data.status === 'success') {
+          showAlert('success', 'Plan updated.', 'You have successfully a plan');
+          window.setTimeout(() => {
+            editPlanForm.reset()
+            closeModal('edit-plan-modal');
+          }, 2000)
+        }
+      } catch (error) {
+        showAlert('error', 'Error occurred.', error.response?.data?.message || 'An unexpected error occurred.');
+      } finally {
+        submitBtn.disabled = false
+        submitBtn.style.cursor = 'pointer'
+        submitBtn.textContent = 'Save'
+      }
+    })
+  }
+</script>
+
+<script>
+  const addPlanForm = document.querySelector('.add-plan-form');
+
+  if (addPlanForm) {
+    addPlanForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = document.querySelector('.add-plan-btn')
+      submitBtn.disabled = true
+      submitBtn.style.cursor = 'not-allowed'
+      submitBtn.textContent = 'Saving...'
+
+
+      const name = document.getElementById('name').value;
+      const roi = document.getElementById('roi').value;
+      const min = document.getElementById('min').value;
+      const max = document.getElementById('max').value;
+      const duration = document.getElementById('duration').value;
+
+      try {
+        const response = await axios.post('/api/v1/plans/create-plan', {
+          name,
+          roi,
+          min,
+          max,
+          duration
+        })
+
+        if (response.data.status === 'success') {
+          showAlert('success', 'Plan added successfully', 'A new plan have been added.')
+          window.setTimeout(() => {
+            addPlanForm.reset()
+            closeModal('add-plan-modal');
+          }, 2000)
+
+        }
+
+      } catch (error) {
+        showAlert('error', 'Error occurred.', error.response?.data?.message || 'An unexpected error occurred.');
+      } finally {
+        submitBtn.disabled = false
+        submitBtn.style.cursor = 'pointer'
+        submitBtn.textContent = 'Save'
+      }
+    })
+  }
+</script>
 <%- include('partials/adminFooter') %>

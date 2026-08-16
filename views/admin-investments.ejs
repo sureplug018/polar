@@ -5,6 +5,29 @@
     <h1 style="font-size:24px">Investments</h1>
     <p class="muted" style="margin:6px 0 0">Adjust profit and manage the lifecycle of member plans.</p>
   </div>
+  <div class="card">
+    <form method="GET">
+      <div class="grid g3"><label class="field"><span>Search</span><input type="text" name="email" placeholder="Search by email..." value="<%= query.email || '' %>" /></label>
+    </form>
+    <!-- <label class="field"><span>Type</span>
+        <select>
+          <option>All types</option>
+          <option>Deposit</option>
+          <option>Withdrawal</option>
+          <option>Profit</option>
+        </select>
+      </label>
+      <label class="field"><span>Status</span>
+        <select>
+          <option>All statuses</option>
+          <option>Success</option>
+          <option>Pending</option>
+          <option>Warning</option>
+          <option>Error</option>
+        </select>
+      </label> -->
+  </div>
+
   <div class="mt">
     <div class="card table-card" data-paginate="10" id="tbl7" style="padding:6px">
       <div class="table-wrap">
