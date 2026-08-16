@@ -11,7 +11,7 @@
       <div class="row between"><strong><%= support.subject %></strong><span class="pill <%= support.status === 'replied' ? 'success' : 'warning' %>"><%= support.status === 'replied' ? 'Closed' : 'Open' %></span></div>
       <p class="muted small" style="margin:8px 0 0"><%= support.userId.firstName %> <%= support.userId.lastName %> · <%= support.userId.email %> · <%= support.createdAt.toLocaleDateString() %></p>
       <p class="muted" style="margin:10px 0 0"><%= support.message %></p>
-      <button class="btn sm block" style="margin-top:12px" onclick="openModal('ticket-modal')">Reply</button>
+      <button class="btn sm block support-modal-button" data-support-id="<%= support._id %>" style="margin-top:12px" onclick="openModal('ticket-modal')">Reply</button>
     </div>
     <% }) %>
   </div>
@@ -24,18 +24,69 @@
           </svg></button>
       </div>
       <div class="mt">
-        <form data-demo><label class="field"><span>Reply</span><textarea rows="4" placeholder="Type your response to the member."></textarea></label><label class="field"><span>Set status</span><select>
+        <form data-demo class="reply-support-form">
+          <div id="alert" style="margin-bottom:14px"></div>
+          <label class="field"><span>Reply</span><input type="text" name="" id="subject" placeholder="Enter subject"></label>
+          <label class="field"><span>Reply</span><textarea rows="4" id="message" placeholder="Type your response."></textarea></label>
+          <!-- <label class="field"><span>Set status</span>
+            <select>
               <option>Answered</option>
               <option>Open</option>
               <option>Closed</option>
-            </select></label><button class="btn block" type="submit">Send reply</button>
-          <div class="alert success mt" data-demo-note style="display:none">
-            <h4>Reply sent</h4>
-            <p style="margin:0">The member has been notified by email.</p>
-          </div>
+            </select>
+          </label> -->
+          <button class="btn block submit-btn" type="submit">Send reply</button>
         </form>
       </div>
     </div>
   </div>
 </main>
+<script src="/assets/js/alert.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+  const supportModalButton = document.querySelectorAll('.support-modal-button');
+
+  let supportId
+  if (supportModalButton) {
+    supportModalButton.forEach(button => {
+      button.addEventListener('click', function() {
+        supportId = this.dataset.supportId;
+      })
+    })
+  }
+
+  const replySupportForm = document.querySelector('.reply-support-form')
+  if (replySupportForm) {
+    replySupportForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = document.querySelector('.submit-btn');
+
+      submitBtn.textContent = 'Sending reply...';
+      submitBtn.style.cursor = 'not-allowed';
+      submitBtn.disabled = true;
+
+      try {
+        const response = await axios.post(`/api/v1/supports/reply-support/${supportId}`, {
+          subject: document.getElementById('subject').value,
+          message: document.getElementById('message').value
+        })
+        if (response.data.status === 'success') {
+          showAlert('success', 'Email Sent', 'Reply have been sent to the user.');
+          window.setTimeout(() => {
+            replySupportForm.reset();
+            closeModal('ticket-modal')
+          }, 2000)
+        }
+      } catch (error) {
+        showAlert('error', 'Error occurred.', error.response?.data?.message || 'An unexpected error occurred.');
+      } finally {
+        submitBtn.disabled = false
+        submitBtn.style.cursor = 'pointer'
+        submitBtn.textContent = 'Save'
+      }
+    })
+  }
+</script>
 <%- include('partials/adminFooter') %>

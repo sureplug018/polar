@@ -81,7 +81,8 @@ exports.replySupport = async (req, res) => {
     await sendReplyEmail(email, subject, message);
 
     // Delete the support message
-    // await Support.findByIdAndDelete(support._id);
+    support.status = 'replied';
+    await support.save();
 
     return res.status(200).json({
       status: 'success',
