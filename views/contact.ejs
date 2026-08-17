@@ -1,0 +1,64 @@
+<%- include('partials/landingPageHeader') %>
+<!-- xxx Header End xxx -->
+<!-- xxx Breadcrumbs xxx -->
+<section class="breadcrumbs-wrap">
+  <div class="container">
+    <ul>
+      <li><a href="contact.html#"><i class="icofont icofont-home"></i></a></li>
+      <li>Contact Us</li>
+    </ul>
+    <h1>Contact Us</h1>
+  </div>
+</section>
+<!-- xxx Breadcrumbs End xxx -->
+
+<div id="body-content" class="no-overflow">
+  <section class="section-pad">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-12 mx-auto">
+          <div class="contact-map-bg text-center">
+            <img src="/assets/home/images/map-bg.png" alt="">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-10 col-xl-9 mx-auto col-md-12">
+          <div class="contact-wrap bg-white alternate">
+            <form novalidate id="contact_form" method="post" action="contact.html#">
+              <div class="row">
+                <div class="col-sm-12 col-md-4 mb-0">
+                  <input type="text" placeholder="Your Name" class="form-control border" id="name" name="name">
+                </div>
+                <div class="col-sm-12 col-md-4 mb-0">
+                  <input type="text" placeholder="Your Email " class="form-control border" id="lastname" name="lastname">
+                </div>
+                <div class="col-sm-12 col-md-4 mb-0">
+                  <input type="text" placeholder="Subject" class="form-control border" id="email" name="email">
+                </div>
+                <div class="col-sm-12 mb-0">
+                  <textarea placeholder="Message" rows="8" class="form-control border" id="comment" name="comment"></textarea>
+                </div>
+                <div class="col-sm-12">
+                  <button class="btn-theme bg-navy-blue mt-3" type="submit">Send Now <i class="icofont icofont-verification-check"></i></button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="clearfix"></div>
+</div>
+
+<!-- xxx Google Map xxx -->
+<section class="home-pad">
+  <div id="map-holder-contact">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d6624.986066388227!2d151.221839!3d-33.876954!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1582101032155!5m2!1sen!2sus" style="border:0;" allowfullscreen=""></iframe>
+  </div>
+</section><!-- xxx Google Map End xxx -->
+
+<%- include('partials/landingPageFooter') %>
