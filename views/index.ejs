@@ -445,6 +445,42 @@
     </div>
   </section><!-- xxx FAQ Section End xxx -->
 
+  <section class="wide-tb-100">
+    <div class="container">
+      <div class="row">
+        <!-- Heading Main -->
+        <div class="col-sm-12">
+          <h1 class="heading-main">
+            <span>Scale with Confidence at Every Stage—Flexible, Professionally Designed Plans That Grow Seamlessly with Your Portfolio </span>
+            Transparent fees , 24/hours customer care , Fast Withdraw
+          </h1>
+        </div>
+        <!-- Heading Main -->
+        <% plans.forEach(plan => { %>
+        <!-- Pricing Table -->
+        <div class="col-md-4 col-sm-12">
+          <div class="pricing-table best-seller" style="border-radius: 10px;">
+            <div class="txt-blue fw-6"><%= plan.name %></div>
+            <div class="pricing">
+              <%= plan.roi %><sup>%</sup> Daily
+            </div>
+
+            <ul class="list-unstyled">
+              <li>$<%= plan.min %> minimum investment</li>
+              <li>$<%= plan.mac %> maximum investment</li>
+              <li>Valid for <%= plan.duration %></li>
+              <li>10% referral bonus</li>
+            </ul>
+
+            <a href="/register" class="btn-theme bg-navy-blue">Get Started</a>
+          </div>
+        </div>
+        <!-- Pricing Table -->
+        <% }) %>
+      </div>
+    </div>
+  </section>
+
   <!-- xxx Testimonial Slider xxx -->
   <section class="light-bg wide-tb-100">
     <div class="container">
