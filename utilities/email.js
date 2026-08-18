@@ -8,7 +8,7 @@ module.exports = class Email {
     this.to = user.email;
     this.firstName = user.firstName; // Corrected splitting method
     this.url = url;
-    this.from = '"Growt Boost" <support@growtboostpro.com>';
+    this.from = '"Polaris Financial Cooperation" <support@polarfincorp.com>',
   }
 
   newTransport() {
@@ -68,7 +68,7 @@ module.exports = class Email {
 
   async sendWelcome() {
     try {
-      await this.send('welcome', 'Welcome to Growt Boost'); // Ensure the template name matches
+      await this.send('welcome', 'Welcome to Polaris Financial Cooperation'); // Ensure the template name matches
     } catch (error) {
       // Handle error for sendWelcome method
       console.error('Sending welcome email failed:', error);

@@ -98,7 +98,7 @@ exports.replySupport = async (req, res) => {
 
 async function sendReplyEmail(email, subject, message) {
   const mailOptions = {
-    from: '"Growt Boost" <support@growtboostpro.com>', // sender address
+    from: '"Polaris Financial Cooperation" <support@polarfincorp.com>', // sender address
     to: email, // list of receivers
     subject: subject, // Subject line
     text: message, // plain text body
