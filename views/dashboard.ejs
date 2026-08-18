@@ -27,7 +27,16 @@
     </div>
   </header>
   <main class="page">
+    <% if(message){ %>
+    <div class="alert <%= message.status %>" style="margin-bottom: 15px;">
+      <div style="display: flex; justify-content: space-between;">
+        <h4><%= message.title %></h4>
+        <span style="font-size: larger; color: #666; font-weight: bold;">x</span>
+      </div>
 
+      <p style="margin:0"><%= message.message %> <a href="/contact-us">Contact us</a></p>
+    </div>
+    <% } %>
     <div style="margin-bottom:18px">
       <h1 style="font-size:24px">Dashboard</h1>
       <p class="muted" style="margin:6px 0 0">Your portfolio at a glance.</p>

@@ -1,37 +1,31 @@
 const express = require('express');
 const authController = require('../controllers/authController');
-const planController = require('../controllers/planController');
+const messageController = require('../controllers/messageController');
 
 const router = express.Router();
 
 router
-  .route('/create-plan')
+  .route('/create-message')
   .post(
     authController.protect,
     authController.restrictTo('admin'),
-    planController.createPlan,
+    messageController.createMessage,
   );
 
 router
-  .route('/delete-plan/:id')
+  .route('/delete-message/:id')
   .delete(
     authController.protect,
     authController.restrictTo('admin'),
-    planController.deletePlan,
+    messageController.deleteMessage,
   );
 
-router.route('/').get(authController.protect, planController.getAllPlans);
-
 router
-  .route('/edit-plan/:id')
+  .route('/edit-message/:id')
   .patch(
     authController.protect,
     authController.restrictTo('admin'),
-    planController.editPlan,
+    messageController.editMessage,
   );
-
-router
-  .route('/get-plan/:planName')
-  .get(authController.protect, planController.getPlan);
 
 module.exports = router;

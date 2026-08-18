@@ -65,6 +65,100 @@
     </div>
   </div>
 
+  <div class="row between" style="margin-top:30px;align-items:flex-end">
+    <h2 class="section-title">On Screen Message</h2><button class="btn sm" onclick="openModal('add-message-modal')">Add message</button>
+  </div>
+  <div class="mt-sm">
+    <% if(message){ %>
+    <div class="card table-card" data-paginate="10" id="tbl24" style="padding:6px">
+      <div class="table-wrap">
+        <table class="data">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Message</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= message.title %></td>
+              <td><%= message.message %></td>
+              <td><span class="pill <%= message.status %>"><%= message.status %></span></td>
+              <td><button class="btn sm ghost edit-message-modal-button" data-message-id="<%= message._id %>" onclick="openModal('edit-message-modal')">Edit</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="cards-list" style="padding:10px">
+        <div class="mini-card">
+          <div class="row between"><strong><%= message.title %></strong><span class="pill <%= message.status %>"><%= message.status %></span></div>
+          <p class="muted small" style="word-break:break-all;margin:8px 0 0"><%= message.message %></p>
+          <button class="btn sm block edit-message-modal-button" data-message-id="<%= message._id %>" style="margin-top:10px" onclick="openModal('edit-message-modal')">Edit</button>
+        </div>
+      </div>
+    </div>
+    <% } %>
+  </div>
+  <div class="modal-backdrop" id="add-message-modal">
+    <div class="modal">
+      <div class="row between">
+        <h3 style="font-size:18px">Message details</h3><button class="icon-btn" onclick="closeModal('add-message-modal')"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 6 12 12" />
+            <path d="m18 6-12 12" />
+          </svg></button>
+      </div>
+      <div class="mt">
+        <form data-demo class="add-message-form">
+          <div id="alert" style="margin-bottom:14px"></div>
+          <label class="field"><span>Title</span><input id="add-message-title" type="text" placeholder="Deposit Error" /></label>
+          <label class="field"><span>Message</span><input id="add-message" type="text" placeholder="Enter your message" /></label>
+          <label class="field"><span>Status</span>
+            <select id="add-message-status">
+              <option value="success">Success</option>
+              <option value="warning">Warning</option>
+              <option value="error">Error</option>
+            </select>
+          </label>
+          <div class="row">
+            <button class="btn add-message-btn" type="submit">Save message</button>
+            <button class="btn danger" type="button" onclick="closeModal('edit-message-modal')">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-backdrop" id="edit-message-modal">
+    <div class="modal">
+      <div class="row between">
+        <h3 style="font-size:18px">Message details</h3><button class="icon-btn" onclick="closeModal('edit-message-modal')"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m6 6 12 12" />
+            <path d="m18 6-12 12" />
+          </svg></button>
+      </div>
+      <div class="mt">
+        <form data-demo class="edit-message-form">
+          <div id="alert" style="margin-bottom:14px"></div>
+          <label class="field"><span>Title</span><input id="edit-message-title" type="text" placeholder="Deposit Error" /></label>
+          <label class="field"><span>Message</span><input id="edit-message" type="text" placeholder="Enter your message" /></label>
+          <label class="field"><span>Status</span>
+            <select id="edit-message-status">
+              <option value="">Select Status</option>
+              <option value="success">Success</option>
+              <option value="warning">Warning</option>
+              <option value="error">Error</option>
+            </select>
+          </label>
+          <div class="row">
+            <button class="btn edit-message-btn" type="submit">Save message</button>
+            <button class="btn danger delete-message-btn" type="button">Delete</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <h2 class="section-title mt">Account details</h2>
   <div class="card mt-sm">
     <form data-demo class="user-form" data-user-id="<%= userDetail._id %>">
@@ -341,14 +435,11 @@
 
   <h2 class="section-title mt">Email this member</h2>
   <div class="card mt-sm">
-    <form data-demo>
-      <label class="field"><span>Subject</span><input type="text" placeholder="Your withdrawal has been processed" /></label>
-      <label class="field"><span>Message</span><textarea rows="4" placeholder="Write to the member…"></textarea></label>
-      <button class="btn" type="submit">Send email</button>
-      <div class="alert success mt" data-demo-note style="display:none">
-        <h4>Email sent</h4>
-        <p style="margin:0">Delivered to sofia.castillo@mail.com.</p>
-      </div>
+    <form data-demo class="send-support-form">
+      <div id="alert" style="margin-bottom:14px"></div>
+      <label class="field"><span>Subject</span><input type="text" id="support-subject" placeholder="Your withdrawal has been processed" /></label>
+      <label class="field"><span>Message</span><textarea id="support-message" rows="4" placeholder="Write to the member…"></textarea></label>
+      <button class="btn submit-message" type="submit">Send email</button>
     </form>
   </div>
 </main>
@@ -591,4 +682,193 @@
     })
   }
 </script>
+
+<script>
+  const addMessageForm = document.querySelector('.add-message-form');
+
+  if (addMessageForm) {
+    addMessageForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = document.querySelector('.add-message-btn')
+      submitBtn.disabled = true
+      submitBtn.style.cursor = 'not-allowed'
+      submitBtn.textContent = 'Saving...'
+
+
+      const title = document.getElementById('add-message-title').value;
+      const message = document.getElementById('add-message').value;
+      const status = document.getElementById('add-message-status').value;
+
+      try {
+        const response = await axios.post('/api/v1/messages/create-message', {
+          title,
+          message,
+          status,
+          user: window.location.pathname.split('/').pop()
+        })
+
+        if (response.data.status === 'success') {
+          showAlert('success', 'Message added successfully', 'A new message have been added.')
+          window.setTimeout(() => {
+            addMessageForm.reset()
+            closeModal('add-message-modal');
+          }, 2000)
+
+        }
+
+      } catch (error) {
+        showAlert('error', 'Error occurred.', error.response?.data?.message || 'An unexpected error occurred.');
+      } finally {
+        submitBtn.disabled = false
+        submitBtn.style.cursor = 'pointer'
+        submitBtn.textContent = 'Save'
+      }
+    })
+  }
+</script>
+
+<script>
+  const editMessageModalButton = document.querySelectorAll('.edit-message-modal-button');
+
+  let messageId;
+  if (editMessageModalButton) {
+    editMessageModalButton.forEach(button => {
+      button.addEventListener('click', function() {
+        messageId = this.dataset.messageId;
+      });
+    });
+  }
+
+  const editMessageForm = document.querySelector('.edit-message-form');
+  if (editMessageForm) {
+    // Existing edit/save handler
+    editMessageForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = document.querySelector('.edit-message-btn');
+      submitBtn.disabled = true;
+      submitBtn.style.cursor = 'not-allowed';
+      submitBtn.textContent = 'Saving...';
+
+      const title = document.getElementById('edit-message-title').value;
+      const message = document.getElementById('edit-message').value;
+      const status = document.getElementById('edit-message-status').value;
+
+      if (!messageId) {
+        return showAlert('error', 'Message update error', 'Message ID is required');
+      }
+
+      try {
+        const response = await axios.patch(`/api/v1/messages/edit-message/${messageId}`, {
+          title,
+          message,
+          status
+        });
+
+        if (response.data.status === 'success') {
+          showAlert('success', 'Message updated.', 'You have successfully updated a message');
+          window.setTimeout(() => {
+            editMessageForm.reset();
+            closeModal('edit-message-modal');
+          }, 2000);
+        }
+      } catch (error) {
+        showAlert('error', 'Error occurred.', error.response?.data?.message || 'An unexpected error occurred.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.style.cursor = 'pointer';
+        submitBtn.textContent = 'Save message';
+      }
+    });
+  }
+
+  // Delete handler
+  const deleteBtn = document.querySelector('.delete-message-btn');
+  if (deleteBtn) {
+    deleteBtn.addEventListener('click', async () => {
+      if (!messageId) {
+        return showAlert('error', 'Delete error', 'Message ID is required');
+      }
+
+      // Optional confirmation
+      if (!confirm('Are you sure you want to delete this message?')) {
+        return;
+      }
+
+      deleteBtn.disabled = true;
+      deleteBtn.style.cursor = 'not-allowed';
+      deleteBtn.textContent = 'Deleting...';
+
+      try {
+        // Adjust the endpoint if your backend uses a different path
+        const response = await axios.delete(`/api/v1/messages/delete-message/${messageId}`);
+
+        if (response.data.status === 'success') {
+          showAlert('success', 'Message deleted.', 'You have successfully deleted the message');
+          window.setTimeout(() => {
+            editMessageForm?.reset();
+            closeModal('edit-message-modal');
+            // Optional: refresh the list or remove the row from the table
+            location.reload(); // or better: remove the specific row
+          }, 1500);
+        }
+      } catch (error) {
+        showAlert('error', 'Error occurred.', error.response?.data?.message || 'An unexpected error occurred.');
+      } finally {
+        deleteBtn.disabled = false;
+        deleteBtn.style.cursor = 'pointer';
+        deleteBtn.textContent = 'Delete';
+      }
+    });
+  }
+</script>
+
+<script>
+  const sendSupportForm = document.querySelector('.send-support-form');
+
+  if (sendSupportForm) {
+    sendSupportForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = document.querySelector('.submit-message');
+      submitBtn.disabled = true;
+      submitBtn.style.cursor = 'not-allowed';
+      submitBtn.textContent = 'Sending...';
+
+      const subject = document.getElementById('support-subject').value.trim();
+      const message = document.getElementById('support-message').value.trim();
+
+      if (!subject || !message) {
+        showAlert('error', 'Validation error', 'Subject and message are required');
+        submitBtn.disabled = false;
+        submitBtn.style.cursor = 'pointer';
+        submitBtn.textContent = 'Send email';
+        return;
+      }
+
+      try {
+        // Adjust the endpoint to match your backend
+        const response = await axios.post(`/api/v1/supports/send-mail/${window.location.pathname.split('/').pop()}`, {
+          subject,
+          message
+        });
+
+        if (response.data.status === 'success') {
+          showAlert('success', 'Email sent.', 'The email has been sent successfully');
+          window.setTimeout(() => {
+            sendSupportForm.reset();
+          }, 1500);
+        }
+      } catch (error) {
+        showAlert('error', 'Error occurred.', error.response?.data?.message || 'An unexpected error occurred.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.style.cursor = 'pointer';
+        submitBtn.textContent = 'Send email';
+      }
+    });
+  }
+</script>
+
 <%- include('partials/adminFooter') %>

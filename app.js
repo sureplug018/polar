@@ -9,6 +9,7 @@ const kycRoutes = require('./routes/kycRoutes');
 const transactionRoutes = require('./routes/transactionRoutes');
 const walletRoutes = require('./routes/walletRoutes');
 const planRoutes = require('./routes/planRoutes');
+const messageRoutes = require('./routes/messageRoutes');
 const viewsRoutes = require('./routes/viewsRoutes');
 const investmentRoutes = require('./routes/investmentRoutes');
 
@@ -62,6 +63,7 @@ app.use('/api/v1/supports', supportRoutes);
 app.use('/api/v1/kyc', kycRoutes);
 app.use('/api/v1/transactions', transactionRoutes);
 app.use('/api/v1/plans', planRoutes);
+app.use('/api/v1/messages', messageRoutes);
 app.use('/api/v1/wallets', walletRoutes);
 app.use('/api/v1/investments', investmentRoutes);
 

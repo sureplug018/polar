@@ -22,7 +22,11 @@ router
 
 router
   .route('/edit-wallet/:id')
-  .patch(authController.protect, walletController.editWallet);
+  .patch(
+    authController.protect,
+    authController.restrictTo('admin'),
+    walletController.editWallet,
+  );
 router
   .route('/get-address/:walletName')
   .get(authController.protect, walletController.getWalletAddress);

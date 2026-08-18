@@ -74,14 +74,8 @@ exports.editPlan = async (req, res) => {
     if (duration) plan.duration = duration;
 
     await plan.save();
-    if (!plan) {
-      return res.status(404).json({
-        status: 'fail',
-        message: 'Plan not found',
-      });
-    }
 
-    res.status(200).json({
+    return res.status(200).json({
       status: 'success',
       message: 'Successfully edited plan',
       plan,

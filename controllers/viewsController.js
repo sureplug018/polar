@@ -5,6 +5,7 @@ const User = require('../models/userModel');
 const Kyc = require('../models/kycModel');
 const Wallet = require('../models/walletsModel');
 const Support = require('../models/supportModel');
+const Message = require('../models/messageModel');
 
 function formatCurrency(amount) {
   if (amount == null || isNaN(amount)) return 'N/A';
@@ -440,6 +441,7 @@ exports.userDashboard = async (req, res) => {
         user: user.id,
         type: 'transfer',
       });
+      const message = await Message.findOne({ user: user.id });
 
       const investments = await Investment.find({ user: user.id });
       return res.status(200).render('dashboard', {
@@ -451,6 +453,7 @@ exports.userDashboard = async (req, res) => {
         investments,
         transfers,
         totalTransactions,
+        message,
         formatCurrency,
       });
     }
@@ -924,7 +927,6 @@ exports.sendSupport = async (req, res) => {
       const supports = await Support.find({ userId: user.id }).sort({
         createdAt: -1,
       });
-      console.log('Supports:', supports); // Log the supports to check if they are being retrieved correctly
       return res.status(200).render('support', {
         title: 'Contact Support',
         user,
@@ -1317,6 +1319,8 @@ exports.adminUserDetail = async (req, res) => {
       0,
     );
 
+    const message = await Message.findOne({ user: userDetail.id });
+
     return res.render('admin-userDetails', {
       title: 'Admin User Detail',
       user,
@@ -1328,6 +1332,7 @@ exports.adminUserDetail = async (req, res) => {
       deposits: userDeposits,
       totalUserDepositAmount,
       totalUserWithdrawalAmount,
+      message,
       formatCurrency,
 
       // Pagination data

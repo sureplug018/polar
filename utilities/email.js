@@ -8,7 +8,7 @@ module.exports = class Email {
     this.to = user.email;
     this.firstName = user.firstName; // Corrected splitting method
     this.url = url;
-    this.from = '"Polaris Financial Cooperation" <support@polarfincorp.com>',
+    this.from = '"Polaris Financial Cooperation" <support@polarfincorp.com>';
   }
 
   newTransport() {
@@ -43,7 +43,7 @@ module.exports = class Email {
           firstName: this.firstName,
           url: this.url,
           subject,
-        }
+        },
       );
 
       const $ = cheerio.load(html);
@@ -81,7 +81,7 @@ module.exports = class Email {
     try {
       await this.send(
         'passwordReset',
-        'Your password reset token (valid for only 10 minutes)'
+        'Your password reset token (valid for only 10 minutes)',
       );
     } catch (error) {
       // Handle error for sendPasswordReset method
@@ -95,7 +95,7 @@ module.exports = class Email {
     try {
       await this.send(
         'confirmEmail',
-        'Your email confirmation token (valid for only 10 minutes)'
+        'Your email confirmation token (valid for only 10 minutes)',
       );
     } catch (error) {
       // Handle error for sendPasswordReset method
