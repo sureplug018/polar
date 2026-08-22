@@ -62,12 +62,12 @@
       <p class="stat-value"><%= supports.length %></p>
     </div>
   </div>
-  <div class="card mt">
+  <!-- <div class="card mt">
     <div class="row between">
       <h2 class="section-title">Deposit volume</h2><span class="muted small">Last 6 months</span>
     </div>
     <svg class="chart" data-values='[5000,8000,12000,9000,16000,12000]' data-labels='["Mar","Apr","May","Jun","Jul","Aug"]'></svg>
-  </div>
+  </div> -->
   <div class="row between mt">
     <h2 class="section-title">Recent transactions</h2><a href="/admin/transactions" style="color:var(--primary);font-weight:700" class="small">View all</a>
   </div>
@@ -106,7 +106,7 @@
         </table>
       </div>
       <div class="cards-list" style="padding:10px">
-        <% transactions.forEach((transaction, i) => { %>
+        <% transactions.slice(0, 10).forEach((transaction, i) => { %>
         <div class="mini-card">
           <div class="row between"><strong><%= transaction.user.firstName %> <%= transaction.user.lastName %></strong><span class="pill <%= transaction.status === 'declined' ? 'error' : transaction.status === 'pending' ? 'warning' : 'success' %>"><%= transaction.status %></span></div>
           <div class="mini-row"><span><%= transaction.type %></span><span>$<%= formatCurrency(transaction.amount) %></span></div>

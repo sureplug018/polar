@@ -30,7 +30,7 @@ a {
   transition: all 0.15s linear;
 }
 a:hover {
-  color: #38761d;
+  color: #f98b06;
   text-decoration: none;
 }
 a,
@@ -137,7 +137,7 @@ border-color: transparent transparent #FFF transparent;
 .dropdown-item:hover,
 .dropdown-item:active,
 .dropdown-menu > li.show > a {
-  color: #38761d;
+  color: #f98b06;
   text-decoration: none;
   background-color: transparent;
 }
@@ -219,7 +219,7 @@ border-color: transparent transparent #FFF transparent;
   color: #fff;
 }
 .top-transparent .lang-toggle a:hover {
-  color: #38761d;
+  color: #f98b06;
 }
 .top-transparent.header-fullpage .navbar-brand {
   width: 180px;
@@ -240,7 +240,7 @@ border-color: transparent transparent #FFF transparent;
   color: #fff;
 }
 .top-transparent .navbar-nav .active .nav-link {
-  color: #38761d;
+  color: #f98b06;
 }
 .top-border {
   background: #fff;
@@ -258,7 +258,7 @@ border-color: transparent transparent #FFF transparent;
   border-bottom: 4px solid #fafafa;
 }
 .top-border .top-bar-right i {
-  color: #38761d;
+  color: #f98b06;
 }
 .top-border .top-bar-right .top-text small {
   color: rgba(6, 22, 58, 0.5);
@@ -329,7 +329,7 @@ border-color: transparent transparent #FFF transparent;
   color: #fff;
 }
 .bordered-nav .top-text a {
-  color: #38761d;
+  color: #f98b06;
 }
 .top-text a:hover {
   text-decoration: underline;
@@ -462,7 +462,7 @@ border-color: transparent transparent #FFF transparent;
 /*    Heading Style
 /*------------------------------------------*/
 .heading-main {
-  color: #38761d;
+  color: #f98b06;
   font-size: 2.25rem;
   font-weight: 700;
   text-align: center;
@@ -482,7 +482,7 @@ border-color: transparent transparent #FFF transparent;
 .heading-left-border {
   color: #717171;
   padding: 0.55rem 1.2rem;
-  border-left: 2px solid #38761d;
+  border-left: 2px solid #f98b06;
   margin-bottom: 35px;
   font-weight: 600;
 }
@@ -491,7 +491,7 @@ border-color: transparent transparent #FFF transparent;
 /*    Typography
 /*------------------------------------------*/
 h1 {
-  color: #38761d;
+  color: #f98b06;
 }
 h2 {
   color: #000000;
@@ -1056,7 +1056,7 @@ header.navbar-fixed-top.header-alt {
   color: #fff;
 }
 .welcome-section-alt div:nth-child(3) .box-icon-1 {
-  background: #38761d;
+  background: #f98b06;
 }
 /* === End === */
 
@@ -1066,7 +1066,7 @@ header.navbar-fixed-top.header-alt {
   margin: 0 0 40px 0;
 }
 .head-main h1 {
-  color: #38761d;
+  color: #f98b06;
   font-size: 2.25rem;
   font-weight: 700;
   text-align: center;
@@ -1151,7 +1151,7 @@ header.navbar-fixed-top.header-alt {
   transition: 0.3s ease-in-out;
 }
 .practice-area-wrap:hover .header {
-  background: #38761d;
+  background: #f98b06;
 }
 .stretch-effect {
   position: absolute;
@@ -1195,7 +1195,7 @@ header.navbar-fixed-top.header-alt {
   padding: 3rem;
 }
 .about-us-box {
-  border: 1px solid #38761d;
+  border: 1px solid #f98b06;
   padding: 20px 20px 0;
   background: #fff;
   margin: 0 0 40px 0;
@@ -1240,7 +1240,7 @@ header.navbar-fixed-top.header-alt {
   display: block;
   width: 80px;
   height: 80px;
-  background: #38761d repeat scroll 0 0;
+  background: #f98b06 repeat scroll 0 0;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -1259,7 +1259,7 @@ header.navbar-fixed-top.header-alt {
   display: block;
   width: 80px;
   height: 80px;
-  background: #38761d repeat scroll 0 0;
+  background: #f98b06 repeat scroll 0 0;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
@@ -1534,7 +1534,7 @@ header.navbar-fixed-top.header-alt {
   margin-bottom: 15px;
 }
 .meta-box-wrap a.post-date:hover {
-  background: #38761d;
+  background: #f98b06;
   color: #fff;
 }
 .meta-box {
@@ -1596,14 +1596,14 @@ header.navbar-fixed-top.header-alt {
   font-weight: 600;
 }
 .blog-category a:hover {
-  color: #38761d;
+  color: #f98b06;
   padding: 0.5rem 1.45rem 0.5rem 1.75rem;
 }
 .blog-category a:after {
   position: absolute;
   width: 0;
   height: 100%;
-  background: #38761d;
+  background: #f98b06;
   content: '';
   left: 0;
   top: 0;
@@ -1649,7 +1649,7 @@ header.navbar-fixed-top.header-alt {
 }
 .pagination a:hover,
 .pagination a.dark:hover {
-  background: #38761d;
+  background: #f98b06;
   color: #fff;
 }
 
@@ -1760,7 +1760,7 @@ header.navbar-fixed-top.header-alt {
 }
 .comment-date:hover,
 .comments-reply:hover {
-  background: #38761d;
+  background: #f98b06;
   color: #fff;
 }
 
@@ -1779,7 +1779,7 @@ header.navbar-fixed-top.header-alt {
   display: inline-block;
 }
 .share-this .social-icons ul li a:hover {
-  color: #38761d;
+  color: #f98b06;
 }
 
 .comment-from h4 {
@@ -1837,7 +1837,7 @@ header.navbar-fixed-top.header-alt {
   color: #fff;
 }
 .breadcrumbs-wrap a:hover {
-  color: #38761d;
+  color: #f98b06;
 }
 .breadcrumbs-wrap ul li:last-child:before {
   display: none;
@@ -1868,7 +1868,7 @@ header.navbar-fixed-top.header-alt {
   bottom: -20px;
   width: 100%;
   height: 3px;
-  background: #38761d;
+  background: #f98b06;
 }
 /* === End === */
 
@@ -2008,7 +2008,7 @@ label.error {
   color: #000;
 }
 .copyrights a {
-  color: #38761d;
+  color: #f98b06;
   font-weight: 600;
 }
 .copyrights a:hover {
@@ -2058,7 +2058,7 @@ label.error {
   display: block;
   color: #fff;
   text-align: center;
-  background: #38761d;
+  background: #f98b06;
   font-size: 16px;
   font-weight: 500;
 }
@@ -2196,7 +2196,7 @@ ul#filters li a:hover {
 }
 ul#filters li.active a {
   color: #fff;
-  background: #38761d;
+  background: #f98b06;
 }
 #Grid {
   min-height: 300px;
@@ -2239,7 +2239,7 @@ ul#filters li.active a {
   position: relative;
   font-size: 2.25rem;
   font-weight: 600;
-  color: #38761d;
+  color: #f98b06;
   padding: 35px 15px 0;
   display: inline-block;
 }
@@ -2268,7 +2268,7 @@ ul#filters li.active a {
   z-index: 101;
   text-align: center;
   font-size: 24px;
-  color: #38761d;
+  color: #f98b06;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -2278,12 +2278,12 @@ ul#filters li.active a {
   background: #fff;
   border-style: solid;
   border-width: 1px;
-  border-color: #38761d;
+  border-color: #f98b06;
   box-shadow: 0px 0px 52px 0px rgba(28, 28, 28, 0.09);
 }
 /*------------------------------------------*/
 /*    Footer Style
 /*------------------------------------------*/
 .tp-loader.spinner2 {
-  background: #38761d !important;
+  background: #f98b06 !important;
 }
