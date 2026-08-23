@@ -36,7 +36,7 @@ router.get('/services/real-estate', viewsController.realEstate);
 
 router.get('/services/hedge-fund', viewsController.hedgeFund);
 
-router.get('/services/crypto-investment', viewsController.cryptoInvestment);
+router.get('/services/cryptocurrency', viewsController.cryptoInvestment);
 
 router.get('/services/gold-mining', viewsController.gold);
 
