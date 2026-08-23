@@ -1015,6 +1015,7 @@ exports.adminEditUserData = async (req, res) => {
     withdrawalStatus,
     sendMoneyStatus,
     kycStatus,
+    level,
   } = req.body;
 
   try {
@@ -1084,6 +1085,10 @@ exports.adminEditUserData = async (req, res) => {
 
     if (kycStatus) {
       user.kycStatus = kycStatus;
+    }
+
+    if (level) {
+      user.level = level;
     }
 
     const updatedUser = await user.save();

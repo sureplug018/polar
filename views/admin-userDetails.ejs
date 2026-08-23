@@ -175,6 +175,16 @@
           </select>
         </label>
       </div>
+      <div class="grid g2-md">
+        <label class="field">
+          <span>Account Level</span>
+          <select name="level">
+            <option value="Level 1" <%= userDetail.level === 'Level 1' ? 'selected' : '' %>>Level 1</option>
+            <option value="Level 2" <%= userDetail.level === 'Level 2' ? 'selected' : '' %>>Level 2</option>
+            <option value="Level 3" <%= userDetail.level === 'Level 3' ? 'selected' : '' %>>Level 3</option>
+          </select>
+        </label>
+      </div>
       <div class="row">
         <button class="btn update-btn" type="submit">Save member details</button>
         <!-- <button class="btn ghost" type="button">Reset password</button> -->
@@ -549,6 +559,7 @@
     const email = userForm.querySelector('input[name="email"]').value.trim();
     const phoneNumber = userForm.querySelector('input[name="phoneNumber"]').value.trim();
     const status = userForm.querySelector('select[name="status"]').value;
+    const level = userForm.querySelector('select[name="level"]').value.trim()
 
     // Basic validation
     if (!firstName || !lastName || !email) {
@@ -568,7 +579,8 @@
         lastName,
         email,
         phoneNumber,
-        status
+        status,
+        level
       });
 
       if (response.data.status === 'success') {
