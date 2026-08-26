@@ -79,6 +79,17 @@
             </script>
             <script src="https://cdn.gtranslate.net/widgets/latest/popup.js" defer></script>
           </div>
+
+          <form method="GET" style="display: inline-block;">
+            <select name="currency" onchange="this.form.submit()" class="form-select">
+              <option value="USD" <%= currency === 'USD' ? 'selected' : '' %>>USD ($)</option>
+              <option value="EUR" <%= currency === 'EUR' ? 'selected' : '' %>>EUR (€)</option>
+              <option value="GBP" <%= currency === 'GBP' ? 'selected' : '' %>>GBP (£)</option>
+              <option value="CAD" <%= currency === 'CAD' ? 'selected' : '' %>>CAD (C$)</option>
+              <option value="AUD" <%= currency === 'AUD' ? 'selected' : '' %>>AUD (A$)</option>
+              <option value="JPY" <%= currency === 'JPY' ? 'selected' : '' %>>JPY (¥)</option>
+            </select>
+          </form>
           <!-- Topbar Language Dropdown End -->
         </div>
       </div>
