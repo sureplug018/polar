@@ -10,8 +10,8 @@ module.exports = class Mail {
     this.to = user.email;
     this.name = user.firstName; // Corrected splitting method
     this.subject = subject;
-    this.from = '"Polaris Financial Corporation" <support@polarfincorp.com>',
-    this.transaction = transaction;
+    ((this.from = '"Polaris Finance" <support@polarfincorp.com>'),
+      (this.transaction = transaction));
   }
 
   newTransport() {
