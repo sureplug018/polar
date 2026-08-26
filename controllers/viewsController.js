@@ -6,18 +6,19 @@ const Kyc = require('../models/kycModel');
 const Wallet = require('../models/walletsModel');
 const Support = require('../models/supportModel');
 const Message = require('../models/messageModel');
+const { getRates, convert, formatMoney } = require('../utilities/currency');
 
-function formatCurrency(amount) {
-  if (amount == null || isNaN(amount)) return 'N/A';
-  const num = Number(amount);
-  if (Number.isInteger(num)) {
-    return num.toLocaleString('en-US'); // e.g., 5000 → "5,000"
-  }
-  return num.toLocaleString('en-US', {
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }); // e.g., 5000.567 → "5,000.57"
-}
+// function formatCurrency(amount) {
+//   if (amount == null || isNaN(amount)) return 'N/A';
+//   const num = Number(amount);
+//   if (Number.isInteger(num)) {
+//     return num.toLocaleString('en-US'); // e.g., 5000 → "5,000"
+//   }
+//   return num.toLocaleString('en-US', {
+//     minimumFractionDigits: 2,
+//     maximumFractionDigits: 2,
+//   }); // e.g., 5000.567 → "5,000.57"
+// }
 
 exports.homePage = async (req, res) => {
   try {
@@ -418,6 +419,30 @@ exports.userDashboard = async (req, res) => {
     }
 
     if (user.role === 'user') {
+      // 1. Read currency (query has priority)
+      let currency = (
+        req.query.currency ||
+        req.cookies.currency ||
+        'USD'
+      ).toUpperCase();
+      const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+      if (!allowed.includes(currency)) currency = 'USD';
+
+      // 2. Save it
+      res.cookie('currency', currency, {
+        maxAge: 365 * 24 * 60 * 60 * 1000,
+      });
+
+      // 3. Get rates
+      const rates = await getRates('USD');
+
+      // 4. Helper
+      const formatCurrency = (amount) => {
+        if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+        const converted = convert(amount, 'USD', currency, rates);
+        return formatMoney(converted, currency);
+      };
+
       const transactions = await Transaction.find({ user: user.id }).sort({
         createdAt: -1,
       });
@@ -442,8 +467,8 @@ exports.userDashboard = async (req, res) => {
         type: 'transfer',
       });
       const message = await Message.findOne({ user: user.id });
-
       const investments = await Investment.find({ user: user.id });
+
       return res.status(200).render('dashboard', {
         title: 'User Dashboard',
         user,
@@ -454,11 +479,14 @@ exports.userDashboard = async (req, res) => {
         transfers,
         totalTransactions,
         message,
-        formatCurrency,
+        formatCurrency, // ← pass the helper
+        currency, // optional – useful for the selector
+        rates, // optional
       });
     }
     return res.status(302).redirect('/sign-in');
   } catch (err) {
+    console.error(err);
     return res.status(500).render('404', {
       title: 'Error',
       message: 'Something went wrong',
@@ -480,12 +508,37 @@ exports.investmentPlans = async (req, res) => {
     }
 
     if (user.role === 'user') {
+      // 1. Read currency (query has priority)
+      let currency = (
+        req.query.currency ||
+        req.cookies.currency ||
+        'USD'
+      ).toUpperCase();
+      const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+      if (!allowed.includes(currency)) currency = 'USD';
+
+      // 2. Save it
+      res.cookie('currency', currency, {
+        maxAge: 365 * 24 * 60 * 60 * 1000,
+      });
+
+      // 3. Get rates
+      const rates = await getRates('USD');
+
+      // 4. Helper
+      const formatCurrency = (amount) => {
+        if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+        const converted = convert(amount, 'USD', currency, rates);
+        return formatMoney(converted, currency);
+      };
       const plans = await Plan.find().sort({ min: 1 });
       return res.status(200).render('investment-plans', {
         title: 'Investment Packages',
         user,
         plans,
         formatCurrency,
+        rates,
+        currency,
       });
     }
     return res.status(302).redirect('/sign-in');
@@ -511,6 +564,29 @@ exports.investmentHistory = async (req, res) => {
     }
 
     if (user.role === 'user') {
+      // 1. Read currency (query has priority)
+      let currency = (
+        req.query.currency ||
+        req.cookies.currency ||
+        'USD'
+      ).toUpperCase();
+      const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+      if (!allowed.includes(currency)) currency = 'USD';
+
+      // 2. Save it
+      res.cookie('currency', currency, {
+        maxAge: 365 * 24 * 60 * 60 * 1000,
+      });
+
+      // 3. Get rates
+      const rates = await getRates('USD');
+
+      // 4. Helper
+      const formatCurrency = (amount) => {
+        if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+        const converted = convert(amount, 'USD', currency, rates);
+        return formatMoney(converted, currency);
+      };
       const investments = await Investment.find({ user: user.id }).sort({
         createdAt: -1,
       });
@@ -534,6 +610,8 @@ exports.investmentHistory = async (req, res) => {
         completedInvestments,
         totalInvestments,
         formatCurrency,
+        currency,
+        rates,
       });
     }
     return res.status(302).redirect('/sign-in');
@@ -559,12 +637,37 @@ exports.userProfile = async (req, res) => {
     }
 
     if (user) {
+      // 1. Read currency (query has priority)
+      let currency = (
+        req.query.currency ||
+        req.cookies.currency ||
+        'USD'
+      ).toUpperCase();
+      const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+      if (!allowed.includes(currency)) currency = 'USD';
+
+      // 2. Save it
+      res.cookie('currency', currency, {
+        maxAge: 365 * 24 * 60 * 60 * 1000,
+      });
+
+      // 3. Get rates
+      const rates = await getRates('USD');
+
+      // 4. Helper
+      const formatCurrency = (amount) => {
+        if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+        const converted = convert(amount, 'USD', currency, rates);
+        return formatMoney(converted, currency);
+      };
       const kyc = await Kyc.findOne({ user: user.id });
       return res.status(200).render('profile', {
         title: 'Profile Settings',
         user,
         kyc,
         formatCurrency,
+        currency,
+        rates,
       });
     }
     return res.status(302).redirect('/sign-in');
@@ -622,6 +725,29 @@ exports.referral = async (req, res) => {
     }
 
     if (user.role === 'user') {
+      // 1. Read currency (query has priority)
+      let currency = (
+        req.query.currency ||
+        req.cookies.currency ||
+        'USD'
+      ).toUpperCase();
+      const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+      if (!allowed.includes(currency)) currency = 'USD';
+
+      // 2. Save it
+      res.cookie('currency', currency, {
+        maxAge: 365 * 24 * 60 * 60 * 1000,
+      });
+
+      // 3. Get rates
+      const rates = await getRates('USD');
+
+      // 4. Helper
+      const formatCurrency = (amount) => {
+        if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+        const converted = convert(amount, 'USD', currency, rates);
+        return formatMoney(converted, currency);
+      };
       // 1. Get all users referred by the current user
       const referrals = await User.find({ referral: user.myReferralCode });
 
@@ -653,6 +779,8 @@ exports.referral = async (req, res) => {
         totalReferralEarnings, // pass it to the view
         totalReferralEarningsFormatted: formatCurrency(totalReferralEarnings), // formatted version
         formatCurrency,
+        currency,
+        rates,
       });
     }
     return res.status(302).redirect('/sign-in');
@@ -706,6 +834,29 @@ exports.transactionHistory = async (req, res) => {
     }
 
     if (user.role === 'user') {
+      // 1. Read currency (query has priority)
+      let currency = (
+        req.query.currency ||
+        req.cookies.currency ||
+        'USD'
+      ).toUpperCase();
+      const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+      if (!allowed.includes(currency)) currency = 'USD';
+
+      // 2. Save it
+      res.cookie('currency', currency, {
+        maxAge: 365 * 24 * 60 * 60 * 1000,
+      });
+
+      // 3. Get rates
+      const rates = await getRates('USD');
+
+      // 4. Helper
+      const formatCurrency = (amount) => {
+        if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+        const converted = convert(amount, 'USD', currency, rates);
+        return formatMoney(converted, currency);
+      };
       const transactions = await Transaction.find({ user: user.id }).sort({
         createdAt: -1,
       });
@@ -714,6 +865,8 @@ exports.transactionHistory = async (req, res) => {
         user,
         transactions,
         formatCurrency,
+        currency,
+        rates,
       });
     }
     return res.status(302).redirect('/sign-in');
@@ -737,6 +890,30 @@ exports.withdrawMoney = async (req, res) => {
     if (!user) {
       return res.status(302).redirect('/sign-in');
     }
+
+    // 1. Read currency (query has priority)
+    let currency = (
+      req.query.currency ||
+      req.cookies.currency ||
+      'USD'
+    ).toUpperCase();
+    const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+    if (!allowed.includes(currency)) currency = 'USD';
+
+    // 2. Save it
+    res.cookie('currency', currency, {
+      maxAge: 365 * 24 * 60 * 60 * 1000,
+    });
+
+    // 3. Get rates
+    const rates = await getRates('USD');
+
+    // 4. Helper
+    const formatCurrency = (amount) => {
+      if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+      const converted = convert(amount, 'USD', currency, rates);
+      return formatMoney(converted, currency);
+    };
 
     const pendingWithdrawals = await Transaction.find({
       user: user.id,
@@ -774,6 +951,8 @@ exports.withdrawMoney = async (req, res) => {
         totalPendingWithdrawals,
         totalWithdrawn,
         formatCurrency,
+        currency,
+        rates,
       });
     }
     return res.status(302).redirect('/sign-in');
@@ -829,6 +1008,29 @@ exports.deposit = async (req, res) => {
     }
 
     if (user.role === 'user') {
+      // 1. Read currency (query has priority)
+      let currency = (
+        req.query.currency ||
+        req.cookies.currency ||
+        'USD'
+      ).toUpperCase();
+      const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+      if (!allowed.includes(currency)) currency = 'USD';
+
+      // 2. Save it
+      res.cookie('currency', currency, {
+        maxAge: 365 * 24 * 60 * 60 * 1000,
+      });
+
+      // 3. Get rates
+      const rates = await getRates('USD');
+
+      // 4. Helper
+      const formatCurrency = (amount) => {
+        if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+        const converted = convert(amount, 'USD', currency, rates);
+        return formatMoney(converted, currency);
+      };
       const plans = await Plan.find().sort({ min: 1 });
       const wallets = await Wallet.find({
         user: { $exists: false },
@@ -839,6 +1041,8 @@ exports.deposit = async (req, res) => {
         plans,
         wallets,
         formatCurrency,
+        currency,
+        rates,
       });
     }
     return res.status(302).redirect('/sign-in');
@@ -864,10 +1068,35 @@ exports.walletExchange = async (req, res) => {
     }
 
     if (user.role === 'user') {
+      // 1. Read currency (query has priority)
+      let currency = (
+        req.query.currency ||
+        req.cookies.currency ||
+        'USD'
+      ).toUpperCase();
+      const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+      if (!allowed.includes(currency)) currency = 'USD';
+
+      // 2. Save it
+      res.cookie('currency', currency, {
+        maxAge: 365 * 24 * 60 * 60 * 1000,
+      });
+
+      // 3. Get rates
+      const rates = await getRates('USD');
+
+      // 4. Helper
+      const formatCurrency = (amount) => {
+        if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+        const converted = convert(amount, 'USD', currency, rates);
+        return formatMoney(converted, currency);
+      };
       return res.status(200).render('walletExchange', {
         title: 'Wallet Exchange',
         user,
         formatCurrency,
+        currency,
+        rates,
       });
     }
     return res.status(302).redirect('/sign-in');
@@ -893,12 +1122,37 @@ exports.invest = async (req, res) => {
     }
 
     if (user.role === 'user') {
+      // 1. Read currency (query has priority)
+      let currency = (
+        req.query.currency ||
+        req.cookies.currency ||
+        'USD'
+      ).toUpperCase();
+      const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+      if (!allowed.includes(currency)) currency = 'USD';
+
+      // 2. Save it
+      res.cookie('currency', currency, {
+        maxAge: 365 * 24 * 60 * 60 * 1000,
+      });
+
+      // 3. Get rates
+      const rates = await getRates('USD');
+
+      // 4. Helper
+      const formatCurrency = (amount) => {
+        if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+        const converted = convert(amount, 'USD', currency, rates);
+        return formatMoney(converted, currency);
+      };
       const plans = await Plan.find().sort({ minn: 1 });
       return res.status(200).render('invest', {
         title: 'Investment',
         user,
         plans,
         formatCurrency,
+        currency,
+        rates,
       });
     }
     return res.status(302).redirect('/sign-in');
@@ -953,6 +1207,29 @@ exports.adminDashboard = async (req, res) => {
     }
 
     if (user.role === 'admin') {
+      // 1. Read currency (query has priority)
+      let currency = (
+        req.query.currency ||
+        req.cookies.currency ||
+        'USD'
+      ).toUpperCase();
+      const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+      if (!allowed.includes(currency)) currency = 'USD';
+
+      // 2. Save it
+      res.cookie('currency', currency, {
+        maxAge: 365 * 24 * 60 * 60 * 1000,
+      });
+
+      // 3. Get rates
+      const rates = await getRates('USD');
+
+      // 4. Helper
+      const formatCurrency = (amount) => {
+        if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+        const converted = convert(amount, 'USD', currency, rates);
+        return formatMoney(converted, currency);
+      };
       const transactions = await Transaction.find().sort({ createdAt: -1 });
       const deposits = await Transaction.find({
         type: 'deposit',
@@ -981,6 +1258,8 @@ exports.adminDashboard = async (req, res) => {
         formatCurrency,
         users,
         pendingVerifications,
+        currency,
+        rates,
       });
     }
 
@@ -1017,6 +1296,29 @@ exports.allInvestments = async (req, res) => {
     }
 
     if (user.role === 'admin') {
+      // 1. Read currency (query has priority)
+      let currency = (
+        req.query.currency ||
+        req.cookies.currency ||
+        'USD'
+      ).toUpperCase();
+      const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+      if (!allowed.includes(currency)) currency = 'USD';
+
+      // 2. Save it
+      res.cookie('currency', currency, {
+        maxAge: 365 * 24 * 60 * 60 * 1000,
+      });
+
+      // 3. Get rates
+      const rates = await getRates('USD');
+
+      // 4. Helper
+      const formatCurrency = (amount) => {
+        if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+        const converted = convert(amount, 'USD', currency, rates);
+        return formatMoney(converted, currency);
+      };
       const page = parseInt(req.query.page) || 1;
       const limit = 10;
       const skip = (page - 1) * limit;
@@ -1051,6 +1353,8 @@ exports.allInvestments = async (req, res) => {
         currentPage: page,
         totalPages,
         totalInvestments,
+        currency,
+        rates,
       });
     }
 
@@ -1127,6 +1431,30 @@ exports.allTransactions = async (req, res) => {
       return res.redirect('/');
     }
 
+    // 1. Read currency (query has priority)
+    let currency = (
+      req.query.currency ||
+      req.cookies.currency ||
+      'USD'
+    ).toUpperCase();
+    const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+    if (!allowed.includes(currency)) currency = 'USD';
+
+    // 2. Save it
+    res.cookie('currency', currency, {
+      maxAge: 365 * 24 * 60 * 60 * 1000,
+    });
+
+    // 3. Get rates
+    const rates = await getRates('USD');
+
+    // 4. Helper
+    const formatCurrency = (amount) => {
+      if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+      const converted = convert(amount, 'USD', currency, rates);
+      return formatMoney(converted, currency);
+    };
+
     const { email, type, status } = req.query;
 
     const page = parseInt(req.query.page) || 1;
@@ -1173,6 +1501,8 @@ exports.allTransactions = async (req, res) => {
       currentPage: page,
       totalPages,
       totalTransactions,
+      currency,
+      rates,
     });
   } catch (err) {
     return res.status(500).render('404', {
@@ -1191,6 +1521,29 @@ exports.allUsers = async (req, res) => {
     }
 
     if (user.role === 'admin') {
+      // 1. Read currency (query has priority)
+      let currency = (
+        req.query.currency ||
+        req.cookies.currency ||
+        'USD'
+      ).toUpperCase();
+      const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+      if (!allowed.includes(currency)) currency = 'USD';
+
+      // 2. Save it
+      res.cookie('currency', currency, {
+        maxAge: 365 * 24 * 60 * 60 * 1000,
+      });
+
+      // 3. Get rates
+      const rates = await getRates('USD');
+
+      // 4. Helper
+      const formatCurrency = (amount) => {
+        if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+        const converted = convert(amount, 'USD', currency, rates);
+        return formatMoney(converted, currency);
+      };
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 10;
       const skip = (page - 1) * limit;
@@ -1223,6 +1576,8 @@ exports.allUsers = async (req, res) => {
         totalPages,
         totalUsers,
         emailQuery, // so the search input can keep the value
+        currency,
+        rates,
       });
     }
 
@@ -1248,6 +1603,30 @@ exports.adminUserDetail = async (req, res) => {
     if (!userDetail) {
       return res.redirect('/admin/users');
     }
+
+    // 1. Read currency (query has priority)
+    let currency = (
+      req.query.currency ||
+      req.cookies.currency ||
+      'USD'
+    ).toUpperCase();
+    const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+    if (!allowed.includes(currency)) currency = 'USD';
+
+    // 2. Save it
+    res.cookie('currency', currency, {
+      maxAge: 365 * 24 * 60 * 60 * 1000,
+    });
+
+    // 3. Get rates
+    const rates = await getRates('USD');
+
+    // 4. Helper
+    const formatCurrency = (amount) => {
+      if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+      const converted = convert(amount, 'USD', currency, rates);
+      return formatMoney(converted, currency);
+    };
 
     // Pagination settings
     const limit = 10;
@@ -1334,6 +1713,8 @@ exports.adminUserDetail = async (req, res) => {
       totalUserWithdrawalAmount,
       message,
       formatCurrency,
+      currency,
+      rates,
 
       // Pagination data
       txPage,

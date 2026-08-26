@@ -46,8 +46,8 @@
               <td><%= i + 1 %></td>
               <td><%= user.firstName %> <%= user.lastName %></td>
               <td><%= user.email %></td>
-              <td>$<%= formatCurrency(user.balance) %></td>
-              <td>$<%= formatCurrency(user.profit) %></td>
+              <td><%= formatCurrency(user.balance) %></td>
+              <td><%= formatCurrency(user.profit) %></td>
               <td><span class="pill <%= user.confirmed === true ? 'success' : 'warning' %>"><%= user.confirmed === true ? 'Verified' : 'Unverified' %></span></td>
               <td><a class="btn sm ghost" href="/admin/users/<%= user.id %>">Open profile</a></td>
             </tr>
@@ -60,8 +60,8 @@
         <div class="mini-card">
           <div class="row between"><strong><%= user.firstName %> <%= user.lastName %></strong><span class="pill <%= user.confirmed === true ? 'success' : 'warning' %>"><%= user.confirmed === true ? 'Verified' : 'Unverified' %></span></div>
           <div class="mini-row"><span>Email</span><span><%= user.email %></span></div>
-          <div class="mini-row"><span>Balance</span><span>$<%= formatCurrency(user.balance) %></span></div>
-          <div class="mini-row"><span>Profit</span><span>$<%= formatCurrency(user.profit) %></span></div>
+          <div class="mini-row"><span>Balance</span><span><%= formatCurrency(user.balance) %></span></div>
+          <div class="mini-row"><span>Profit</span><span><%= formatCurrency(user.profit) %></span></div>
           <div class="mini-row"><span>Country</span><span><%= user.country %></span></div>
           <a class="btn sm block" style="margin-top:10px" href="/admin/users/<%= user.id %>">Open profile</a>
         </div>

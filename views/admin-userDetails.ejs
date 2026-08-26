@@ -17,7 +17,7 @@
             <path d="M16 12.5h3" />
           </svg></span>
       </div>
-      <p class="stat-value">$<%= formatCurrency(userDetail.balance) %></p>
+      <p class="stat-value"><%= formatCurrency(userDetail.balance) %></p>
       <p class="muted small" style="margin:6px 0 0">Available to withdraw</p>
     </div>
     <div class="card stat">
@@ -28,7 +28,7 @@
             <circle cx="9" cy="12" r="1" />
           </svg></span>
       </div>
-      <p class="stat-value">$<%= formatCurrency(userDetail.profit) %></p>
+      <p class="stat-value"><%= formatCurrency(userDetail.profit) %></p>
       <p class="muted small" style="margin:6px 0 0">Capital in plans</p>
     </div>
     <div class="card stat">
@@ -45,7 +45,7 @@
       <% deposits.forEach(deposit => { %>
       <% totalDeposits += deposit.amount %>
       <% }) %>
-      <p class="stat-value">$<%= formatCurrency(totalDeposits) %></p>
+      <p class="stat-value"><%= formatCurrency(totalDeposits) %></p>
       <p class="muted small" style="margin:6px 0 0">All deposits</p>
     </div>
     <div class="card stat">
@@ -60,7 +60,7 @@
       <% investments.forEach(investment => { %>
       <% totalInvestments += investment.amount %>
       <% }) %>
-      <p class="stat-value">$<%= formatCurrency(totalInvestments) %></p>
+      <p class="stat-value"><%= formatCurrency(totalInvestments) %></p>
       <p class="muted small" style="margin:6px 0 0">All investments</p>
     </div>
   </div>
@@ -303,7 +303,7 @@
         <% investments.forEach(investment => { %>
         <div class="mini-card">
           <div class="row between"><strong><%= investment.user.firstName %> <%= investment.user.lastName %></strong><span class="pill <%= investment.status === 'active' ? 'warning' : 'success' %>"><%= investment.status === 'active' ? 'Active' : 'Completed' %></span></div>
-          <div class="mini-row"><span><%= investment.plan.name %></span><span>$<%= formatCurrency(investment.amount) %></span></div>
+          <div class="mini-row"><span><%= investment.plan.name %></span><span><%= formatCurrency(investment.amount) %></span></div>
           <div class="mini-row"><span>Profit</span><span><%= formatCurrency(investment.plan.roi) %>%</span></div>
           <!-- <button class="btn sm block" style="margin-top:10px" onclick="openModal('inv-modal')">Adjust</button> -->
         </div>

@@ -47,7 +47,7 @@
               <tr>
                 <td><%= i + 1 %></td>
                 <td><%= transaction.type %></td>
-                <td>$<%= formatCurrency(transaction.amount) %></td>
+                <td><%= formatCurrency(transaction.amount) %></td>
                 <td><%= transaction.wallet %></td>
                 <td><%= transaction.address || 'N/A' %></td>
                 <td><span class="pill <%= transaction.status === 'declined' ? 'error' : transaction.status === 'pending' ? 'warning' : 'success' %>"><%= transaction.status %></span></td>
@@ -63,7 +63,7 @@
           <% transactions.slice(0, 5).forEach(transaction => { %>
           <div class="mini-card">
             <div class="row between"><strong><%= transaction.type %></strong><span class="pill <%= transaction.status === 'declined' ? 'error' : transaction.status === 'pending' ? 'warning' : 'success' %>"><%= transaction.status %></span></div>
-            <div class="mini-row"><span>Amount</span><span>$<%= formatCurrency(transaction.amount) %></span></div>
+            <div class="mini-row"><span>Amount</span><span><%= formatCurrency(transaction.amount) %></span></div>
             <div class="mini-row"><span>Asset</span><span><%= transaction.wallet %></span></div>
             <div class="mini-row"><span>Date</span><span><%= transaction.createdAt.toLocaleDateString() %>, <%= transaction.createdAt.toLocaleTimeString() %></span></div>
             <!-- <p class="muted small" style="margin:8px 0 0">Deposit confirmed after 12 network confirmations.</p> -->

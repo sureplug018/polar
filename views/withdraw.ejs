@@ -16,7 +16,7 @@
               <path d="M16 12.5h3" />
             </svg></span>
         </div>
-        <p class="stat-value">$<%= formatCurrency(user.balance) %></p>
+        <p class="stat-value"><%= formatCurrency(user.balance) %></p>
       </div>
       <div class="card stat">
         <div class="row between" style="align-items:flex-start;flex-wrap:nowrap">
@@ -27,7 +27,7 @@
               <path d="M12 8v4l3 2" />
             </svg></span>
         </div>
-        <p class="stat-value">$<%= formatCurrency(totalPendingWithdrawals) %></p>
+        <p class="stat-value"><%= formatCurrency(totalPendingWithdrawals) %></p>
       </div>
       <div class="card stat">
         <div class="row between" style="align-items:flex-start;flex-wrap:nowrap">
@@ -38,7 +38,7 @@
               <path d="M4 3h16" />
             </svg></span>
         </div>
-        <p class="stat-value">$<%= formatCurrency(totalWithdrawn[0] ? totalWithdrawn[0].total : 0) %></p>
+        <p class="stat-value"><%= formatCurrency(totalWithdrawn[0] ? totalWithdrawn[0].total : 0) %></p>
       </div>
     </div>
     <div class="grid g2-md mt">

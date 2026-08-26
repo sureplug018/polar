@@ -12,6 +12,7 @@ const planRoutes = require('./routes/planRoutes');
 const messageRoutes = require('./routes/messageRoutes');
 const viewsRoutes = require('./routes/viewsRoutes');
 const investmentRoutes = require('./routes/investmentRoutes');
+const currencyMiddleware = require('./middlewares/currency');
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -34,6 +35,7 @@ app.use('/api', limiter);
 // limiting the amount of data that is parsed in body-parser by adding size in kb
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
+app.use(currencyMiddleware);
 
 // DATA SANITIZATION
 app.use((req, res, next) => {

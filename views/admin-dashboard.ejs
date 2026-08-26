@@ -31,7 +31,7 @@
       <% deposits.forEach(deposit => { %>
       <% totalDeposits += deposit.amount %>
       <% }) %>
-      <p class="stat-value">$<%= formatCurrency(totalDeposits) %></p>
+      <p class="stat-value"><%= formatCurrency(totalDeposits) %></p>
     </div>
     <div class="card stat">
       <div class="row between" style="align-items:flex-start;flex-wrap:nowrap">
@@ -46,7 +46,7 @@
       <% withdrawals.forEach(withdrawal => { %>
       <% totalWithdrawal += withdrawal.amount %>
       <% }) %>
-      <p class="stat-value">$<%= formatCurrency(totalWithdrawal) %></p>
+      <p class="stat-value"><%= formatCurrency(totalWithdrawal) %></p>
       <p class="muted small" style="margin:6px 0 0"><%= withdrawals.filter(w => w.status === 'pending').length %> awaiting review</p>
     </div>
     <div class="card stat">
@@ -93,7 +93,7 @@
               <td><%= i + 1 %></td>
               <td><%= transaction.user.firstName %> <%= transaction.user.lastName %></td>
               <td><%= transaction.type %></td>
-              <td>$<%= formatCurrency(transaction.amount) %></td>
+              <td><%= formatCurrency(transaction.amount) %></td>
               <td><%= transaction.wallet %></td>
               <td><%= transaction.address || 'N/A' %></td>
               <td><span class="pill <%= transaction.status === 'declined' ? 'error' : transaction.status === 'pending' ? 'warning' : 'success' %>"><%= transaction.status %></span></td>
@@ -109,7 +109,7 @@
         <% transactions.slice(0, 10).forEach((transaction, i) => { %>
         <div class="mini-card">
           <div class="row between"><strong><%= transaction.user.firstName %> <%= transaction.user.lastName %></strong><span class="pill <%= transaction.status === 'declined' ? 'error' : transaction.status === 'pending' ? 'warning' : 'success' %>"><%= transaction.status %></span></div>
-          <div class="mini-row"><span><%= transaction.type %></span><span>$<%= formatCurrency(transaction.amount) %></span></div>
+          <div class="mini-row"><span><%= transaction.type %></span><span><%= formatCurrency(transaction.amount) %></span></div>
           <% const date = transaction.createdAt.toLocaleDateString() %>
           <% const time = transaction.createdAt.toLocaleTimeString() %>
           <div class="mini-row"><span>Date</span><span><%= date %>, <%= time %></span></div>

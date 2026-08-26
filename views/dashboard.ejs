@@ -12,6 +12,17 @@
           <img src="/assets/home/images/logo.png" style="width: 120px; height: auto;" alt="">
         </a>
       </div>
+      <form method="GET" style="display: inline-block;">
+        <select name="currency" onchange="this.form.submit()" class="form-select">
+          <option value="USD" <%= currency === 'USD' ? 'selected' : '' %>>USD ($)</option>
+          <option value="EUR" <%= currency === 'EUR' ? 'selected' : '' %>>EUR (€)</option>
+          <option value="GBP" <%= currency === 'GBP' ? 'selected' : '' %>>GBP (£)</option>
+          <!-- <option value="NGN" <%= currency === 'NGN' ? 'selected' : '' %>>NGN (₦)</option> -->
+          <option value="CAD" <%= currency === 'CAD' ? 'selected' : '' %>>CAD (C$)</option>
+          <option value="AUD" <%= currency === 'AUD' ? 'selected' : '' %>>AUD (A$)</option>
+          <option value="JPY" <%= currency === 'JPY' ? 'selected' : '' %>>JPY (¥)</option>
+        </select>
+      </form>
       <div class="row">
         <button class="icon-btn" aria-label="Notifications"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M18 9a6 6 0 1 0-12 0c0 5-2 6-2 6h16s-2-1-2-6" />
@@ -50,7 +61,7 @@
               <path d="M16 12.5h3" />
             </svg></span>
         </div>
-        <p class="stat-value">$<%= formatCurrency(user.balance) %></p>
+        <p class="stat-value"><%= formatCurrency(user.balance) %></p>
         <p class="muted small" style="margin:6px 0 0">Available to withdraw</p>
       </div>
       <div class="card stat">
@@ -61,7 +72,7 @@
               <circle cx="9" cy="12" r="1" />
             </svg></span>
         </div>
-        <p class="stat-value">$<%= formatCurrency(user.profit) %></p>
+        <p class="stat-value"><%= formatCurrency(user.profit) %></p>
         <p class="muted small" style="margin:6px 0 0">Available Profit</p>
       </div>
       <div class="card stat">
@@ -76,7 +87,7 @@
         <% deposits.forEach(deposit => { %>
         <% totalDeposits += deposit.amount %>
         <% }) %>
-        <p class="stat-value">$<%= formatCurrency(totalDeposits) %></p>
+        <p class="stat-value"><%= formatCurrency(totalDeposits) %></p>
         <p class="muted small" style="margin:6px 0 0">All deposits</p>
       </div>
       <div class="card stat">
@@ -93,7 +104,7 @@
         <% investments.forEach(investment => { %>
         <% totalInvestments += investment.amount %>
         <% }) %>
-        <p class="stat-value">$<%= formatCurrency(totalInvestments) %></p>
+        <p class="stat-value"><%= formatCurrency(totalInvestments) %></p>
         <p class="muted small" style="margin:6px 0 0">All investments</p>
       </div>
     </div>
@@ -160,7 +171,7 @@
               <tr>
                 <td><%= i + 1 %></td>
                 <td><%= transaction.type %></td>
-                <td>$<%= formatCurrency(transaction.amount) %></td>
+                <td><%= formatCurrency(transaction.amount) %></td>
                 <td><%= transaction.wallet %></td>
                 <td><%= transaction.address || 'N/A' %></td>
                 <td><span class="pill <%= transaction.status === 'declined' ? 'error' : transaction.status === 'pending' ? 'warning' : 'success' %>"><%= transaction.status %></span></td>
@@ -176,7 +187,7 @@
           <% transactions.slice(0, 5).forEach(transaction => { %>
           <div class="mini-card">
             <div class="row between"><strong><%= transaction.type %></strong><span class="pill <%= transaction.status === 'declined' ? 'error' : transaction.status === 'pending' ? 'warning' : 'success' %>"><%= transaction.status %></span></div>
-            <div class="mini-row"><span>Amount</span><span>$<%= formatCurrency(transaction.amount) %></span></div>
+            <div class="mini-row"><span>Amount</span><span><%= formatCurrency(transaction.amount) %></span></div>
             <div class="mini-row"><span>Asset</span><span><%= transaction.wallet %></span></div>
             <div class="mini-row"><span>Date</span><span><%= transaction.createdAt.toLocaleDateString() %>, <%= transaction.createdAt.toLocaleTimeString() %></span></div>
             <!-- <p class="muted small" style="margin:8px 0 0">Deposit confirmed after 12 network confirmations.</p> -->

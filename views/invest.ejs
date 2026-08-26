@@ -13,8 +13,8 @@
         <p class="display" style="font-size:18px;font-weight:700"><%= plan.name %></p>
         <p class="stat-value" style="color:var(--primary)"><%= plan.roi %>% ROI Daily</p>
         <p class="muted small"><%= plan.duration %> days term</p>
-        <div class="mini-row"><span>Min</span><span>$<%= plan.min.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></span></div>
-        <div class="mini-row"><span>Max</span><span>$<%= plan.max.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %></span></div>
+        <div class="mini-row"><span>Min</span><span><%= formatCurrency(plan.min) %></span></div>
+        <div class="mini-row"><span>Max</span><span><%= formatCurrency(plan.max)%></span></div>
         <div class="mini-row"><span>Referral</span><span>10% referral bonus</span></div>
         <!-- <button class="btn block sm" style="margin-top:12px" onclick="openModal('invest-modal')">Choose </button> -->
         <!-- <button class="btn block sm" style="margin-top:12px" onclick="openModal('invest-modal')">Choose </button> -->

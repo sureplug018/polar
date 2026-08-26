@@ -10,6 +10,17 @@
         <img src="/assets/home/images/logo.png" style="width: 120px; height: auto;" alt="">
       </a>
     </div>
+    <form method="GET" style="display: inline-block;">
+      <select name="currency" onchange="this.form.submit()" class="form-select">
+        <option value="USD" <%= currency === 'USD' ? 'selected' : '' %>>USD ($)</option>
+        <option value="EUR" <%= currency === 'EUR' ? 'selected' : '' %>>EUR (€)</option>
+        <option value="GBP" <%= currency === 'GBP' ? 'selected' : '' %>>GBP (£)</option>
+        <!-- <option value="NGN" <%= currency === 'NGN' ? 'selected' : '' %>>NGN (₦)</option> -->
+        <option value="CAD" <%= currency === 'CAD' ? 'selected' : '' %>>CAD (C$)</option>
+        <option value="AUD" <%= currency === 'AUD' ? 'selected' : '' %>>AUD (A$)</option>
+        <option value="JPY" <%= currency === 'JPY' ? 'selected' : '' %>>JPY (¥)</option>
+      </select>
+    </form>
     <div class="row"><button class="icon-btn" aria-label="Notifications"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M18 9a6 6 0 1 0-12 0c0 5-2 6-2 6h16s-2-1-2-6" />
           <path d="M10.5 20a2 2 0 0 0 3 0" />

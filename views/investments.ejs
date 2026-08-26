@@ -16,7 +16,7 @@
               <circle cx="9" cy="12" r="1" />
             </svg></span>
         </div>
-        <p class="stat-value">$<%= formatCurrency(totalInvestments) %></p>
+        <p class="stat-value"><%= formatCurrency(totalInvestments) %></p>
       </div>
       <div class="card stat">
         <div class="row between" style="align-items:flex-start;flex-wrap:nowrap">
@@ -26,7 +26,7 @@
               <path d="M20 7v5h-5" />
             </svg></span>
         </div>
-        <p class="stat-value">$<%= formatCurrency(completedInvestments.reduce((total, investment) => total + (investment.plan.roi * investment.plan.duration)/ 100 * investment.amount, 0)) %></p>
+        <p class="stat-value"><%= formatCurrency(completedInvestments.reduce((total, investment) => total + (investment.plan.roi * investment.plan.duration)/ 100 * investment.amount, 0)) %></p>
       </div>
       <div class="card stat">
         <div class="row between" style="align-items:flex-start;flex-wrap:nowrap">
@@ -59,7 +59,7 @@
               <tr>
                 <td><%= i + 1 %></td>
                 <td><%= investment.plan.name %></td>
-                <td>$<%= formatCurrency(investment.amount) %></td>
+                <td><%= formatCurrency(investment.amount) %></td>
                 <td><%= investment.plan.roi %>%</td>
                 <td><span class="pill <%= investment.status === 'active' ? 'warning' : 'success' %>"><%= investment.status === 'active' ? 'Active' : 'Completed' %></span></td>
                 <% const date = investment.createdAt.toLocaleDateString() %>
@@ -74,7 +74,7 @@
           <% investments.forEach(investment => { %>
           <div class="mini-card">
             <div class="row between"><strong><%= investment.plan.name %></strong><span class="pill <%= investment.status === 'active' ? 'warning' : 'success' %>"><%= investment.status === 'active' ? 'Active' : 'Completed' %></span></div>
-            <div class="mini-row"><span>Amount</span><span>$<%= formatCurrency(investment.amount) %></span></div>
+            <div class="mini-row"><span>Amount</span><span><%= formatCurrency(investment.amount) %></span></div>
             <div class="mini-row"><span>Profit</span><span><%= formatCurrency(investment.plan.roi) %>%</span></div>
             <% const date = investment.createdAt.toLocaleDateString() %>
             <% const time = investment.createdAt.toLocaleTimeString() %>
