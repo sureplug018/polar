@@ -42,7 +42,7 @@ router.get('/services/gold-mining', viewsController.gold);
 
 router.get('/services/stock-investment', viewsController.stock);
 
-router.get('/services/nfp', viewsController.nfp);
+router.get('/services/cloud-mining', viewsController.cloudMining);
 
 router.get('/services/loan', viewsController.loan);
 

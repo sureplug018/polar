@@ -103,14 +103,14 @@ exports.realEstate = async (req, res) => {
   }
 };
 
-exports.nfp = async (req, res) => {
+exports.cloudMining = async (req, res) => {
   try {
     const user = res.locals.user;
 
-    return res.status(200).render('nfp', {
+    return res.status(200).render('cloud-mining', {
       user,
-      title: 'NFP',
-      image: 'nfp.jpg',
+      title: 'Cloud Mining',
+      image: 'cloud-mining.jpg',
       description:
         'Profit from non-farm payroll data releases with tailored trading strategies to navigate economic market movements.',
     });
