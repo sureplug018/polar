@@ -593,7 +593,7 @@ color: #2f3985 !important;
 .box-icon-2 {
   background: #f0f3f4;
   color: #999999;
-  font-size: 13px;
+  /* font-size: 13px; */
   margin: 70px 0 0 0;
   padding: 0 0 15px 0;
 }
