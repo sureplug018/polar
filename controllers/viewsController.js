@@ -55,7 +55,7 @@ exports.homePage = async (req, res) => {
       plans,
       formatCurrency,
       currency,
-      rates
+      rates,
     });
   } catch (err) {
     return res.status(500).render('404', {
@@ -132,6 +132,51 @@ exports.cryptoInvestment = async (req, res) => {
       image: 'crypto.jpg',
       description:
         'Capitalize on digital assets with strategic insights and risk management in the volatile crypto market.',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.plans = async (req, res) => {
+  try {
+    const user = res.locals.user;
+    const plans = await Plan.find().sort({ min: 1 });
+
+    // 1. Read currency (query has priority)
+    let currency = (
+      req.query.currency ||
+      req.cookies.currency ||
+      'USD'
+    ).toUpperCase();
+    const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+    if (!allowed.includes(currency)) currency = 'USD';
+
+    // 2. Save it
+    res.cookie('currency', currency, {
+      maxAge: 365 * 24 * 60 * 60 * 1000,
+    });
+
+    // 3. Get rates
+    const rates = await getRates('USD');
+
+    // 4. Helper
+    const formatCurrency = (amount) => {
+      if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+      const converted = convert(amount, 'USD', currency, rates);
+      return formatMoney(converted, currency);
+    };
+
+    return res.status(200).render('plans', {
+      user,
+      title: 'Investment Plans',
+      plans,
+      formatCurrency,
+      currency,
+      rates,
     });
   } catch (err) {
     return res.status(500).render('404', {

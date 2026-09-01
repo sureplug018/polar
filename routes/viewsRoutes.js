@@ -26,6 +26,8 @@ router.get('/', viewsController.homePage);
 
 router.get('/about-us', viewsController.about);
 
+router.get('/plans', viewsController.plans);
+
 router.get('/services', viewsController.services);
 
 router.get('/services/agriculture', viewsController.agriculture);
