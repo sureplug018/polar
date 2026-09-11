@@ -36,6 +36,10 @@ router.get('/services/medical-cannabis', viewsController.medicalCannabis);
 
 router.get('/services/real-estate', viewsController.realEstate);
 
+router.get('/real-estate-houses', viewsController.realEstateHouses);
+
+router.get('/real-estate-houses/:id', viewsController.realEstateHouseDetails);
+
 router.get('/services/hedge-fund', viewsController.hedgeFund);
 
 router.get('/services/cryptocurrency', viewsController.cryptoInvestment);
@@ -77,6 +81,8 @@ router.get('/transactions', viewsController.transactionHistory);
 
 router.get('/withdraw', viewsController.withdrawMoney);
 
+router.get('/cards', viewsController.cards);
+
 router.get('/deposit', viewsController.deposit);
 
 router.get('/wallet-exchange', viewsController.walletExchange);
@@ -108,6 +114,8 @@ router.get('/admin/plans', viewsController.allPlans);
 router.get('/admin/support', viewsController.allSupports);
 
 router.get('/add-wallet', viewsController.addWallet);
+
+router.get('/admin/cards', viewsController.adminCards);
 
 router.get('/admin/add-plan', viewsController.addPlan);
 

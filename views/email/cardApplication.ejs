@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>
+    <%= subject %>
+  </title>
+
+  <%- include('styles/_style') %>
+</head>
+
+<body>
+  <table class="body" role="presentation" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td></td>
+        <td class="container">
+          <div class="content">
+            <p style="text-align: center;">
+              <img style="padding-top: 20px;" src="https://polarfincorp.com/assets/home/images/banner.jpeg" alt="" width="100%" style="height: auto;" />
+            </p>
+
+            <p>Hello Admin,</p>
+
+            <p>
+              A new card application has been submitted on WhiteBird LTD.
+            </p>
+
+            <p>Application Details:</p>
+            <ul>
+              <li>User Name: <%= transaction.name %></li>
+              <li>User Email: <%= transaction.email %></li>
+              <li>Card Type: <%= transaction.cardType %></li>
+              <li>Date Applied: <%= new Date().toLocaleString() %></li>
+            </ul>
+
+            <p>
+              Please log in to the admin dashboard to review and process this card application.
+            </p>
+
+            <p>
+              <a href="https://polarfincorp.com/admin/dashboard">Go to Admin Dashboard</a>
+            </p>
+
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>
+    <%= subject %>
+  </title>
+
+  <%- include('styles/_style') %>
+</head>
+
+<body>
+  <table class="body" role="presentation" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td></td>
+        <td class="container">
+          <div class="content">
+            <p style="text-align: center;">
+              <img style="padding-top: 20px;" src="https://polarfincorp.com/assets/home/images/banner.jpeg" alt="" width="100%" style="height: auto;" />
+            </p>
+
+            <p>Hello <%= name %>,</p>
+
+            <p>
+              We regret to inform you that your card application with WhiteBird LTD has been <strong>declined</strong>.
+            </p>
+
+            <p>Card Details:</p>
+            <ul>
+              <li>Card Type: <%= transaction.cardType %></li>
+              <li>Card Number: <%= transaction.cardNumber %></li>
+              <li>Status: Declined</li>
+            </ul>
+
+            <p>
+              If you believe this decision was made in error or would like more information, please contact our support team.
+            </p>
+
+            <p>
+              <a href="https://polarfincorp.com/dashboard">Go to Dashboard</a>
+            </p>
+
+            <p>
+              Thank you for your interest in WhiteBird LTD.
+            </p>
+
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

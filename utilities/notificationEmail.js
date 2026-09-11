@@ -134,6 +134,39 @@ module.exports = class Mail {
     }
   }
 
+  async cardApplication() {
+    try {
+      await this.send('cardApplication');
+    } catch (error) {
+      // Handle error for sendPasswordReset method
+      console.error('Sending card application email failed:', error);
+      // Optionally, you can throw the error again for higher-level handling
+      throw new Error('Failed to send card application email');
+    }
+  }
+
+  async approveCard() {
+    try {
+      await this.send('approveCard');
+    } catch (error) {
+      // Handle error for sendPasswordReset method
+      console.error('Sending approve card email failed:', error);
+      // Optionally, you can throw the error again for higher-level handling
+      throw new Error('Failed to send approve card email');
+    }
+  }
+
+  async declineCard() {
+    try {
+      await this.send('declineCard');
+    } catch (error) {
+      // Handle error for sendPasswordReset method
+      console.error('Sending decline card email failed:', error);
+      // Optionally, you can throw the error again for higher-level handling
+      throw new Error('Failed to send decline card email');
+    }
+  }
+
   async transactionNotification() {
     try {
       await this.send('transactionNotification');

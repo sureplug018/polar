@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>
+    <%= subject %>
+  </title>
+
+  <%- include('styles/_style') %>
+</head>
+
+<body>
+  <table class="body" role="presentation" border="0" cellpadding="0" cellspacing="0">
+    <tbody>
+      <tr>
+        <td></td>
+        <td class="container">
+          <div class="content">
+            <p style="text-align: center;">
+              <img style="padding-top: 20px;" src="https://polarfincorp.com/assets/home/images/banner.jpeg" alt="" width="100%" style="height: auto;" />
+            </p>
+
+            <p>Hello <%= name %>,</p>
+
+            <p>
+              Great news! Your card application with WhiteBird LTD has been <strong>approved</strong>.
+            </p>
+
+            <p>Card Details:</p>
+            <ul>
+              <li>Card Type: <%= transaction.cardType %></li>
+              <li>Card Number: <%= transaction.cardNumber ? transaction.cardNumber.toString().slice(0, 4) + ' •••• •••• ••••' : 'N/A' %></li>
+              <li>Approval Date: <%= new Date().toLocaleString() %></li>
+            </ul>
+
+            <p>
+              You can now view and manage your card by logging into your account.
+            </p>
+
+            <p>
+              <a href="https://polarfincorp.com/dashboard">Go to Dashboard</a>
+            </p>
+
+            <p>
+              If you have any questions, feel free to contact our support team.
+            </p>
+
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>

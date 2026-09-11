@@ -1,0 +1,377 @@
+<%- include('partials/dashboardHeader') %>
+<div class="content">
+  <%- include('partials/dashboardHead') %>
+  <main class="page">
+
+    <% if(!card || card === null){ %>
+    <div style="margin-bottom:18px">
+      <h1 style="font-size:24px">Get a Card</h1>
+      <p class="muted" style="margin:6px 0 0">Apply for a new card and get started with your financial journey.</p>
+    </div>
+    <div class="card mt">
+      <h2 class="section-title">Apply for a Card</h2>
+      <form data-demo class="mt-sm">
+        <div id="alert" style="margin-bottom:14px"></div>
+        <div class="grid g2-md"><label class="field"><span>Card Type</span>
+            <select data-card-select>
+              <option value="">Select a card type</option>
+              <option data-amount="2500" value="Master card">Master Card</option>
+              <option data-amount="3000" value="Visa card">Visa Card</option>
+            </select></label>
+          <label class="field"><span>Amount USD</span><input type="number" readonly /></label>
+        </div>
+        <div class="grid g2-md">
+          <label class="field"><span>Billing Address</span><input type="text" placeholder="Enter your billing address" /></label>
+          <label class="field"><span>Zip Code</span><input type="text" placeholder="Enter your zip code" /></label>
+        </div>
+        <!-- <label class="field"><span>Funding source</span>
+          <select class="source-select" data-source-select>
+            <option value="balance">Account balance</option>
+            <option value="wallet">New deposit</option>
+          </select>
+        </label> -->
+        <div>
+          <label class="field"><span>Payment Method</span>
+            <select class="wallet-address-select" data-wallet-address-select>
+              <option value="">Select a wallet</option>
+              <% wallets.forEach(wallet => { %>
+              <option data-wallet-id="<%= wallet.id %>" data-wallet-name="<%= wallet.name %>" data-wallet-address="<%= wallet.address %>"><%= wallet.name %></option>
+              <% }) %>
+            </select>
+          </label>
+        </div>
+
+        <div style="padding-bottom:12px; display:none" data-wallet-info>
+          <div class="alert warning">
+            <h4>Make your deposit here</h4>
+            <p style="margin:0">
+              <span class="wallet-name"></span> - <span class="wallet-address"></span>
+              <button class="btn" onclick="copyAddress(this)">Copy</button>
+            </p>
+          </div>
+        </div>
+        <button class="btn block submit-btn" type="submit">Start investment</button>
+      </form>
+    </div>
+    <% }else if(card.status === 'pending'){ %>
+    <div style="margin-bottom:18px; text-align:center">
+      <h1 style="font-size:24px">Card Application Pending</h1>
+      <p class="muted" style="margin:6px 0 0">Your card application is currently pending. Please check back later for updates on your application status.</p>
+
+      <% }else { %>
+      <div style="margin-bottom:18px; text-align:center">
+        <h1 style="font-size:24px">Card Details</h1>
+        <div class="debit-card">
+          <div class="card-chip"></div>
+          <div class="card-type"><%= card.cardType %></div>
+
+          <div class="card-number">
+            <%= card.cardNumber.toString().replace(/(\d{4})(?=\d)/g, '$1 ') %>
+          </div>
+
+          <div class="card-bottom">
+            <div class="card-holder">
+              <span class="label">Card Holder</span>
+              <span class="value"><%= card.cardName %></span>
+            </div>
+            <div class="card-expiry">
+              <span class="label">Expires</span>
+              <span class="value"><%= card.expirationDate %></span>
+            </div>
+            <div class="card-cvv">
+              <span class="label">CVV</span>
+              <span class="value"><%= card.cvv %></span>
+            </div>
+          </div>
+        </div>
+
+        <style>
+          .debit-card {
+            width: 380px;
+            height: 230px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            padding: 24px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            overflow: hidden;
+          }
+
+          /* Golden Chip */
+          .card-chip {
+            width: 50px;
+            height: 38px;
+            background: linear-gradient(135deg, #f5d76e, #d4a017, #f5d76e);
+            border-radius: 6px;
+            position: relative;
+            margin-bottom: 28px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          }
+
+          .card-chip::before {
+            content: '';
+            position: absolute;
+            top: 6px;
+            left: 6px;
+            right: 6px;
+            bottom: 6px;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+            background: repeating-linear-gradient(90deg,
+                transparent,
+                transparent 4px,
+                rgba(0, 0, 0, 0.1) 4px,
+                rgba(0, 0, 0, 0.1) 5px);
+          }
+
+          /* Card Type (Visa / Mastercard) */
+          .card-type {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            opacity: 0.9;
+          }
+
+          /* Card Number */
+          .card-number {
+            font-size: 22px;
+            letter-spacing: 3px;
+            margin-bottom: 28px;
+            font-weight: 500;
+          }
+
+          /* Bottom section */
+          .card-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+          }
+
+          .card-holder,
+          .card-expiry,
+          .card-cvv {
+            display: flex;
+            flex-direction: column;
+          }
+
+          .label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.7;
+            margin-bottom: 4px;
+          }
+
+          .value {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+          }
+        </style>
+      </div>
+      <% } %>
+
+      <div class="modal-backdrop" id="invest-modal">
+        <div class="modal">
+          <div class="row between">
+            <h3 style="font-size:18px">Confirm plan</h3><button class="icon-btn" onclick="closeModal('invest-modal')"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m6 6 12 12" />
+                <path d="m18 6-12 12" />
+              </svg></button>
+          </div>
+          <div class="mt">
+            <p class="muted">Confirm to move funds from your available balance into the selected plan.</p><button class="btn block" onclick="closeModal('invest-modal')">Confirm</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt">
+        <form data-demo>
+          <div id="alert" style="margin-bottom:14px"></div>
+          <p>Billing Address: <%= card.billingAddress %></p>
+          <p>Zip Code: <%= card.zipCode %></p>
+          <p>Card Status: <span class="pill <%= card.status === 'inactive' || card.status === 'blocked' ? 'error' : card.status === 'pending' ? 'warning' : 'success' %>"><%= card.status %></span></p>
+          <!-- <label class="field"><span>Message to member</span><textarea rows="4" placeholder="Deposit confirmed after 12 network confirmations."></textarea></label> -->
+          <div class="row">
+            <div><label class="field"><span>Card Status</span>
+                <select data-card-select-status>
+                  <option value="">Select a card Status</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select></label>
+              <button class="btn status-btn" data-card-id="<%= card.id %>" type="submit">Update Status</button>
+            </div>
+          </div>
+        </form>
+      </div>
+  </main>
+</div>
+<script src="/assets/js/alert.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  const cardSelect = document.querySelector('select[data-card-select]');
+  const walletSelect = document.querySelector('select[data-wallet-address-select]');
+  const walletAddressSpan = document.querySelector('.wallet-address');
+  const walletNameSpan = document.querySelector('.wallet-name');
+  const walletInfoDiv = document.querySelector('[data-wallet-info]');
+  const zipCodeInput = document.querySelector('input[placeholder="Enter your zip code"]');
+  const billingAddressInput = document.querySelector('input[placeholder="Enter your billing address"]');
+
+  if (cardSelect) {
+    cardSelect.addEventListener('change', function() {
+      const selectedOption = this.options[this.selectedIndex];
+      const amount = selectedOption.dataset.amount;
+
+      if (amount) {
+        document.querySelector('input[type="number"]').value = amount;
+      } else {
+        document.querySelector('input[type="number"]').value = '';
+      }
+    });
+  }
+
+  if (walletSelect) {
+    walletSelect.addEventListener('change', function() {
+      const selectedOption = this.options[this.selectedIndex];
+      const walletAddress = selectedOption.dataset.walletAddress;
+      const walletName = selectedOption.textContent;
+
+      if (walletAddress) {
+        walletNameSpan.textContent = walletName;
+        walletAddressSpan.textContent = walletAddress;
+        walletInfoDiv.style.display = 'block';
+        document.querySelector('.wallet-name').textContent = walletName;
+      } else {
+        walletInfoDiv.style.display = 'none';
+      }
+    });
+  }
+
+  function copyAddress(button) {
+    // Find the wallet address span inside the same paragraph
+    const addressSpan = button.parentElement.querySelector('.wallet-address');
+
+    if (!addressSpan) {
+      alert('No wallet address found');
+      return;
+    }
+
+    const textToCopy = addressSpan.textContent.trim();
+
+    if (!textToCopy) {
+      alert('Wallet address is empty');
+      return;
+    }
+
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      // Visual feedback
+      const originalText = button.textContent;
+      button.textContent = 'Copied!';
+      setTimeout(() => {
+        button.textContent = originalText;
+      }, 1500);
+    }).catch(err => {
+      console.error('Failed to copy:', err);
+      alert('Failed to copy address');
+    });
+  }
+
+  document.querySelector('form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const selectedCardOption = cardSelect.options[cardSelect.selectedIndex];
+    const selectedCardType = selectedCardOption ? selectedCardOption.value : null;
+    const amount = this.querySelector('input[type="number"]').value;
+    const selectedWalletOption = walletSelect.options[walletSelect.selectedIndex];
+    const selectedWallet = selectedWalletOption ? selectedWalletOption.dataset.walletName : null;
+    const submitButton = document.querySelector('.submit-btn');
+
+    // Disable button
+    submitButton.disabled = true;
+    submitButton.textContent = 'Processing...';
+    submitButton.style.cursor = 'not-allowed';
+
+    try {
+      const response = await axios.post('/api/v1/cards/apply-for-card', {
+        cardType: selectedCardType,
+        amount: amount,
+        wallet: selectedWallet, // better to use the ID
+        address: selectedWalletOption ? selectedWalletOption.dataset.walletAddress : '',
+        billingAddress: billingAddressInput.value,
+        zipCode: zipCodeInput.value
+      });
+
+      if (response.data.status === 'success' && response.data.data.wallet === 'balance') {
+        showAlert('success', 'Card Applied', 'Your card application has been successfully submitted.');
+        this.reset();
+        walletInfoDiv.style.display = 'none';
+      } else {
+        showAlert('success', 'Card Pending', 'Your card application is pending. Please complete the required steps to activate it.');
+        this.reset();
+        walletInfoDiv.style.display = 'none';
+      }
+
+    } catch (error) {
+      console.error('Error applying for card:', error.response ? error.response.data : error.message);
+      showAlert(
+        'error',
+        'Card Application Failed',
+        error.response?.data?.message || 'An unexpected error occurred. Please try again.'
+      );
+    } finally {
+      // Re-enable button
+      submitButton.disabled = false;
+      submitButton.textContent = 'Start investment';
+      submitButton.style.cursor = 'pointer';
+    }
+  });
+
+  const statusBtn = document.querySelector('.status-btn');
+  const cardSelectStatus = document.querySelector('[data-card-select-status]');
+  const selectedStatus = cardSelectStatus.value;
+  const cardId = statusBtn.getAttribute('data-card-id');
+  let currentCardId = null;
+
+
+  function setProcessingState(clickedBtn) {
+    clickedBtn.textContent = 'Processing...';
+  }
+
+  // Update status handler
+  statusBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (!cardId) {
+      showAlert('error', 'Action not allowed', 'Card ID is missing.');
+      return;
+    }
+    const selectedStatus = cardSelectStatus.value;
+    if (!selectedStatus) {
+      showAlert('error', 'Action not allowed', 'Please select a status.');
+      return;
+    }
+    setProcessingState(statusBtn);
+
+    try {
+      const response = await axios.patch(`/api/v1/cards/update-card-status/${cardId}`, {
+        status: selectedStatus
+      });
+      if (response.data.status === 'success') {
+        showAlert('success', 'Card status updated successfully', 'Card status has been updated.');
+        setTimeout(() => {
+          closeModal('card-modal');
+          location.reload();
+        }, 2000);
+      }
+    } catch (error) {
+      console.error(error);
+      showAlert('error', 'Error occurred.', error.response?.data?.message || 'An unexpected error occurred.');
+      resetButtons();
+    }
+  });
+</script>
+<%- include('partials/dashboardFooter') %>

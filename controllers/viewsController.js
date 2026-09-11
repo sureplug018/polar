@@ -7,6 +7,8 @@ const Wallet = require('../models/walletsModel');
 const Support = require('../models/supportModel');
 const Message = require('../models/messageModel');
 const { getRates, convert, formatMoney } = require('../utilities/currency');
+const Card = require('../models/cardModel');
+const houses = require('../data');
 
 // function formatCurrency(amount) {
 //   if (amount == null || isNaN(amount)) return 'N/A';
@@ -94,6 +96,48 @@ exports.realEstate = async (req, res) => {
       image: 'real-estate.jpg',
       description:
         'Invest in properties with expert guidance to maximize value and secure stable returns through strategic real estate planning.',
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.realEstateHouses = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    return res.status(200).render('real-estate-houses', {
+      user,
+      title: 'Homes for Sale',
+      houses,
+    });
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.realEstateHouseDetails = async (req, res) => {
+  try {
+    const user = res.locals.user;
+    const house = houses.find((item) => item.id === req.params.id);
+
+    if (!house) {
+      return res.status(404).render('404', {
+        title: 'Property Not Found',
+        message: 'The property you are looking for is no longer available.',
+      });
+    }
+
+    return res.status(200).render('real-estate-house-details', {
+      user,
+      title: house.name,
+      house,
     });
   } catch (err) {
     return res.status(500).render('404', {
@@ -613,6 +657,42 @@ exports.investmentPlans = async (req, res) => {
       });
     }
     return res.status(302).redirect('/sign-in');
+  } catch (err) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.cards = async (req, res) => {
+  try {
+    let user;
+    if (req.query.userId) {
+      user = await User.findById(req.query.userId);
+    } else {
+      user = res.locals.user;
+    }
+
+    if (!user) {
+      return res.status(302).redirect('/sign-in');
+    }
+
+    if (user) {
+      const wallets = await Wallet.find({
+        user: { $exists: false },
+      });
+      const card = await Card.findOne().sort({ createdAt: -1 });
+
+      return res.status(200).render('cards', {
+        title: 'Get a Card',
+        user,
+        wallets,
+        card,
+      });
+    }
+
+    return res.status(302).redirect('/');
   } catch (err) {
     return res.status(500).render('404', {
       title: 'Error',
@@ -1897,6 +1977,70 @@ exports.kycManagement = async (req, res) => {
 
     return res.status(302).redirect('/');
   } catch (error) {
+    return res.status(500).render('404', {
+      title: 'Error',
+      message: 'Something went wrong',
+    });
+  }
+};
+
+exports.adminCards = async (req, res) => {
+  try {
+    const user = res.locals.user;
+
+    if (!user) {
+      return res.status(302).redirect('/admin/sign-in');
+    }
+
+    if (user.role === 'admin') {
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const skip = (page - 1) * limit;
+
+      const filter = {};
+
+      const { status, email } = req.query;
+
+      // Optional status filter
+      if (status) {
+        filter.status = status;
+      }
+
+      // Filter by user email
+      if (email) {
+        const matchedUsers = await User.find({
+          email: { $regex: email, $options: 'i' },
+        }).select('_id');
+
+        filter.user = { $in: matchedUsers.map((u) => u._id) };
+      }
+
+      // Total count for pagination
+      const totalCards = await Card.countDocuments(filter);
+      const totalPages = Math.ceil(totalCards / limit);
+
+      const allCards = await Card.find(filter)
+        .populate('user')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit);
+
+      return res.status(200).render('admin-cards', {
+        title: 'Cards',
+        user,
+        cards: allCards,
+        query: req.query,
+        // Pagination data
+        currentPage: page,
+        totalPages,
+        totalCards,
+        formatCurrency,
+      });
+    }
+
+    return res.status(302).redirect('/');
+  } catch (err) {
+    console.log(err);
     return res.status(500).render('404', {
       title: 'Error',
       message: 'Something went wrong',

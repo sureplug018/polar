@@ -1,0 +1,465 @@
+<%- include('partials/landingPageHeader') %>
+
+<style>
+  .house-detail {
+    background: #f6f4ef;
+    color: #1d2927;
+    font-family: Georgia, 'Times New Roman', serif;
+    padding: 54px 0 96px;
+  }
+
+  .house-shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  .house-back {
+    color: #b26935;
+    font: 700 12px Arial, sans-serif;
+    letter-spacing: 1px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .house-back:hover {
+    color: #1d2927;
+  }
+
+  .house-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 24px;
+    margin: 38px 0 28px;
+  }
+
+  .house-heading h1 {
+    font-size: clamp(38px, 5vw, 64px);
+    font-weight: 400;
+    line-height: 1;
+    margin: 10px 0;
+  }
+
+  .house-heading p {
+    color: #68716d;
+    font: 15px Arial, sans-serif;
+    margin: 0;
+  }
+
+  .house-kicker {
+    color: #b26935;
+    font: 700 12px Arial, sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .house-price {
+    font-size: 30px;
+    white-space: nowrap;
+  }
+
+  .house-gallery {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+    gap: 12px;
+  }
+
+  .house-hero {
+    height: 530px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .house-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .gallery-arrow {
+    background: rgba(255, 255, 255, .9);
+    border: 0;
+    color: #1d2927;
+    cursor: pointer;
+    font-size: 26px;
+    height: 46px;
+    width: 46px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .gallery-arrow:hover {
+    background: #e9b178;
+  }
+
+  .gallery-arrow.prev {
+    left: 18px;
+  }
+
+  .gallery-arrow.next {
+    right: 18px;
+  }
+
+  .gallery-caption {
+    background: rgba(29, 41, 39, .8);
+    bottom: 0;
+    color: #fff;
+    font: 12px Arial, sans-serif;
+    left: 0;
+    padding: 13px 18px;
+    position: absolute;
+  }
+
+  .house-thumbnails {
+    display: grid;
+    gap: 12px;
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  .house-thumbnail {
+    border: 0;
+    cursor: pointer;
+    min-height: 0;
+    opacity: .68;
+    padding: 0;
+  }
+
+  .house-thumbnail.active,
+  .house-thumbnail:hover {
+    opacity: 1;
+    outline: 3px solid #e9b178;
+    outline-offset: -3px;
+  }
+
+  .house-thumbnail img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .house-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(260px, 1fr);
+    gap: 70px;
+    margin-top: 56px;
+  }
+
+  .house-content h2 {
+    font-size: 34px;
+    font-weight: 400;
+    margin: 0 0 18px;
+  }
+
+  .house-content p {
+    color: #52605b;
+    font: 16px/1.8 Arial, sans-serif;
+    margin: 0;
+  }
+
+  .house-copy-block {
+    margin-bottom: 30px;
+  }
+
+  .house-label {
+    color: #b26935;
+    font: 700 11px Arial, sans-serif;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .house-highlights {
+    border-left: 3px solid #e9b178;
+    color: #1d2927;
+    font: 21px/1.5 Georgia, serif;
+    margin: 0 0 34px;
+    padding-left: 20px;
+  }
+
+  .house-neighborhood {
+    margin-top: 34px;
+  }
+
+  .house-amenities {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 28px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .house-amenities li {
+    color: #52605b;
+    font: 14px/1.5 Arial, sans-serif;
+    padding-left: 18px;
+    position: relative;
+  }
+
+  .house-amenities li::before {
+    color: #b26935;
+    content: '\2022';
+    left: 0;
+    position: absolute;
+  }
+
+  .house-sidebar {
+    border-top: 2px solid #1d2927;
+  }
+
+  .house-facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 0;
+  }
+
+  .house-fact {
+    border-bottom: 1px solid #d9d9d1;
+    padding: 16px 0;
+  }
+
+  .house-fact dt {
+    color: #68716d;
+    font: 11px Arial, sans-serif;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+  }
+
+  .house-fact dd {
+    font: 17px Georgia, serif;
+    margin: 0;
+  }
+
+  .house-fact-wide {
+    grid-column: 1 / -1;
+  }
+
+  .house-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 24px;
+    list-style: none;
+    margin: 28px 0 0;
+    padding: 0;
+  }
+
+  .house-features li {
+    color: #52605b;
+    font: 14px/1.4 Arial, sans-serif;
+    padding-left: 18px;
+    position: relative;
+  }
+
+  .house-features li::before {
+    color: #b26935;
+    content: '\2022';
+    left: 0;
+    position: absolute;
+  }
+
+  .house-contact {
+    background: #1d2927;
+    color: #fff;
+    margin-top: 38px;
+    padding: 24px;
+  }
+
+  .house-contact h3 {
+    font-size: 22px;
+    font-weight: 400;
+    margin: 0 0 8px;
+  }
+
+  .house-contact p {
+    color: #d7dfda;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+  }
+
+  .house-contact a {
+    color: #e9b178;
+    font: 700 12px Arial, sans-serif;
+    letter-spacing: 1px;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 760px) {
+
+    .house-heading,
+    .house-content {
+      display: block;
+    }
+
+    .house-price {
+      margin-top: 18px;
+    }
+
+    .house-gallery {
+      display: block;
+    }
+
+    .house-hero {
+      height: 360px;
+    }
+
+    .house-thumbnails {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 100px;
+      margin-top: 10px;
+    }
+
+    .house-content h2 {
+      margin-top: 44px;
+    }
+  }
+
+  @media (max-width: 460px) {
+
+    .house-features,
+    .house-amenities,
+    .house-facts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<main class="house-detail">
+  <div class="house-shell">
+    <a class="house-back" href="/real-estate-houses">&larr; Back to residences</a>
+
+    <div class="house-heading">
+      <div>
+        <div class="house-kicker"><%= house.type %> &middot; <%= house.status %></div>
+        <h1><%= house.name %></h1>
+        <p><%= house.location %></p>
+      </div>
+      <div class="house-price"><%= formatMoney(house.price) %></div>
+    </div>
+
+    <section class="house-gallery" aria-label="Property gallery">
+      <div class="house-hero">
+        <img id="house-slide" src="<%= house.images[0] %>" alt="<%= house.name %> view 1">
+        <button class="gallery-arrow prev" type="button" aria-label="Previous image">&#8249;</button>
+        <button class="gallery-arrow next" type="button" aria-label="Next image">&#8250;</button>
+        <div class="gallery-caption"><span id="house-slide-number">1</span> / <%= house.images.length %> &middot; Property view</div>
+      </div>
+      <div class="house-thumbnails">
+        <% house.images.forEach((image, index) => { %>
+        <button class="house-thumbnail <%= index === 0 ? 'active' : '' %>" type="button" data-index="<%= index %>" aria-label="Show image <%= index + 1 %>">
+          <img src="<%= image %>" alt="<%= house.name %> thumbnail <%= index + 1 %>">
+        </button>
+        <% }); %>
+      </div>
+    </section>
+
+    <section class="house-content">
+      <div>
+        <h2>A home made for living well.</h2>
+        <div class="house-copy-block">
+          <div class="house-label">The property</div>
+          <p><%= house.description %></p>
+        </div>
+        <div class="house-copy-block">
+          <div class="house-label">At a glance</div>
+          <p class="house-highlights"><%= house.highlights %></p>
+        </div>
+        <div class="house-copy-block">
+          <div class="house-label">Included features</div>
+          <ul class="house-amenities">
+            <% house.amenities.forEach((amenity) => { %><li><%= amenity %></li><% }); %>
+          </ul>
+        </div>
+        <ul class="house-features">
+          <% house.features.forEach((feature) => { %><li><%= feature %></li><% }); %>
+        </ul>
+        <div class="house-neighborhood">
+          <div class="house-label">The neighborhood</div>
+          <p><%= house.neighborhood %></p>
+        </div>
+      </div>
+      <aside class="house-sidebar">
+        <dl class="house-facts">
+          <div class="house-fact">
+            <dt>Bedrooms</dt>
+            <dd><%= house.bedrooms %></dd>
+          </div>
+          <div class="house-fact">
+            <dt>Bathrooms</dt>
+            <dd><%= house.bathrooms %></dd>
+          </div>
+          <div class="house-fact">
+            <dt>Interior</dt>
+            <dd><%= house.area %></dd>
+          </div>
+          <div class="house-fact">
+            <dt>Land</dt>
+            <dd><%= house.lotSize %></dd>
+          </div>
+          <div class="house-fact">
+            <dt>Year built</dt>
+            <dd><%= house.yearBuilt %></dd>
+          </div>
+          <div class="house-fact">
+            <dt>Parking</dt>
+            <dd><%= house.parking %></dd>
+          </div>
+          <div class="house-fact house-fact-wide">
+            <dt>Ownership</dt>
+            <dd><%= house.tenure %></dd>
+          </div>
+          <div class="house-fact house-fact-wide">
+            <dt>Indicative annual rates</dt>
+            <dd><%= house.rates %></dd>
+          </div>
+          <div class="house-fact house-fact-wide">
+            <dt>Listing adviser</dt>
+            <dd><%= house.agent %></dd>
+          </div>
+        </dl>
+        <div class="house-contact">
+          <h3>Arrange a private viewing</h3>
+          <p>Speak with a Polaris property adviser about this residence, availability, and next steps.</p>
+          <a href="/contact-us">Contact our team &rarr;</a>
+        </div>
+      </aside>
+    </section>
+  </div>
+</main>
+
+<script type="application/json" id="house-images-data">
+  <%- JSON.stringify(house.images) %>
+</script>
+
+<script>
+  (() => {
+    const images = JSON.parse(document.getElementById('house-images-data').textContent);
+    const slide = document.getElementById('house-slide');
+    const number = document.getElementById('house-slide-number');
+    const thumbnails = document.querySelectorAll('.house-thumbnail');
+    let current = 0;
+
+    const showSlide = (index) => {
+      current = (index + images.length) % images.length;
+      slide.src = images[current];
+      slide.alt = '<%= house.name %> view ' + (current + 1);
+      number.textContent = current + 1;
+      thumbnails.forEach((thumbnail, thumbnailIndex) => {
+        thumbnail.classList.toggle('active', thumbnailIndex === current);
+      });
+    };
+
+    document.querySelector('.gallery-arrow.prev').addEventListener('click', () => showSlide(current - 1));
+    document.querySelector('.gallery-arrow.next').addEventListener('click', () => showSlide(current + 1));
+    thumbnails.forEach((thumbnail) => thumbnail.addEventListener('click', () => showSlide(Number(thumbnail.dataset.index))));
+  })();
+</script>
+
+<%- include('partials/landingPageFooter') %>

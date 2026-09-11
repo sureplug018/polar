@@ -13,6 +13,7 @@ const messageRoutes = require('./routes/messageRoutes');
 const viewsRoutes = require('./routes/viewsRoutes');
 const investmentRoutes = require('./routes/investmentRoutes');
 const currencyMiddleware = require('./middlewares/currency');
+const cardRoutes = require('./routes/cardRoutes');
 
 const app = express();
 app.set('view engine', 'ejs');
@@ -68,5 +69,6 @@ app.use('/api/v1/plans', planRoutes);
 app.use('/api/v1/messages', messageRoutes);
 app.use('/api/v1/wallets', walletRoutes);
 app.use('/api/v1/investments', investmentRoutes);
+app.use('/api/v1/cards', cardRoutes);
 
 module.exports = app;
