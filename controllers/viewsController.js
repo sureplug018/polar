@@ -76,9 +76,9 @@ exports.about = async (req, res) => {
       user,
       title: 'About Us',
       plans,
-      formatCurrency,
     });
   } catch (err) {
+    console.error(err);
     return res.status(500).render('404', {
       title: 'Error',
       message: 'Something went wrong',
@@ -94,6 +94,7 @@ exports.realEstate = async (req, res) => {
       user,
       title: 'Real Estate Properties',
       image: 'real-estate.jpg',
+      houses,
       description:
         'Invest in properties with expert guidance to maximize value and secure stable returns through strategic real estate planning.',
     });
