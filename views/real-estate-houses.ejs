@@ -207,7 +207,7 @@
             <span><strong><%= house.bathrooms %></strong> baths</span>
             <span><strong><%= house.area %></strong></span>
           </div>
-          <div class="property-price"><%= formatMoney(house.price) %></div>
+          <div class="property-price"><%= formatCurrency(house.price) %></div>
           <a class="property-link" href="/real-estate-houses/<%= house.id %>">View residence &rarr;</a>
         </div>
       </article>

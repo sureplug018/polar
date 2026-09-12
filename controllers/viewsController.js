@@ -110,10 +110,37 @@ exports.realEstateHouses = async (req, res) => {
   try {
     const user = res.locals.user;
 
+    // 1. Read currency (query has priority)
+    let currency = (
+      req.query.currency ||
+      req.cookies.currency ||
+      'USD'
+    ).toUpperCase();
+    const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+    if (!allowed.includes(currency)) currency = 'USD';
+
+    // 2. Save it
+    res.cookie('currency', currency, {
+      maxAge: 365 * 24 * 60 * 60 * 1000,
+    });
+
+    // 3. Get rates
+    const rates = await getRates('USD');
+
+    // 4. Helper
+    const formatCurrency = (amount) => {
+      if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+      const converted = convert(amount, 'USD', currency, rates);
+      return formatMoney(converted, currency);
+    };
+
     return res.status(200).render('real-estate-houses', {
       user,
       title: 'Homes for Sale',
       houses,
+      formatCurrency,
+      currency,
+      rates,
     });
   } catch (err) {
     return res.status(500).render('404', {
@@ -135,10 +162,37 @@ exports.realEstateHouseDetails = async (req, res) => {
       });
     }
 
+    // 1. Read currency (query has priority)
+    let currency = (
+      req.query.currency ||
+      req.cookies.currency ||
+      'USD'
+    ).toUpperCase();
+    const allowed = ['USD', 'EUR', 'GBP', 'NGN', 'CAD', 'AUD', 'JPY'];
+    if (!allowed.includes(currency)) currency = 'USD';
+
+    // 2. Save it
+    res.cookie('currency', currency, {
+      maxAge: 365 * 24 * 60 * 60 * 1000,
+    });
+
+    // 3. Get rates
+    const rates = await getRates('USD');
+
+    // 4. Helper
+    const formatCurrency = (amount) => {
+      if (amount == null || isNaN(amount)) return formatMoney(0, currency);
+      const converted = convert(amount, 'USD', currency, rates);
+      return formatMoney(converted, currency);
+    };
+
     return res.status(200).render('real-estate-house-details', {
       user,
       title: house.name,
       house,
+      formatCurrency,
+      currency,
+      rates,
     });
   } catch (err) {
     return res.status(500).render('404', {
