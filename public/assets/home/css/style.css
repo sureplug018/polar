@@ -922,11 +922,11 @@ header.navbar-fixed-top.header-alt {
   position: relative;
 }
 .menuzord-menu > li.active > a:after,
-.menuzord-menu > li:hover > a:after {
-  position: absolute;
-  content: '';
-  left: 0;
-  width: 20px;
+.polaris-choice-icon-blue svg circle { fill: #007bff; }
+.polaris-choice-icon-coral svg circle { fill: #ff6f61; }
+.polaris-choice-icon-mint svg circle { fill: #3ebf8e; }
+.polaris-choice-icon-violet svg circle { fill: #6f42c1; }
+.polaris-choice-icon-gold svg circle { fill: #ffd700; }
   height: 2px;
   background: #f5bd49;
   bottom: 16px;
@@ -2286,4 +2286,319 @@ ul#filters li.active a {
 /*------------------------------------------*/
 .tp-loader.spinner2 {
   background: #f98b06 !important;
+}
+
+/* Landing page icon treatment */
+.polaris-welcome-icon {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow:
+    0 12px 24px rgba(6, 22, 58, 0.14),
+    0 3px 0 rgba(6, 22, 58, 0.08);
+  transform: perspective(180px) rotateX(4deg) rotateY(-5deg);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.polaris-welcome-icon svg {
+  width: 50px;
+  height: 50px;
+}
+.box-icon-3:hover .polaris-welcome-icon {
+  transform: perspective(180px) rotateX(0) rotateY(0) translateY(-4px);
+  box-shadow:
+    0 16px 28px rgba(6, 22, 58, 0.2),
+    0 4px 0 rgba(6, 22, 58, 0.1);
+}
+.polaris-feature-icon {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 24px 24px 8px 8px;
+  color: #fff;
+  background: linear-gradient(145deg, #eff8ff, #dbe9f5);
+  box-shadow:
+    inset 0 -8px 0 rgba(6, 22, 58, 0.08),
+    0 12px 24px rgba(6, 22, 58, 0.12);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.polaris-feature-icon svg {
+  filter: drop-shadow(0 7px 3px rgba(6, 22, 58, 0.2));
+  transition: transform 0.2s ease;
+}
+.box-icon-2:hover .polaris-feature-icon {
+  transform: translateY(-5px);
+  box-shadow:
+    inset 0 -8px 0 rgba(6, 22, 58, 0.1),
+    0 17px 28px rgba(6, 22, 58, 0.18);
+}
+.box-icon-2:hover .polaris-feature-icon svg {
+  transform: scale(1.06) rotate(-3deg);
+}
+.polaris-feature-icon-blue {
+  background: linear-gradient(145deg, #e9f8ff, #c9e3f6);
+  color: #1762d2;
+}
+.polaris-feature-icon-coral {
+  background: linear-gradient(145deg, #fff1e4, #ffd8c2);
+  color: #ef5b49;
+}
+.polaris-feature-icon-mint {
+  background: linear-gradient(145deg, #e8fff8, #c4eee4);
+  color: #159d9a;
+}
+.polaris-feature-icon-violet {
+  background: linear-gradient(145deg, #f2edff, #ddd2ff);
+  color: #7656c8;
+}
+.polaris-feature-icon-gold {
+  background: linear-gradient(145deg, #fff8da, #ffe9a8);
+  color: #ed8b18;
+}
+.polaris-mini-icon {
+  width: 58px;
+  height: 58px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow:
+    0 8px 18px rgba(6, 22, 58, 0.15),
+    0 3px 0 rgba(6, 22, 58, 0.08);
+  transform: perspective(150px) rotateX(5deg) rotateY(-7deg);
+}
+.polaris-mini-icon svg {
+  width: 44px;
+  height: 44px;
+}
+
+/* Reference-style Why Choose cards */
+.polaris-why-choose .box-icon-2 {
+  margin-top: 70px;
+  margin-bottom: 30px;
+  padding: 0 18px 24px;
+  background: #fff;
+  border: 1px solid #e8edf2;
+  box-shadow: 0 9px 24px rgba(6, 22, 58, 0.07);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.polaris-why-choose .box-icon-2:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(6, 22, 58, 0.12);
+}
+.polaris-why-choose .box-icon-2 .polaris-choice-icon {
+  width: 104px;
+  height: 104px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -52px auto 22px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #fff, #edf2f6);
+  box-shadow: 0 8px 18px rgba(6, 22, 58, 0.16);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.polaris-why-choose .box-icon-2 .polaris-choice-icon svg {
+  width: 86px;
+  height: 86px;
+  color: #fff;
+  stroke-width: 2.1;
+  filter: drop-shadow(0 4px 2px rgba(6, 22, 58, 0.2));
+}
+.polaris-why-choose .box-icon-2:hover .polaris-choice-icon {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 12px 22px rgba(6, 22, 58, 0.2);
+}
+
+/* Mature Polaris homepage system */
+body:has(.polaris-homepage) {
+  color: #273142;
+  background: #fff;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+body:has(.polaris-homepage) .polaris-homepage {
+  background: #0b1224;
+}
+body:has(.polaris-homepage) .polaris-homepage .rev-slidebg {
+  filter: brightness(0.62) saturate(0.8);
+}
+body:has(.polaris-homepage) #body-content > section {
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
+body:has(.polaris-homepage) .polaris-section-heading {
+  max-width: 760px;
+  margin: 0 auto 54px;
+  text-align: center;
+}
+body:has(.polaris-homepage) .polaris-section-heading h1,
+body:has(.polaris-homepage) .head-main h1 {
+  margin: 0 0 18px;
+  color: #101a2d;
+  font-size: clamp(2rem, 4vw, 3.15rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+body:has(.polaris-homepage) .polaris-section-heading h1 span,
+body:has(.polaris-homepage) .head-main h1 span,
+body:has(.polaris-homepage) .polaris-eyebrow {
+  display: block;
+  margin-bottom: 12px;
+  color: #d77a13;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+body:has(.polaris-homepage) .polaris-section-heading p,
+body:has(.polaris-homepage) .head-main p {
+  max-width: 650px;
+  margin: 0 auto;
+  color: #6b7482;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+body:has(.polaris-homepage) #body-content > section:first-child {
+  background: #fff;
+}
+body:has(.polaris-homepage) #body-content > section:first-child .box-icon-3 {
+  min-height: 100%;
+  margin: 0 0 28px;
+  padding: 28px 24px 24px;
+  border: 1px solid #edf0f4;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(16, 26, 45, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+body:has(.polaris-homepage) #body-content > section:first-child .box-icon-3:before {
+  display: none;
+}
+body:has(.polaris-homepage) #body-content > section:first-child .box-icon-3:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 34px rgba(16, 26, 45, 0.11);
+}
+body:has(.polaris-homepage) #body-content > section:first-child .box-icon-3-text p,
+body:has(.polaris-homepage) .polaris-why-choose .box-icon-2 p {
+  color: #707987;
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+body:has(.polaris-homepage) .polaris-why-choose {
+  background: #f6f8fa;
+}
+body:has(.polaris-homepage) .polaris-why-choose .box-icon-2 {
+  height: calc(100% - 70px);
+  min-height: 310px;
+  padding-right: 24px;
+  padding-left: 24px;
+}
+body:has(.polaris-homepage) .polaris-why-choose .box-icon-2 h3 {
+  color: #101a2d;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+body:has(.polaris-homepage) .polaris-how-it-works {
+  background: #fff;
+}
+body:has(.polaris-homepage) .polaris-how-it-works .box-icon-2 {
+  height: calc(100% - 70px);
+  min-height: 310px;
+  padding-right: 24px;
+  padding-left: 24px;
+}
+body:has(.polaris-homepage) .polaris-how-it-works .box-icon-2 h3 {
+  color: #101a2d;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+body:has(.polaris-homepage) .polaris-how-it-works .box-icon-2 p {
+  color: #707987;
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+.polaris-how-it-works .box-icon-2 .polaris-step-icon {
+  width: 104px;
+  height: 104px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -52px auto 22px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #fff, #edf2f6);
+  box-shadow: 0 8px 18px rgba(6, 22, 58, 0.16);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.polaris-how-it-works .box-icon-2 .polaris-step-icon svg {
+  width: 86px;
+  height: 86px;
+  color: #fff;
+  stroke-width: 2.1;
+  filter: drop-shadow(0 4px 2px rgba(6, 22, 58, 0.2));
+}
+.polaris-how-it-works .box-icon-2:hover .polaris-step-icon {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 12px 22px rgba(6, 22, 58, 0.2);
+}
+body:has(.polaris-homepage) .light-bg.wide-tb-100 {
+  background: #fff;
+}
+body:has(.polaris-homepage) .service-icon-wrap {
+  padding: 24px 0;
+  border-bottom: 1px solid #e3e8ee;
+}
+body:has(.polaris-homepage) .service-inner-content h4 {
+  color: #101a2d;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+body:has(.polaris-homepage) .service-inner-content p {
+  color: #707987;
+  font-size: 0.9rem;
+  line-height: 1.75;
+}
+body:has(.polaris-homepage) .btn-theme {
+  border-radius: 2px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+@media (max-width: 767.98px) {
+  body:has(.polaris-homepage) #body-content > section {
+    padding-top: 68px;
+    padding-bottom: 68px;
+  }
+  body:has(.polaris-homepage) .polaris-section-heading {
+    margin-bottom: 38px;
+  }
+  body:has(.polaris-homepage) .polaris-why-choose .box-icon-2 {
+    min-height: 0;
+  }
+  body:has(.polaris-homepage) .polaris-how-it-works .box-icon-2 {
+    min-height: 0;
+  }
 }
