@@ -218,10 +218,10 @@ const houses = [
       'Walkable beach location',
     ],
     images: [
-      'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1600&q=85',
-      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1600&q=85',
-      'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=1600&q=85',
-      'https://images.unsplash.com/photo-1544984243-ec57ea16fe25?auto=format&fit=crop&w=1600&q=85',
+      '/assets/home/images/fill-1.avif',
+      '/assets/home/images/fill-2.avif',
+      '/assets/home/images/fill-3.avif',
+      '/assets/home/images/fill-4.jpg',
     ],
   },
   {
@@ -547,19 +547,19 @@ const propertyGalleries = {
     '/assets/home/images/harbour-2.avif',
     '/assets/home/images/harbour-3.jpg',
     '/assets/home/images/harbour-4.jpg',
-    ],
+  ],
   'cedar-grove-house': [
     '/assets/home/images/cedar-1.avif',
     '/assets/home/images/cedar-2.avif',
     '/assets/home/images/cedar-3.avif',
     '/assets/home/images/cedar-4.jpg',
-    ],
+  ],
   'olive-ridge-retreat': [
     '/assets/home/images/olive-1.avif',
     '/assets/home/images/olive-2.avif',
     '/assets/home/images/olive-3.jpg',
     '/assets/home/images/olive-4.jpg',
-    ],
+  ],
   'laneway-loft-residence': [
     '/assets/home/images/laneway-1.avif',
     '/assets/home/images/laneway-2.avif',
