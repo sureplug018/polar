@@ -11,7 +11,7 @@
       <% plans.forEach(plan => { %>
       <div class="card">
         <p class="display" style="font-size:18px;font-weight:700"><%= plan.name %></p>
-        <p class="stat-value" style="color:var(--primary)"><%= plan.roi %>% ROI Daily</p>
+        <p class="stat-value" style="color:var(--primary)"><%= Math.round(plan.roi * plan.duration) %>% ROI</p>
         <p class="muted small"><%= plan.duration %> days term</p>
         <div class="mini-row"><span>Min</span><span><%= formatCurrency(plan.min) %></span></div>
         <div class="mini-row"><span>Max</span><span><%= formatCurrency(plan.max)%></span></div>
@@ -29,7 +29,7 @@
             <select data-plan-select>
               <option value="">Select a plan</option>
               <% plans.forEach(plan => { %>
-              <option data-plan-id="<%= plan.id %>"><%= plan.name %> — <%= plan.roi %>% ROI Daily</option>
+              <option data-plan-id="<%= plan.id %>"><%= plan.name %> — <%= Math.round(plan.roi * plan.duration) %>% ROI</option>
               <% }) %>
             </select></label><label class="field"><span>Amount (USD)</span><input type="number" placeholder="2500" /></label></div>
         <label class="field"><span>Funding source</span>

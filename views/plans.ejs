@@ -40,7 +40,7 @@
                       <h3><%= plan.name %></h3>
 
                       <div class="plan-roi">
-                        <span><%= plan.roi * plan.duration %></span><sup>%</sup>
+                        <span><%= Math.round(plan.roi * plan.duration) %></span><sup>%</sup>
                         <small> ROI</small>
                       </div>
                     </div>
