@@ -60,8 +60,7 @@
   }
 
   .house-gallery {
-    display: grid;
-    grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+    display: block;
     gap: 12px;
   }
 
@@ -76,6 +75,13 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    transition: opacity .45s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .house-hero img {
+      transition: none;
+    }
   }
 
   .gallery-arrow {
@@ -116,7 +122,9 @@
   .house-thumbnails {
     display: grid;
     gap: 12px;
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-rows: 120px;
+    margin-top: 12px;
   }
 
   .house-thumbnail {
@@ -441,24 +449,49 @@
 <script>
   (() => {
     const images = JSON.parse(document.getElementById('house-images-data').textContent);
+    const gallery = document.querySelector('.house-gallery');
     const slide = document.getElementById('house-slide');
     const number = document.getElementById('house-slide-number');
     const thumbnails = document.querySelectorAll('.house-thumbnail');
     let current = 0;
+    let autoplay;
 
     const showSlide = (index) => {
       current = (index + images.length) % images.length;
+      slide.style.opacity = '0';
       slide.src = images[current];
       slide.alt = '<%= house.name %> view ' + (current + 1);
       number.textContent = current + 1;
       thumbnails.forEach((thumbnail, thumbnailIndex) => {
         thumbnail.classList.toggle('active', thumbnailIndex === current);
       });
+      requestAnimationFrame(() => {
+        slide.style.opacity = '1';
+      });
     };
 
-    document.querySelector('.gallery-arrow.prev').addEventListener('click', () => showSlide(current - 1));
-    document.querySelector('.gallery-arrow.next').addEventListener('click', () => showSlide(current + 1));
-    thumbnails.forEach((thumbnail) => thumbnail.addEventListener('click', () => showSlide(Number(thumbnail.dataset.index))));
+    const startAutoplay = () => {
+      clearInterval(autoplay);
+      autoplay = setInterval(() => showSlide(current + 1), 5000);
+    };
+
+    document.querySelector('.gallery-arrow.prev').addEventListener('click', () => {
+      showSlide(current - 1);
+      startAutoplay();
+    });
+    document.querySelector('.gallery-arrow.next').addEventListener('click', () => {
+      showSlide(current + 1);
+      startAutoplay();
+    });
+    thumbnails.forEach((thumbnail) => thumbnail.addEventListener('click', () => {
+      showSlide(Number(thumbnail.dataset.index));
+      startAutoplay();
+    }));
+    gallery.addEventListener('mouseenter', () => clearInterval(autoplay));
+    gallery.addEventListener('mouseleave', startAutoplay);
+    gallery.addEventListener('focusin', () => clearInterval(autoplay));
+    gallery.addEventListener('focusout', startAutoplay);
+    startAutoplay();
   })();
 </script>
 

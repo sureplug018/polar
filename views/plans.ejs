@@ -1,400 +1,418 @@
 <%- include('partials/landingPageHeader') %>
 
 <div id="body-content">
-    <section class="wide-tb-100">
-      <div class="container">
-        <div class="row">
-          <!-- Heading Main -->
-          <div class="col-sm-12">
-            <h1 style="text-align: center;">Investment Plans</h1>
-            <h1 class="heading-main">
-              <span>Scale with Confidence at Every Stage—Flexible, Professionally Designed Plans That Grow Seamlessly with Your Portfolio </span>
-              Transparent fees , 24/hours customer care , Fast Withdraw
-            </h1>
-          </div>
-          <!-- Investment Plans -->
-          <section class="investment-plans">
-            <div class="container">
+  <section class="wide-tb-100">
+    <div class="container">
+      <div class="row">
+        <!-- Heading Main -->
+        <div class="col-sm-12">
+          <h1 style="text-align: center;">Investment Plans</h1>
+          <h1 class="heading-main">
+            <span>Scale with Confidence at Every Stage—Flexible, Professionally Designed Plans That Grow Seamlessly with Your Portfolio </span>
+            Transparent fees , 24/hours customer care , Fast Withdraw
+          </h1>
+        </div>
+        <!-- Investment Plans -->
+        <section class="investment-plans">
+          <div class="container">
 
-              <div class="plans-heading">
-                <span>Investment Plans</span>
-                <h2>Choose the plan that works for you</h2>
-                <p>
-                  Select an investment plan and start growing your investment today.
-                </p>
-              </div>
+            <div class="plans-heading">
+              <span>Investment Plans</span>
+              <h2>Choose the plan that works for you</h2>
+              <p>
+                Select an investment plan and start growing your investment today.
+              </p>
+            </div>
 
-              <div class="row g-4">
-                <% plans.forEach((plan, index) => { %>
+            <div class="row g-4">
+              <% plans.forEach((plan, index) => { %>
 
-                <!-- Investment Plan Card -->
-                <div class="col-md-4 col-sm-12">
-                  <div class="investment-card <%= index === 1 ? 'featured-plan' : '' %>">
+              <!-- Investment Plan Card -->
+              <div class="col-md-4 col-sm-12">
+                <div class="investment-card <%= index === 1 ? 'featured-plan' : '' %>">
 
-                    <% if (index === 1) { %>
-                    <div class="popular-badge">Most Popular</div>
-                    <% } %>
+                  <% if (index === 1) { %>
+                  <div class="popular-badge">Most Popular</div>
+                  <% } %>
 
-                    <!-- Plan Header -->
-                    <div class="plan-header">
-                      <h3><%= plan.name %></h3>
+                  <!-- Plan Header -->
+                  <div class="plan-header">
+                    <h3><%= plan.name %></h3>
 
-                      <div class="plan-roi">
-                        <span><%= Math.round(plan.roi * plan.duration) %></span><sup>%</sup>
-                        <small> ROI</small>
-                      </div>
+                    <div class="plan-roi">
+                      <span><%= Math.round(plan.roi * plan.duration) %></span><sup>%</sup>
+                      <small> ROI</small>
+                    </div>
+                  </div>
+
+                  <!-- Plan Features -->
+                  <div class="plan-features">
+
+                    <div class="feature-item">
+                      <span class="check-icon">✓</span>
+                      <span>
+                        Minimum investment
+                        <strong><%= formatCurrency(plan.min) %></strong>
+                      </span>
                     </div>
 
-                    <!-- Plan Features -->
-                    <div class="plan-features">
-
-                      <div class="feature-item">
-                        <span class="check-icon">✓</span>
-                        <span>
-                          Minimum investment
-                          <strong><%= formatCurrency(plan.min) %></strong>
-                        </span>
-                      </div>
-
-                      <div class="feature-item">
-                        <span class="check-icon">✓</span>
-                        <span>
-                          Maximum investment
-                          <strong><%= formatCurrency(plan.max) %></strong>
-                        </span>
-                      </div>
-
-                      <div class="feature-item">
-                        <span class="check-icon">✓</span>
-                        <span>
-                          Investment duration
-                          <strong><%= plan.duration %></strong>
-                        </span>
-                      </div>
-
-                      <div class="feature-item">
-                        <span class="check-icon">✓</span>
-                        <span>
-                          Daily return
-                          <strong><%= plan.roi %>% ROI</strong>
-                        </span>
-                      </div>
-
-                      <div class="feature-item">
-                        <span class="check-icon">✓</span>
-                        <span>
-                          Referral bonus
-                          <strong>10%</strong>
-                        </span>
-                      </div>
-
-                      <div class="feature-item">
-                        <span class="check-icon">✓</span>
-                        <span>
-                          Secure investment
-                          <strong>Available</strong>
-                        </span>
-                      </div>
-
+                    <div class="feature-item">
+                      <span class="check-icon">✓</span>
+                      <span>
+                        Maximum investment
+                        <strong><%= formatCurrency(plan.max) %></strong>
+                      </span>
                     </div>
 
-                    <!-- CTA -->
-                    <a href="/register" class="plan-button">
-                      Get Started
-                      <span>→</span>
-                    </a>
+                    <div class="feature-item">
+                      <span class="check-icon">✓</span>
+                      <span>
+                        Investment duration
+                        <strong><%= plan.duration %></strong>
+                      </span>
+                    </div>
+
+                    <div class="feature-item">
+                      <span class="check-icon">✓</span>
+                      <span>
+                        Daily return
+                        <strong><%= plan.roi %>% ROI</strong>
+                      </span>
+                    </div>
+
+                    <div class="feature-item">
+                      <span class="check-icon">✓</span>
+                      <span>
+                        Referral bonus
+                        <strong>10%</strong>
+                      </span>
+                    </div>
+
+                    <div class="feature-item">
+                      <span class="check-icon">✓</span>
+                      <span>
+                        Secure investment
+                        <strong>Available</strong>
+                      </span>
+                    </div>
 
                   </div>
-                </div>
 
-                <% }) %>
+                  <!-- CTA -->
+                  <a href="/register" class="plan-button">
+                    Get Started
+                    <span>→</span>
+                  </a>
+
+                </div>
               </div>
 
+              <% }) %>
             </div>
-          </section>
+
+          </div>
+        </section>
 
 
-          <style>
-            /* =========================================
+        <style>
+          /* =========================================
    INVESTMENT PLANS
 ========================================= */
 
-            .investment-plans {
-              padding: 80px 0;
-              background: #f7f9fc;
-            }
+          .investment-plans {
+            padding: 80px 0;
+            background: #f7f9fc;
+          }
 
-            /* Heading */
-            .plans-heading {
-              text-align: center;
-              max-width: 650px;
-              margin: 0 auto 50px;
-            }
+          /* Heading */
+          .plans-heading {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto 50px;
+          }
 
-            .plans-heading>span {
-              display: inline-block;
-              color: #f98b06;
-              background: #eaf1ff;
-              font-size: 13px;
-              font-weight: 700;
-              text-transform: uppercase;
-              letter-spacing: 1px;
-              padding: 8px 16px;
-              border-radius: 30px;
-              margin-bottom: 15px;
-            }
+          .plans-heading>span {
+            display: inline-block;
+            color: #f98b06;
+            background: #eaf1ff;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 16px;
+            border-radius: 30px;
+            margin-bottom: 15px;
+          }
 
-            .plans-heading h2 {
-              margin: 0 0 12px;
-              color: #101828;
-              font-size: 36px;
-              font-weight: 700;
-            }
+          .plans-heading h2 {
+            margin: 0 0 12px;
+            color: #101828;
+            font-size: 36px;
+            font-weight: 700;
+          }
 
-            .plans-heading p {
-              margin: 0;
-              color: #667085;
-              font-size: 16px;
-              line-height: 1.7;
-            }
+          .plans-heading p {
+            margin: 0;
+            color: #667085;
+            font-size: 16px;
+            line-height: 1.7;
+          }
 
 
-            /* =========================================
+          /* =========================================
    CARD
 ========================================= */
 
-            .investment-card {
-              position: relative;
-              height: 100%;
-              padding: 32px 28px;
-              background: #ffffff;
-              border: 1px solid #e5e7eb;
-              border-radius: 18px;
+          .investment-card {
+            --plan-accent: #f98b06;
+            --plan-dark: #111827;
+            --plan-soft: #fff5e8;
+            position: relative;
+            height: 100%;
+            padding: 32px 28px;
+            background: linear-gradient(145deg, #ffffff 0%, var(--plan-soft) 180%);
+            border: 1px solid #e5e7eb;
+            border-top: 4px solid var(--plan-accent);
+            border-radius: 18px;
 
-              display: flex;
-              flex-direction: column;
+            display: flex;
+            flex-direction: column;
 
-              box-shadow: 0 8px 30px rgba(16, 24, 40, 0.06);
+            box-shadow: 0 8px 30px rgba(16, 24, 40, 0.06);
 
-              transition:
-                transform 0.3s ease,
-                box-shadow 0.3s ease,
-                border-color 0.3s ease;
-            }
+            transition:
+              transform 0.3s ease,
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+          }
 
-            .investment-card:hover {
-              transform: translateY(-8px);
-              border-color: #b8cfff;
-              box-shadow: 0 18px 45px rgba(16, 24, 40, 0.12);
-            }
+          .investment-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--plan-accent);
+            border-top-color: var(--plan-accent);
+            box-shadow: 0 18px 45px rgba(16, 24, 40, 0.12);
+          }
 
-
-            /* =========================================
+          /* =========================================
    FEATURED PLAN
 ========================================= */
 
-            .featured-plan {
-              border: 2px solid #f98b06;
-              box-shadow: 0 15px 45px rgba(23, 78, 166, 0.15);
-            }
+          .featured-plan {
+            border: 2px solid var(--plan-accent);
+            border-top: 4px solid var(--plan-accent);
+            box-shadow: 0 15px 45px rgba(17, 24, 39, 0.15);
+          }
 
-            .popular-badge {
-              position: absolute;
-              top: -14px;
-              left: 50%;
-              transform: translateX(-50%);
+          .popular-badge {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
 
-              padding: 7px 20px;
+            padding: 7px 20px;
 
-              background: #f98b06;
-              color: #fff;
+            background: var(--plan-accent);
+            color: #fff;
 
-              border-radius: 30px;
+            border-radius: 30px;
 
-              font-size: 12px;
-              font-weight: 700;
-              white-space: nowrap;
-              text-transform: uppercase;
-              letter-spacing: .5px;
-            }
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+          }
 
 
-            /* =========================================
+          /* =========================================
    PLAN HEADER
 ========================================= */
 
-            .plan-header {
-              text-align: center;
-              padding-bottom: 25px;
-              border-bottom: 1px solid #edf0f5;
-            }
+          .plan-header {
+            text-align: center;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #edf0f5;
+            position: relative;
+          }
 
-            .plan-header h3 {
-              margin: 0 0 18px;
-              color: #101828;
-              font-size: 21px;
-              font-weight: 700;
-            }
+          .plan-header::after {
+            background: var(--plan-accent);
+            bottom: -2px;
+            content: '';
+            height: 3px;
+            left: 50%;
+            position: absolute;
+            transform: translateX(-50%);
+            width: 46px;
+          }
 
-            .plan-roi {
-              color: #f98b06;
-              font-size: 18px;
-              font-weight: 600;
-            }
+          .plan-header h3 {
+            margin: 0 0 18px;
+            color: #101828;
+            font-size: 21px;
+            font-weight: 700;
+          }
 
-            .plan-roi span {
-              font-size: 52px;
-              line-height: 1;
-              font-weight: 800;
-              letter-spacing: -2px;
-            }
+          .plan-roi {
+            color: var(--plan-accent);
+            font-size: 18px;
+            font-weight: 600;
+          }
 
-            .plan-roi sup {
-              position: relative;
-              top: -22px;
-              font-size: 20px;
-              font-weight: 700;
-            }
+          .plan-roi span {
+            font-size: 52px;
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: -2px;
+          }
 
-            .plan-roi small {
-              display: block;
-              margin-top: 8px;
+          .plan-roi sup {
+            position: relative;
+            top: -22px;
+            font-size: 20px;
+            font-weight: 700;
+          }
 
-              color: #667085;
-              font-size: 13px;
-              font-weight: 500;
-            }
+          .plan-roi small {
+            display: block;
+            margin-top: 8px;
+
+            color: #667085;
+            font-size: 13px;
+            font-weight: 500;
+          }
 
 
-            /* =========================================
+          /* =========================================
    FEATURES
 ========================================= */
 
-            .plan-features {
-              padding: 22px 0;
-              flex: 1;
-            }
+          .plan-features {
+            padding: 22px 0;
+            flex: 1;
+          }
 
-            .feature-item {
-              display: flex;
-              align-items: flex-start;
-              gap: 12px;
+          .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            white-space: nowrap;
 
-              padding: 12px 0;
+            padding: 12px 0;
 
-              color: #667085;
-              font-size: 14px;
-              line-height: 1.5;
-            }
+            color: #667085;
+            font-size: 14px;
+            line-height: 1.5;
+          }
 
-            .check-icon {
-              flex-shrink: 0;
+          .check-icon {
+            flex-shrink: 0;
 
-              width: 22px;
-              height: 22px;
+            width: 22px;
+            height: 22px;
 
-              display: flex;
-              align-items: center;
-              justify-content: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-              margin-top: 1px;
+            margin-top: 1px;
 
-              background: #eaf7ef;
-              color: #16a34a;
+            background: var(--plan-soft);
+            color: var(--plan-dark);
 
-              border-radius: 50%;
+            border-radius: 50%;
 
-              font-size: 12px;
-              font-weight: 800;
-            }
+            font-size: 12px;
+            font-weight: 800;
+          }
 
-            .feature-item strong {
-              display: block;
-              margin-top: 2px;
+          .feature-item strong {
+            display: inline;
+            margin-left: 4px;
 
-              color: #101828;
-              font-size: 14px;
-              font-weight: 600;
-            }
+            color: #101828;
+            font-size: 14px;
+            font-weight: 600;
+          }
 
 
-            /* =========================================
+          /* =========================================
    BUTTON
 ========================================= */
 
-            .plan-button {
-              width: 100%;
+          .plan-button {
+            width: 100%;
 
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              gap: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
 
-              padding: 14px 20px;
+            padding: 14px 20px;
 
-              background: #f98b06;
-              color: #fff !important;
+            background: var(--plan-dark);
+            color: #fff !important;
 
-              border: 1px solid #f98b06;
-              border-radius: 8px;
+            border: 1px solid var(--plan-dark);
+            border-radius: 8px;
 
-              text-decoration: none !important;
+            text-decoration: none !important;
 
-              font-size: 14px;
-              font-weight: 700;
+            font-size: 14px;
+            font-weight: 700;
 
-              transition: all .25s ease;
-            }
+            transition: all .25s ease;
+          }
 
-            .plan-button span {
-              font-size: 19px;
-              line-height: 1;
+          .plan-button span {
+            font-size: 19px;
+            line-height: 1;
 
-              transition: transform .25s ease;
-            }
+            transition: transform .25s ease;
+          }
 
-            .plan-button:hover {
-              background: #0d3b82;
-              border-color: #0d3b82;
-              color: #fff !important;
-            }
+          .plan-button:hover {
+            background: var(--plan-accent);
+            border-color: var(--plan-accent);
+            color: #fff !important;
+          }
 
-            .plan-button:hover span {
-              transform: translateX(4px);
-            }
+          .plan-button:hover span {
+            transform: translateX(4px);
+          }
 
 
-            /* =========================================
+          /* =========================================
    RESPONSIVE
 ========================================= */
 
-            @media (max-width: 991px) {
-              .investment-plans {
-                padding: 60px 0;
-              }
-
-              .investment-card {
-                margin-bottom: 10px;
-              }
+          @media (max-width: 991px) {
+            .investment-plans {
+              padding: 60px 0;
             }
 
-            @media (max-width: 767px) {
-              .plans-heading h2 {
-                font-size: 28px;
-              }
-
-              .investment-card {
-                padding: 28px 22px;
-              }
-
-              .plan-roi span {
-                font-size: 45px;
-              }
+            .investment-card {
+              margin-bottom: 10px;
             }
-          </style>
-        </div>
+          }
+
+          @media (max-width: 767px) {
+            .plans-heading h2 {
+              font-size: 28px;
+            }
+
+            .investment-card {
+              padding: 28px 22px;
+            }
+
+            .plan-roi span {
+              font-size: 45px;
+            }
+          }
+        </style>
       </div>
-    </section>
+    </div>
+  </section>
 
   <!-- xxx Google Map xxx -->
   <section class="home-pad">
