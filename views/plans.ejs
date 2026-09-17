@@ -40,7 +40,7 @@
                     <h3><%= plan.name %></h3>
 
                     <div class="plan-roi">
-                      <span><%= Math.round(plan.roi * plan.duration) %></span><sup>%</sup>
+                      <span><%= Math.round(plan.roi * plan.duration) %>%</span><sup></sup>
                       <small> ROI</small>
                     </div>
                   </div>
@@ -48,31 +48,31 @@
                   <!-- Plan Features -->
                   <div class="plan-features">
 
-                    <div class="feature-item">
+                    <div class="feature-item" style="justify-content: center;">
                       <span class="check-icon">✓</span>
                       <span>
-                        Minimum investment
+                        Minimum
                         <strong><%= formatCurrency(plan.min) %></strong>
                       </span>
                     </div>
 
-                    <div class="feature-item">
+                    <div class="feature-item" style="justify-content: center;">
                       <span class="check-icon">✓</span>
                       <span>
-                        Maximum investment
+                        Maximum
                         <strong><%= formatCurrency(plan.max) %></strong>
                       </span>
                     </div>
 
-                    <div class="feature-item">
+                    <div class="feature-item" style="justify-content: center;">
                       <span class="check-icon">✓</span>
                       <span>
-                        Investment duration
-                        <strong><%= plan.duration %></strong>
+                         Duration
+                        <strong><%= plan.duration %> days</strong>
                       </span>
                     </div>
 
-                    <div class="feature-item">
+                    <div class="feature-item" style="justify-content: center;">
                       <span class="check-icon">✓</span>
                       <span>
                         Daily return
@@ -80,7 +80,7 @@
                       </span>
                     </div>
 
-                    <div class="feature-item">
+                    <div class="feature-item" style="justify-content: center;">
                       <span class="check-icon">✓</span>
                       <span>
                         Referral bonus
@@ -88,11 +88,10 @@
                       </span>
                     </div>
 
-                    <div class="feature-item">
+                    <div class="feature-item" style="justify-content: center;">
                       <span class="check-icon">✓</span>
                       <span>
-                        Secure investment
-                        <strong>Available</strong>
+                        24/7 support
                       </span>
                     </div>
 
