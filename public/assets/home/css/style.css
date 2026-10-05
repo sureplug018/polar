@@ -922,11 +922,6 @@ header.navbar-fixed-top.header-alt {
   position: relative;
 }
 .menuzord-menu > li.active > a:after,
-.polaris-choice-icon-blue svg circle { fill: #007bff; }
-.polaris-choice-icon-coral svg circle { fill: #ff6f61; }
-.polaris-choice-icon-mint svg circle { fill: #3ebf8e; }
-.polaris-choice-icon-violet svg circle { fill: #6f42c1; }
-.polaris-choice-icon-gold svg circle { fill: #ffd700; }
   height: 2px;
   background: #f5bd49;
   bottom: 16px;
@@ -2290,31 +2285,24 @@ ul#filters li.active a {
 
 /* Landing page icon treatment */
 .polaris-welcome-icon {
-  width: 64px;
-  height: 64px;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 15px;
-  border-radius: 20px;
-  background: #fff;
-  box-shadow:
-    0 12px 24px rgba(6, 22, 58, 0.14),
-    0 3px 0 rgba(6, 22, 58, 0.08);
-  transform: perspective(180px) rotateX(4deg) rotateY(-5deg);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: #fbf1e6;
+  color: #d77a13;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 .polaris-welcome-icon svg {
-  width: 50px;
-  height: 50px;
+  width: 28px;
+  height: 28px;
 }
 .box-icon-3:hover .polaris-welcome-icon {
-  transform: perspective(180px) rotateX(0) rotateY(0) translateY(-4px);
-  box-shadow:
-    0 16px 28px rgba(6, 22, 58, 0.2),
-    0 4px 0 rgba(6, 22, 58, 0.1);
+  background: #d77a13;
+  color: #fff;
 }
 .polaris-feature-icon {
   height: 120px;
@@ -2365,21 +2353,18 @@ ul#filters li.active a {
   color: #ed8b18;
 }
 .polaris-mini-icon {
-  width: 58px;
-  height: 58px;
+  width: 52px;
+  height: 52px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 18px;
-  background: #fff;
-  box-shadow:
-    0 8px 18px rgba(6, 22, 58, 0.15),
-    0 3px 0 rgba(6, 22, 58, 0.08);
-  transform: perspective(150px) rotateX(5deg) rotateY(-7deg);
+  border-radius: 50%;
+  background: #fbf1e6;
+  color: #d77a13;
 }
 .polaris-mini-icon svg {
-  width: 44px;
-  height: 44px;
+  width: 24px;
+  height: 24px;
 }
 
 /* Reference-style Why Choose cards */
@@ -2399,30 +2384,25 @@ ul#filters li.active a {
   box-shadow: 0 15px 30px rgba(6, 22, 58, 0.12);
 }
 .polaris-why-choose .box-icon-2 .polaris-choice-icon {
-  width: 104px;
-  height: 104px;
+  width: 96px;
+  height: 96px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: -52px auto 22px;
+  margin: -48px auto 22px;
   border: 8px solid #fff;
   border-radius: 50%;
-  background: linear-gradient(145deg, #fff, #edf2f6);
-  box-shadow: 0 8px 18px rgba(6, 22, 58, 0.16);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  background: #d77a13;
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(6, 22, 58, 0.12);
+  transition: transform 0.2s ease;
 }
 .polaris-why-choose .box-icon-2 .polaris-choice-icon svg {
-  width: 86px;
-  height: 86px;
-  color: #fff;
-  stroke-width: 2.1;
-  filter: drop-shadow(0 4px 2px rgba(6, 22, 58, 0.2));
+  width: 36px;
+  height: 36px;
 }
 .polaris-why-choose .box-icon-2:hover .polaris-choice-icon {
-  transform: translateY(-3px) scale(1.04);
-  box-shadow: 0 12px 22px rgba(6, 22, 58, 0.2);
+  transform: translateY(-3px);
 }
 
 /* Mature Polaris homepage system */
