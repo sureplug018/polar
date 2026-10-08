@@ -9,6 +9,7 @@ const Message = require('../models/messageModel');
 const { getRates, convert, formatMoney } = require('../utilities/currency');
 const Card = require('../models/cardModel');
 const houses = require('../data');
+const miningGrades = require('../miningMachines');
 
 // function formatCurrency(amount) {
 //   if (amount == null || isNaN(amount)) return 'N/A';
@@ -209,9 +210,10 @@ exports.cloudMining = async (req, res) => {
     return res.status(200).render('cloud-mining', {
       user,
       title: 'Cloud Mining',
-      image: 'cloud-mining.jpg',
+      image: 'cloud-mining-facility.jpg',
+      miningGrades,
       description:
-        'Profit from non-farm payroll data releases with tailored trading strategies to navigate economic market movements.',
+        'Rent hash power from industrial ASIC miners we own and operate, and receive daily mining output without buying, hosting or maintaining hardware.',
     });
   } catch (err) {
     return res.status(500).render('404', {

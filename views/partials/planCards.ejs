@@ -1,0 +1,24 @@
+<div class="pf-plans">
+  <% if (!plans || !plans.length) { %>
+  <p class="pf-plans-empty">Investment plans will be published shortly.</p>
+  <% } %>
+  <% plans.forEach((plan, index) => { const featured = plans.length > 1 && index === 1; %>
+  <article class="pf-plan <%= featured ? 'is-featured' : '' %>">
+    <% if (featured) { %><span class="pf-plan-tag">Most popular</span><% } %>
+    <h3 class="pf-plan-name"><%= plan.name %></h3>
+    <div class="pf-plan-profit">
+      <strong><%= Math.round(plan.roi * plan.duration) %>%</strong>
+      <span>Profit</span>
+    </div>
+    <ul class="pf-plan-list">
+      <li>Minimum: <strong><%= formatCurrency(plan.min) %></strong></li>
+      <li>Maximum: <strong><%= formatCurrency(plan.max) %></strong></li>
+      <li>Daily ROI: <strong><%= plan.roi %>%</strong></li>
+      <li>Duration: <strong><%= plan.duration %> <%= plan.duration === 1 ? 'Day' : 'Days' %></strong></li>
+      <li>Referral: <strong>10%</strong></li>
+      <li>Support: <strong>24/7</strong></li>
+    </ul>
+    <a href="/register" class="pf-btn">Invest Now</a>
+  </article>
+  <% }) %>
+</div>

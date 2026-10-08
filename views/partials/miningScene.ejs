@@ -1,0 +1,58 @@
+<div class="pf-scene <%= typeof sceneClass !== 'undefined' ? sceneClass : '' %>" data-base-hashrate="6.42" role="img" aria-label="Live view of the Polaris cloud mining floor sending hash power to the mining pool">
+  <div class="pf-scene-photo"></div>
+  <div class="pf-scene-grid"></div>
+  <div class="pf-scene-leds"></div>
+  <div class="pf-scene-shade"></div>
+  <div class="pf-scene-scan"></div>
+
+  <svg class="pf-scene-flow" viewBox="0 0 600 460" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path id="pfFlow1" class="pf-flow-path" d="M470 330 C 460 220, 360 160, 300 98" />
+    <path id="pfFlow2" class="pf-flow-path" d="M560 250 C 520 170, 400 130, 318 92" />
+    <path id="pfFlow3" class="pf-flow-path" d="M380 300 C 360 220, 320 150, 302 100" />
+    <path id="pfFlow4" class="pf-flow-path" d="M140 300 C 170 200, 240 140, 285 98" />
+
+    <circle class="pf-packet" r="3.5"><animateMotion dur="2.6s" repeatCount="indefinite"><mpath href="#pfFlow1" /></animateMotion></circle>
+    <circle class="pf-packet is-green" r="3"><animateMotion dur="2.6s" begin="1.3s" repeatCount="indefinite"><mpath href="#pfFlow1" /></animateMotion></circle>
+    <circle class="pf-packet" r="3.5"><animateMotion dur="3.1s" begin="0.4s" repeatCount="indefinite"><mpath href="#pfFlow2" /></animateMotion></circle>
+    <circle class="pf-packet is-green" r="3"><animateMotion dur="3.1s" begin="1.9s" repeatCount="indefinite"><mpath href="#pfFlow2" /></animateMotion></circle>
+    <circle class="pf-packet is-green" r="3"><animateMotion dur="2.2s" begin="0.8s" repeatCount="indefinite"><mpath href="#pfFlow3" /></animateMotion></circle>
+    <circle class="pf-packet" r="3.5"><animateMotion dur="2.9s" begin="0.2s" repeatCount="indefinite"><mpath href="#pfFlow4" /></animateMotion></circle>
+    <circle class="pf-packet is-green" r="3"><animateMotion dur="2.9s" begin="1.6s" repeatCount="indefinite"><mpath href="#pfFlow4" /></animateMotion></circle>
+  </svg>
+
+  <div class="pf-scene-cloud" aria-hidden="true">
+    <svg viewBox="0 0 150 100">
+      <path class="pf-cloud-glow" d="M40 82h74a24 24 0 0 0 2-48 32 32 0 0 0-61-6 22 22 0 0 0-15 54z" />
+      <path class="pf-cloud-shape" d="M40 82h74a24 24 0 0 0 2-48 32 32 0 0 0-61-6 22 22 0 0 0-15 54z" />
+      <g class="pf-cloud-coin-spin">
+        <circle class="pf-cloud-coin" cx="75" cy="52" r="17" />
+        <text class="pf-cloud-coin-text" x="75" y="60" text-anchor="middle">&#8383;</text>
+      </g>
+    </svg>
+  </div>
+
+  <span class="pf-scene-live">Live &middot; Polaris Pool</span>
+  <span class="pf-scene-temp">Floor A &middot; <b data-temp>64.8</b>&deg;C</span>
+  <div class="pf-scene-hash" aria-hidden="true"></div>
+
+  <div class="pf-scene-panel">
+    <div class="pf-scene-card">
+      <div class="pf-scene-card-label"><span>Pool hashrate</span><em>&#9650; Online</em></div>
+      <span class="pf-scene-hashrate"><span data-hashrate>6.42</span><small>EH/s</small></span>
+      <svg class="pf-scene-chart" viewBox="0 0 200 46" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="pfChartFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#22e07a" stop-opacity="0.35" />
+            <stop offset="100%" stop-color="#22e07a" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <polygon class="pf-chart-area" points="" />
+        <polyline class="pf-chart-line" points="" />
+      </svg>
+    </div>
+    <div class="pf-scene-card">
+      <div class="pf-scene-card-label"><span>Accepted shares</span><span data-block-height>&nbsp;</span></div>
+      <ul class="pf-scene-feed"></ul>
+    </div>
+  </div>
+</div>
